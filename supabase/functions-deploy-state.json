@@ -1,0 +1,13 @@
+{
+  "projectId": "73069131",
+  "functions": {
+    "record-bill": {
+      "hasChanged": false,
+      "hash": "50799040a3a1ffc8826397c73c5d6a5c1bdcd34c539e36378fdc20014eaf6bf2"
+    },
+    "zite-bill": {
+      "hasChanged": false,
+      "hash": "a1b430b13bcebe2358c80cd7eac6c830db2be6ce67f3bbd585f95c6466cb6df9"
+    }
+  }
+}

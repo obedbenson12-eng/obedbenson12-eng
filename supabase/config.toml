@@ -1,0 +1,5 @@
+[functions.record-bill]
+verify_jwt = false
+
+[functions.zite-bill]
+verify_jwt = false
