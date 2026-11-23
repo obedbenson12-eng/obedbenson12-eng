@@ -12,6 +12,7 @@ import {
   CreditCard,
   Download,
   FileText,
+  Gauge,
   Headphones,
   Home,
   Info,
@@ -37,7 +38,13 @@ type Modal = 'signin' | 'register' | 'pay' | 'success' | 'addAccount' | null;
 type ServiceAccount = { id: string; account_number: string; service_address: string; balance: number; due_date: string; status: string };
 type Payment = { id: string; amount: number; method: string; status: string; receipt_number: string; created_at: string };
 type Bill = { id: string; billing_period: string; amount: number; due_date: string; status: string };
-type ZiteBill = { account_number: string; customer_name: string | null; balance: number | null; due_date: string | null; status: string | null; source: string };
+type ZiteField = Record<string, unknown>;
+type ZiteCustomerData = {
+  customer: ZiteField | null;
+  water_readings: ZiteField[];
+  payments: ZiteField[];
+  error: string | null;
+};
 type MenuItem = { label: string; icon: LucideIcon; screen?: Screen; action?: () => void };
 
 type AuthForm = { name: string; email: string; password: string; accountNumber: string; address: string };
@@ -60,7 +67,7 @@ function App() {
   const [account, setAccount] = useState<ServiceAccount | null>(null);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [bills, setBills] = useState<Bill[]>([]);
-  const [ziteBill, setZiteBill] = useState<ZiteBill | null>(null);
+  const [ziteData, setZiteData] = useState<ZiteCustomerData | null>(null);
   const [ziteSyncing, setZiteSyncing] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   const [appError, setAppError] = useState('');
@@ -98,27 +105,25 @@ function App() {
       setPayments(paymentsResult.data ?? []);
       setBills(billsResult.data ?? []);
       if (accountResult.data?.account_number) {
-        syncZiteBill(accountResult.data.account_number);
+        syncZiteData(accountResult.data.account_number);
       }
     }
     setDataLoading(false);
   };
 
-  const syncZiteBill = async (accountNumber: string) => {
+  const syncZiteData = async (accountNumber: string) => {
     setZiteSyncing(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const token = sessionData?.session?.access_token;
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/zite-bill?account_number=${encodeURIComponent(accountNumber)}`;
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/zite-bill?action=customer&account_number=${encodeURIComponent(accountNumber)}`;
       const res = await fetch(apiUrl, {
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
       });
       if (res.ok) {
-        const body = await res.json();
-        if (body && body.source === 'zite') setZiteBill(body);
+        const body = await res.json() as ZiteCustomerData;
+        if (body && !body.error) setZiteData(body);
       }
     } catch (err) {
-      console.error('zite bill sync failed', err);
+      console.error('zite data sync failed', err);
     }
     setZiteSyncing(false);
   };
@@ -144,9 +149,9 @@ function App() {
     <main className="portal-content">
       {appError && <div className="error-banner"><Info size={17} /><span>{appError}</span><button onClick={() => loadCustomerData(session.user.id)}>Retry</button></div>}
       {dataLoading && !account ? <div className="loading-card"><LoaderCircle className="spin" size={22} /> Loading your account</div> : <>
-        {screen === 'home' && <HomeScreen account={account} payments={payments} bills={bills} ziteBill={ziteBill} ziteSyncing={ziteSyncing} displayName={displayName} setModal={setModal} showBalance={showBalance} setShowBalance={setShowBalance} navigate={navigate} />}
+        {screen === 'home' && <HomeScreen account={account} payments={payments} bills={bills} ziteData={ziteData} ziteSyncing={ziteSyncing} displayName={displayName} setModal={setModal} showBalance={showBalance} setShowBalance={setShowBalance} navigate={navigate} />}
         {screen === 'help' && <HelpScreen account={account} showToast={showToast} session={session} />}
-        {screen === 'statements' && <StatementsScreen payments={payments} showToast={showToast} />}
+        {screen === 'statements' && <StatementsScreen payments={payments} zitePayments={ziteData?.payments ?? []} showToast={showToast} />}
         {screen === 'account' && <AccountScreen displayName={displayName} email={session.user.email ?? ''} showToast={showToast} signOut={signOut} />}
       </>}
     </main>
@@ -161,14 +166,16 @@ function Welcome({ modal, setModal, navigate, showToast }: { modal: Modal; setMo
   return <div className="app-shell welcome-shell"><div className="welcome-orb welcome-orb--one" /><div className="welcome-orb welcome-orb--two" /><header className="welcome-header"><WatsanMark /></header><main className="welcome-main"><div className="logo-hero"><img src={logoPath} alt="Tsrukpe Tota WATSAN" /></div><p className="eyebrow eyebrow--light">TSRUKPE TOTA WATSAN</p><h1>Reliable water services, right at your fingertips.</h1><p className="welcome-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p><div className="welcome-actions"><button className="button button--light" onClick={() => setModal('register')}>Create an account <ArrowRight size={18} /></button><button className="button button--outline-light" onClick={() => setModal('signin')}>Sign in</button></div><div className="trust-row"><ShieldCheck size={16} /> Secure account access <span /> <Zap size={16} /> Always available</div></main><footer className="welcome-footer"><span>Serving Tsrukpe Tota and surrounding communities</span><span className="footer-dot" /></footer>{modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onPayment={async () => false} addAccount={async (accountNumber, address) => { const { error } = await supabase.from('service_accounts').insert({ account_number: accountNumber, service_address: address }); return !error; }} showToast={showToast} />} </div>;
 }
 
-function HomeScreen({ account, payments, bills, ziteBill, ziteSyncing, displayName, setModal, showBalance, setShowBalance, navigate }: { account: ServiceAccount | null; payments: Payment[]; bills: Bill[]; ziteBill: ZiteBill | null; ziteSyncing: boolean; displayName: string; setModal: (modal: Modal) => void; showBalance: boolean; setShowBalance: (show: boolean) => void; navigate: (screen: Screen) => void }) {
+function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayName, setModal, showBalance, setShowBalance, navigate }: { account: ServiceAccount | null; payments: Payment[]; bills: Bill[]; ziteData: ZiteCustomerData | null; ziteSyncing: boolean; displayName: string; setModal: (modal: Modal) => void; showBalance: boolean; setShowBalance: (show: boolean) => void; navigate: (screen: Screen) => void }) {
   const firstName = displayName.split(' ')[0];
   const latestBill = bills.find((bill) => bill.status === 'pending');
   const periodLabel = latestBill ? new Date(`${latestBill.billing_period}T12:00:00`).toLocaleDateString('en-GH', { month: 'long', year: 'numeric' }) : '';
-  const liveBalance = ziteBill?.balance != null ? ziteBill.balance : (account ? Number(account.balance) : 0);
-  const liveDueDate = ziteBill?.due_date ?? account?.due_date ?? '';
-  const liveStatus = ziteBill?.status ?? account?.status ?? 'active';
-  return <div className="screen-stack"><section className="greeting-row"><div><p className="eyebrow">OVERVIEW</p><h1>Good morning, {firstName}</h1><p className="muted">What would you like to do?</p></div><div className="avatar"><UserRound size={19} /></div></section>{account ? <><section className="balance-card"><div className="balance-top"><span>YOUR CURRENT BALANCE</span><button className="balance-refresh" onClick={() => setShowBalance(!showBalance)} aria-label="Show or hide balance"><RefreshCw size={16} /></button></div><strong>{showBalance ? `GHS ${liveBalance.toFixed(2)}` : 'GHS ••••'}</strong><p>{liveBalance > 0 && liveDueDate ? `Due ${new Date(`${liveDueDate}T12:00:00`).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })}` : 'No payment due'}</p><div className="balance-bottom"><span><span className="status-pip" /> Account {liveStatus}</span><button onClick={() => setModal('pay')} disabled={liveBalance <= 0}>Pay bill <ArrowRight size={15} /></button></div>{ziteBill && <div className="zite-sync">{ziteSyncing ? <LoaderCircle className="spin" size={13} /> : <ShieldCheck size={13} />} {ziteSyncing ? 'Syncing with billing office…' : 'Bill synced from WATSAN office'}</div>}</section><section className="account-strip"><div><span className="eyebrow">SERVICE ACCOUNT</span><strong>{account.account_number}</strong><p>{account.service_address}</p></div><button className="mini-icon" onClick={() => setModal('addAccount')} aria-label="Add account"><Plus size={19} /></button></section></> : <EmptyAccount onClick={() => setModal('addAccount')} />}{account && latestBill && <section className="bill-card"><div className="bill-top"><span className="eyebrow">CURRENT BILL</span><strong>{periodLabel}</strong></div><div className="bill-amount"><span>Billed this month</span><strong>GHS {Number(latestBill.amount).toFixed(2)}</strong></div><p className="bill-due">Due {new Date(`${latestBill.due_date}T12:00:00`).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })}</p><button className="button button--primary" onClick={() => setModal('pay')}>Pay this bill <ArrowRight size={16} /></button></section>}{account && <><section><SectionHeading title="Quick access" /><div className="quick-grid"><QuickAction icon={CreditCard} label="Pay bill" onClick={() => setModal('pay')} /><QuickAction icon={FileText} label="Statements" onClick={() => navigate('statements')} /><QuickAction icon={MessageSquare} label="Report an issue" onClick={() => navigate('help')} /><QuickAction icon={Headphones} label="Contact us" onClick={() => navigate('help')} /></div></section><section><SectionHeading title="Recent activity" action="View all" onClick={() => navigate('statements')} /><div className="activity-card">{payments.length ? payments.slice(0, 3).map((payment) => <ActivityRow key={payment.id} icon={Check} title="Bill payment successful" subtitle={`${new Date(payment.created_at).toLocaleDateString('en-GH')} · ${payment.method === 'mobile_money' ? 'Mobile Money' : 'Card'}`} amount={`GHS ${Number(payment.amount).toFixed(2)}`} />) : <div className="activity-empty"><Receipt size={20} /><span>Your payment activity will appear here.</span></div>}</div></section><div className="info-banner"><Lightbulb size={19} /><div><strong>Need help?</strong><p>Our support team is ready to assist you.</p></div><button onClick={() => navigate('help')} aria-label="Open help"><ChevronRight size={18} /></button></div></>}</div>;
+  const ziteCustomer = ziteData?.customer;
+  const liveBalance: number = ziteCustomer ? (toFieldValue(ziteCustomer, ['Balance', 'Amount Due', 'Outstanding', 'Current Balance'], 'number') as number | null) ?? (account ? Number(account.balance) : 0) : (account ? Number(account.balance) : 0);
+  const liveDueDate = ziteCustomer ? toFieldValue(ziteCustomer, ['Due Date', 'Payment Due', 'Due'], 'string') as string ?? account?.due_date ?? '' : account?.due_date ?? '';
+  const liveStatus = ziteCustomer ? (toFieldValue(ziteCustomer, ['Status', 'Account Status'], 'string') as string ?? account?.status ?? 'active') : account?.status ?? 'active';
+  const ziteReadings = ziteData?.water_readings ?? [];
+  return <div className="screen-stack"><section className="greeting-row"><div><p className="eyebrow">OVERVIEW</p><h1>Good morning, {firstName}</h1><p className="muted">What would you like to do?</p></div><div className="avatar"><UserRound size={19} /></div></section>{account ? <><section className="balance-card"><div className="balance-top"><span>YOUR CURRENT BALANCE</span><button className="balance-refresh" onClick={() => setShowBalance(!showBalance)} aria-label="Show or hide balance"><RefreshCw size={16} /></button></div><strong>{showBalance ? `GHS ${liveBalance.toFixed(2)}` : 'GHS ••••'}</strong><p>{liveBalance > 0 && liveDueDate ? `Due ${new Date(`${liveDueDate}T12:00:00`).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })}` : 'No payment due'}</p><div className="balance-bottom"><span><span className="status-pip" /> Account {liveStatus}</span><button onClick={() => setModal('pay')} disabled={liveBalance <= 0}>Pay bill <ArrowRight size={15} /></button></div>{ziteData && <div className="zite-sync">{ziteSyncing ? <LoaderCircle className="spin" size={13} /> : <ShieldCheck size={13} />} {ziteSyncing ? 'Syncing with billing office…' : 'Bill synced from WATSAN office'}</div>}</section><section className="account-strip"><div><span className="eyebrow">SERVICE ACCOUNT</span><strong>{account.account_number}</strong><p>{account.service_address}</p></div><button className="mini-icon" onClick={() => setModal('addAccount')} aria-label="Add account"><Plus size={19} /></button></section></> : <EmptyAccount onClick={() => setModal('addAccount')} />}{account && latestBill && <section className="bill-card"><div className="bill-top"><span className="eyebrow">CURRENT BILL</span><strong>{periodLabel}</strong></div><div className="bill-amount"><span>Billed this month</span><strong>GHS {Number(latestBill.amount).toFixed(2)}</strong></div><p className="bill-due">Due {new Date(`${latestBill.due_date}T12:00:00`).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })}</p><button className="button button--primary" onClick={() => setModal('pay')}>Pay this bill <ArrowRight size={16} /></button></section>}{account && ziteReadings.length > 0 && <section className="reading-card"><div className="reading-top"><SectionHeading title="Water readings" /></div><div className="reading-list">{ziteReadings.slice(0, 3).map((reading, i) => <div className="reading-row" key={i}><GaugeIcon /> <span>{toFieldValue(reading, ['Reading Date', 'Date', 'Meter Reading Date'], 'string') as string ?? '—'}</span><strong>{toFieldValue(reading, ['Reading', 'Meter Reading', 'Consumption', 'Usage'], 'string') as string ?? '—'}</strong></div>)}</div></section>}{account && <><section><SectionHeading title="Quick access" /><div className="quick-grid"><QuickAction icon={CreditCard} label="Pay bill" onClick={() => setModal('pay')} /><QuickAction icon={FileText} label="Statements" onClick={() => navigate('statements')} /><QuickAction icon={MessageSquare} label="Report an issue" onClick={() => navigate('help')} /><QuickAction icon={Headphones} label="Contact us" onClick={() => navigate('help')} /></div></section><section><SectionHeading title="Recent activity" action="View all" onClick={() => navigate('statements')} /><div className="activity-card">{payments.length ? payments.slice(0, 3).map((payment) => <ActivityRow key={payment.id} icon={Check} title="Bill payment successful" subtitle={`${new Date(payment.created_at).toLocaleDateString('en-GH')} · ${payment.method === 'mobile_money' ? 'Mobile Money' : 'Card'}`} amount={`GHS ${Number(payment.amount).toFixed(2)}`} />) : <div className="activity-empty"><Receipt size={20} /><span>Your payment activity will appear here.</span></div>}</div></section><div className="info-banner"><Lightbulb size={19} /><div><strong>Need help?</strong><p>Our support team is ready to assist you.</p></div><button onClick={() => navigate('help')} aria-label="Open help"><ChevronRight size={18} /></button></div></>}</div>;
 }
 
 function EmptyAccount({ onClick }: { onClick: () => void }) { return <section className="empty-account"><div className="empty-account-icon"><Plus size={23} /></div><div><strong>Add your service account</strong><p>Link your WATSAN account to view your bill and make payments.</p></div><button className="button button--primary" onClick={onClick}>Add account</button></section>; }
@@ -182,7 +189,9 @@ function HelpScreen({ account, showToast, session }: { account: ServiceAccount |
   return <div className="screen-stack"><PageIntro eyebrow="SUPPORT" title="How can we help?" copy="Our team is ready to help with your account, payments and water service." /><div className="support-card"><div className="support-icon"><Headphones size={26} /></div><div><strong>Speak to our team</strong><p>Monday — Friday, 8:00 AM to 5:00 PM</p></div><button className="circle-arrow" onClick={() => showToast('Call 055 000 1422 for support')}><ArrowRight size={17} /></button></div><div className="support-list"><HelpItem icon={MessageSquare} title="Report a water issue" copy="Tell us about a leak, low pressure or service interruption." onClick={() => setFormOpen(true)} /><HelpItem icon={FileText} title="Request a statement" copy="Get a clear record of your recent water payments." onClick={() => showToast('Statement request received')} /><HelpItem icon={CircleHelp} title="Frequently asked questions" copy="Find quick answers about bills, meters and payments." onClick={() => showToast('FAQ section coming soon')} /></div>{formOpen && <form className="issue-form" onSubmit={submitRequest}><div className="section-heading"><h2>Send a request</h2><button type="button" onClick={() => setFormOpen(false)} aria-label="Close"><X size={18} /></button></div><label>Request type<select value={requestType} onChange={(event) => setRequestType(event.target.value)}><option value="water_issue">Water issue</option><option value="billing">Billing question</option><option value="other">Other</option></select></label><label>How can we help?<textarea required minLength={5} maxLength={2000} value={description} onChange={(event) => setDescription(event.target.value)} placeholder="Describe the issue or question" /></label><button className="button button--primary" disabled={submitting}>{submitting ? <LoaderCircle className="spin" size={18} /> : <SendIcon />} {submitting ? 'Sending…' : 'Send request'}</button></form>}<div className="contact-panel"><p className="eyebrow">EMERGENCY WATER LINE</p><strong>055 000 1422</strong><p>For urgent leaks and supply concerns.</p></div><span className="sr-only">Signed in as {session.user.email}</span></div>;
 }
 
-function StatementsScreen({ payments, showToast }: { payments: Payment[]; showToast: (message: string) => void }) { return <div className="screen-stack"><div className="page-title-row"><PageIntro eyebrow="YOUR RECORDS" title="Statements" copy="Keep track of your bills and payments." /><button className="mini-icon mini-icon--gold" onClick={() => showToast('Statement request received')} aria-label="Request statement"><Plus size={20} /></button></div><div className="filter-row"><button className="filter-chip filter-chip--active">All payments</button><button className="filter-chip">Recent <ChevronDown size={14} /></button></div><div className="statement-list">{payments.length ? payments.map((payment) => <div className="statement-card" key={payment.id}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>Payment receipt</strong><span>{new Date(payment.created_at).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })} · {payment.receipt_number}</span><small><span className="paid-dot" /> {payment.status} · GHS {Number(payment.amount).toFixed(2)}</small></div><button className="download-button" onClick={() => showToast('Receipt download is being prepared')}><Download size={16} /></button></div>) : <div className="activity-empty"><Receipt size={20} /><span>No payments yet. Your receipts will appear here.</span></div>}</div><div className="empty-note"><Info size={17} /><span>Payment records are securely linked to your WATSAN account.</span></div></div>; }
+function StatementsScreen({ payments, zitePayments, showToast }: { payments: Payment[]; zitePayments: ZiteField[]; showToast: (message: string) => void }) {
+  const hasZitePayments = zitePayments.length > 0;
+  return <div className="screen-stack"><div className="page-title-row"><PageIntro eyebrow="YOUR RECORDS" title="Statements" copy="Keep track of your bills and payments." /><button className="mini-icon mini-icon--gold" onClick={() => showToast('Statement request received')} aria-label="Request statement"><Plus size={20} /></button></div><div className="filter-row"><button className="filter-chip filter-chip--active">All payments</button><button className="filter-chip">Recent <ChevronDown size={14} /></button></div><div className="statement-list">{payments.length ? payments.map((payment) => <div className="statement-card" key={payment.id}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>Payment receipt</strong><span>{new Date(payment.created_at).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })} · {payment.receipt_number}</span><small><span className="paid-dot" /> {payment.status} · GHS {Number(payment.amount).toFixed(2)}</small></div><button className="download-button" onClick={() => showToast('Receipt download is being prepared')}><Download size={16} /></button></div>) : <div className="activity-empty"><Receipt size={20} /><span>No payments yet. Your receipts will appear here.</span></div>}</div>{hasZitePayments && <><SectionHeading title="From billing office" /><div className="statement-list">{zitePayments.map((payment, i) => <div className="statement-card" key={`zite-${i}`}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>{toFieldValue(payment, ['Description', 'Type', 'Payment Type'], 'string') as string ?? 'Payment'}</strong><span>{toFieldValue(payment, ['Date', 'Payment Date'], 'string') as string ?? '—'}</span><small><span className="paid-dot" /> {toFieldValue(payment, ['Status', 'Payment Status'], 'string') as string ?? 'completed'} · GHS {Number(toFieldValue(payment, ['Amount', 'Payment Amount'], 'number') ?? 0).toFixed(2)}</small></div></div>)}</div></>}</div>; }
 
 function AccountScreen({ displayName, email, showToast, signOut }: { displayName: string; email: string; showToast: (message: string) => void; signOut: () => void }) { return <div className="screen-stack"><PageIntro eyebrow="PREFERENCES" title="Settings" copy="Manage your profile and service preferences." /><div className="profile-card"><div className="profile-avatar"><UserRound size={26} /></div><div><strong>{displayName}</strong><p>{email}</p></div><ChevronRight size={18} /></div><div className="settings-list"><SettingRow icon={UserRound} title="Personal details" onClick={() => showToast('Personal details are managed from your account')} /><SettingRow icon={Bell} title="Notifications" onClick={() => showToast('Notifications are on')} /><SettingRow icon={ShieldCheck} title="Security and privacy" onClick={() => showToast('Your account is secure')} /><SettingRow icon={Info} title="About WATSAN" onClick={() => showToast('Tsrukpe Tota WATSAN customer portal')} /></div><button className="signout-button" onClick={signOut}><LogOut size={18} /> Sign out</button></div>; }
 
@@ -211,5 +220,20 @@ function ActivityRow({ icon: Icon, title, subtitle, amount }: { icon: LucideIcon
 function HelpItem({ icon: Icon, title, copy, onClick }: { icon: LucideIcon; title: string; copy: string; onClick: () => void }) { return <button className="help-item" onClick={onClick}><span className="help-item-icon"><Icon size={19} /></span><span><strong>{title}</strong><small>{copy}</small></span><ChevronRight size={18} /></button>; }
 function SettingRow({ icon: Icon, title, onClick }: { icon: LucideIcon; title: string; onClick: () => void }) { return <button className="setting-row" onClick={onClick}><span><Icon size={18} /></span><strong>{title}</strong><ChevronRight size={17} /></button>; }
 function SendIcon() { return <ArrowRight size={18} />; }
+function GaugeIcon() { return <Gauge size={16} />; }
+
+function toFieldValue(record: ZiteField, candidates: string[], kind: 'string' | 'number'): string | number | null {
+  const keys = Object.keys(record);
+  for (const candidate of candidates) {
+    const match = keys.find((k) => k.toLowerCase() === candidate.toLowerCase());
+    if (match) {
+      const val = record[match];
+      if (val == null || val === '') continue;
+      if (kind === 'number') { const n = Number(val); if (Number.isFinite(n)) return n; }
+      else { return String(val); }
+    }
+  }
+  return null;
+}
 
 export default App;
