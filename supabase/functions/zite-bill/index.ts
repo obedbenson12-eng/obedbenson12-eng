@@ -139,13 +139,6 @@ async function fetchCustomerData(accountNumber: string): Promise<Response> {
   try {
     // 1. Find the customer record by account number
     const customersDb = DATABASES[0];
-    const customerRes = await ziteFetch(
-      `/bases/${customersDb.id}/tables/${customersDb.tableId}/records/list`,
-      { method: 'POST', body: JSON.stringify({ limit: 1, filter: { mode: 'insensitive' } }) },
-    ) as { records?: Array<{ id: string; fields: Record<string, unknown> }>; total?: number };
-
-    // We need to find by account number — use the first record's fields to discover the account field name
-    // First, get schema to find the account number field
     const dbDetail = await ziteFetch(`/bases/${customersDb.id}`) as {
       tables?: Array<{ id: string; name: string; fields?: Array<{ id: string; name: string; type: string }> }>;
     };
@@ -170,7 +163,6 @@ async function fetchCustomerData(accountNumber: string): Promise<Response> {
     }
 
     result.customer = filteredRes.records[0].fields;
-    const customerId = filteredRes.records[0].id;
 
     // 2. Fetch water readings — find the link field
     const readingsDb = DATABASES[1];
