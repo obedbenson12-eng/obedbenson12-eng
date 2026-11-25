@@ -51,7 +51,7 @@ type AuthForm = { meterNumber: string; code: string };
 
 const logoPath = `${import.meta.env.BASE_URL}watsan-logo.png`;
 const initialAuthForm: AuthForm = { meterNumber: '', code: '' };
-type PortalSession = { meterNumber: string; token: string; expiresAt: string; customer: { fullName: string; meterNumber: string } };
+type PortalSession = { meterNumber: string; token: string; expiresAt: string; isDemo?: boolean; customer: { fullName: string; meterNumber: string } };
 
 function WatsanMark({ compact = false }: { compact?: boolean }) {
   return <div className={`brand-mark ${compact ? 'brand-mark--compact' : ''}`} aria-label="Tsrukpe Tota Water and Sanitation"><img src={logoPath} alt="Tsrukpe Tota Water and Sanitation logo" /><div><strong>TSRUKPE TOTA</strong><small>WATER &amp; SANITATION</small></div></div>;
@@ -81,7 +81,16 @@ function App() {
   const [appError, setAppError] = useState('');
 
   useEffect(() => {
-    if (session) void loadCustomerData(session);
+    if (!session) return;
+    if (session.isDemo) {
+      setAccount({ id: 'DEMO-001', account_number: 'DEMO-001', service_address: 'Tsrukpe-Tota (Demo Account)', balance: 25, due_date: '2026-11-30', status: 'Demo' });
+      setBills([{ id: 'demo-bill-1', billing_period: '2026-11', amount: 25, due_date: '2026-11-30', status: 'pending' }]);
+      setPayments([]);
+      setZiteData(null);
+      setAppError('');
+      return;
+    }
+    void loadCustomerData(session);
   }, [session?.meterNumber, session?.token]);
 
   useEffect(() => {
@@ -163,7 +172,7 @@ function App() {
     setScreen('home');
   };
   const signOut = async () => {
-    if (session) {
+    if (session && !session.isDemo) {
       try { await logoutCustomerPortal({ meterNumber: session.meterNumber, sessionToken: session.token }); } catch (error) { console.warn('Session revocation failed', error); }
     }
     sessionStorage.removeItem('watsan_customer_session');
@@ -172,7 +181,7 @@ function App() {
   };
 
   if (authLoading) return <div className="loading-shell"><LoaderCircle className="spin" size={30} /><span>Opening your WATSAN account…</span></div>;
-  if (!session) return <Welcome modal={modal} setModal={setModal} navigate={navigate} showToast={showToast} onLogin={handleLogin} />;
+  if (!session) return <Welcome modal={modal} setModal={setModal} navigate={navigate} showToast={showToast} onLogin={handleLogin} onDemo={() => handleLogin({ meterNumber: 'DEMO-001', token: 'DEMO-ONLY', expiresAt: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(), isDemo: true, customer: { fullName: 'Demo Customer', meterNumber: 'DEMO-001' } })} />;
 
   const menuItems: MenuItem[] = [
     { label: 'Home', icon: Home, screen: 'home' },
@@ -197,7 +206,7 @@ function App() {
     <nav className="bottom-nav"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account'} onClick={() => navigate('account')} /></nav>
     {drawerOpen && <Drawer close={() => setDrawerOpen(false)} items={menuItems} navigate={navigate} displayName={displayName} signOut={signOut} />}
     {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={handleLogin} onPayment={async () => {
-      if (!session || !account || account.balance <= 0) return false;
+      if (!session || session.isDemo || !account || account.balance <= 0) { showToast('Payments are disabled in demo mode'); return false; }
       const result = await initializeCustomerPayment({ meterNumber: session.meterNumber, sessionToken: session.token, amount: account.balance });
       if (!result.success || !result.authorizationUrl) { showToast(result.error || 'Payment could not be started'); return false; }
       window.location.assign(result.authorizationUrl);
@@ -207,8 +216,8 @@ function App() {
   </div>;
 }
 
-function Welcome({ modal, setModal, navigate, showToast, onLogin }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void; onLogin: (session: PortalSession) => void }) {
-  return <div className="app-shell welcome-shell"><div className="welcome-orb welcome-orb--one" /><div className="welcome-orb welcome-orb--two" /><header className="welcome-header"><WatsanMark /></header><main className="welcome-main"><div className="logo-hero"><img src={logoPath} alt="Tsrukpe Tota WATSAN" /></div><p className="eyebrow eyebrow--light">TSRUKPE TOTA WATSAN</p><h1>Reliable water services, right at your fingertips.</h1><p className="welcome-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p><div className="welcome-actions"><button className="button button--light" onClick={() => setModal('signin')}>Access my account <ArrowRight size={18} /></button></div><div className="trust-row"><ShieldCheck size={16} /> Meter number + OTP verification <span /> <Zap size={16} /> Always available</div></main><footer className="welcome-footer"><span>Serving Tsrukpe Tota and surrounding communities</span><span className="footer-dot" /></footer>{modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}</div>;
+function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void; onLogin: (session: PortalSession) => void; onDemo: () => void }) {
+  return <div className="app-shell welcome-shell"><div className="welcome-orb welcome-orb--one" /><div className="welcome-orb welcome-orb--two" /><header className="welcome-header"><WatsanMark /></header><main className="welcome-main"><div className="logo-hero"><img src={logoPath} alt="Tsrukpe Tota WATSAN" /></div><p className="eyebrow eyebrow--light">TSRUKPE TOTA WATSAN</p><h1>Reliable water services, right at your fingertips.</h1><p className="welcome-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p><div className="welcome-actions"><button className="button button--light" onClick={() => setModal('signin')}>Access my account <ArrowRight size={18} /></button><button className="text-button" type="button" onClick={onDemo}>Enter demo portal (testing only)</button></div><div className="trust-row"><ShieldCheck size={16} /> Meter number + OTP verification <span /> <Zap size={16} /> Always available</div></main><footer className="welcome-footer"><span>Serving Tsrukpe Tota and surrounding communities</span><span className="footer-dot" /></footer>{modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}</div>;
 }
 
 function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayName, setModal, showBalance, setShowBalance, navigate }: { account: ServiceAccount | null; payments: Payment[]; bills: Bill[]; ziteData: ZiteCustomerData | null; ziteSyncing: boolean; displayName: string; setModal: (modal: Modal) => void; showBalance: boolean; setShowBalance: (show: boolean) => void; navigate: (screen: Screen) => void }) {
