@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import type { Session } from '@supabase/supabase-js';
+import { sendCustomerOtp, verifyCustomerOtp, getCustomerPortalData, logoutCustomerPortal, initializeCustomerPayment, verifyCustomerPayment } from '@/lib/zite';
 import {
   ArrowRight,
   Bell,
@@ -31,10 +31,10 @@ import {
   X,
   Zap,
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+
 
 type Screen = 'home' | 'help' | 'statements' | 'account';
-type Modal = 'signin' | 'register' | 'pay' | 'success' | 'addAccount' | null;
+type Modal = 'signin' | 'pay' | 'success' | null;
 type ServiceAccount = { id: string; account_number: string; service_address: string; balance: number; due_date: string; status: string };
 type Payment = { id: string; amount: number; method: string; status: string; receipt_number: string; created_at: string };
 type Bill = { id: string; billing_period: string; amount: number; due_date: string; status: string };
@@ -47,18 +47,26 @@ type ZiteCustomerData = {
 };
 type MenuItem = { label: string; icon: LucideIcon; screen?: Screen; action?: () => void };
 
-type AuthForm = { name: string; email: string; password: string; accountNumber: string; address: string };
+type AuthForm = { meterNumber: string; code: string };
 
 const logoPath = '/watsan-logo.png';
-const initialAuthForm: AuthForm = { name: '', email: '', password: '', accountNumber: '', address: '' };
+const initialAuthForm: AuthForm = { meterNumber: '', code: '' };
+type PortalSession = { meterNumber: string; token: string; expiresAt: string; customer: { fullName: string; meterNumber: string } };
 
 function WatsanMark({ compact = false }: { compact?: boolean }) {
   return <div className={`brand-mark ${compact ? 'brand-mark--compact' : ''}`} aria-label="Tsrukpe Tota Water and Sanitation"><img src={logoPath} alt="Tsrukpe Tota Water and Sanitation logo" /><div><strong>TSRUKPE TOTA</strong><small>WATER &amp; SANITATION</small></div></div>;
 }
 
 function App() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [session, setSession] = useState<PortalSession | null>(() => {
+    try {
+      const saved = sessionStorage.getItem('watsan_customer_session');
+      if (!saved) return null;
+      const parsed = JSON.parse(saved) as PortalSession;
+      return new Date(parsed.expiresAt).getTime() > Date.now() ? parsed : null;
+    } catch { return null; }
+  });
+  const [authLoading, setAuthLoading] = useState(false);
   const [screen, setScreen] = useState<Screen>('home');
   const [modal, setModal] = useState<Modal>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -73,67 +81,98 @@ function App() {
   const [appError, setAppError] = useState('');
 
   useEffect(() => {
-    let mounted = true;
-    supabase.auth.getSession().then(({ data }) => {
-      if (mounted) { setSession(data.session); setAuthLoading(false); }
-    });
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
-      setAuthLoading(false);
-      (async () => { if (nextSession) await loadCustomerData(nextSession.user.id); })();
-    });
-    return () => { mounted = false; listener.subscription.unsubscribe(); };
-  }, []);
+    if (session) void loadCustomerData(session);
+  }, [session?.meterNumber, session?.token]);
 
   useEffect(() => {
-    if (session) loadCustomerData(session.user.id);
-  }, [session]);
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get('reference') || params.get('trxref');
+    if (!reference || !session) return;
+    void (async () => {
+      try {
+        const result = await verifyCustomerPayment({ meterNumber: session.meterNumber, sessionToken: session.token, reference });
+        if (result.verified) {
+          showToast(result.status === 'already_recorded' ? 'Payment already recorded' : 'Payment confirmed successfully');
+          await loadCustomerData(session);
+        } else {
+          showToast('Payment is not yet confirmed. Please refresh in a moment.');
+        }
+      } catch {
+        showToast('We could not verify the payment yet. Please contact WATSAN before paying again.');
+      } finally {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    })();
+  }, [session?.meterNumber, session?.token]);
 
-  const loadCustomerData = async (userId: string) => {
+  const loadCustomerData = async (activeSession: PortalSession) => {
     setDataLoading(true);
-    setAppError('');
-    const [accountResult, paymentsResult, billsResult] = await Promise.all([
-      supabase.from('service_accounts').select('id, account_number, service_address, balance, due_date, status').eq('user_id', userId).order('created_at', { ascending: true }).limit(1).maybeSingle(),
-      supabase.from('payments').select('id, amount, method, status, receipt_number, created_at').eq('user_id', userId).order('created_at', { ascending: false }).limit(10),
-      supabase.from('bills').select('id, billing_period, amount, due_date, status').order('created_at', { ascending: false }).limit(12),
-    ]);
-    if (accountResult.error || paymentsResult.error) {
-      console.error('customer data load failed', accountResult.error ?? paymentsResult.error);
-      setAppError('We could not load your account right now. Please try again.');
-    } else {
-      setAccount(accountResult.data);
-      setPayments(paymentsResult.data ?? []);
-      setBills(billsResult.data ?? []);
-      if (accountResult.data?.account_number) {
-        syncZiteData(accountResult.data.account_number);
-      }
-    }
-    setDataLoading(false);
-  };
-
-  const syncZiteData = async (accountNumber: string) => {
     setZiteSyncing(true);
+    setAppError('');
     try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/zite-bill?action=customer&account_number=${encodeURIComponent(accountNumber)}`;
-      const res = await fetch(apiUrl, {
-        headers: { 'Content-Type': 'application/json' },
+      const data = await getCustomerPortalData({ meterNumber: activeSession.meterNumber, sessionToken: activeSession.token });
+      const readings = data.water_readings ?? [];
+      const outstanding = readings.reduce((sum, item) =>
+        sum + Math.max(0, Number(item.amountDue ?? 0) - Number(item.amountPaid ?? 0)), 0);
+      const latestReading = [...readings].sort((a, b) =>
+        String(b.readingMonth ?? '').localeCompare(String(a.readingMonth ?? '')))[0];
+      setAccount({
+        id: activeSession.meterNumber,
+        account_number: activeSession.meterNumber,
+        service_address: String(data.customer.location ?? 'Tsrukpe-Tota'),
+        balance: Math.round(outstanding * 100) / 100,
+        due_date: String(latestReading?.readingMonth ?? ''),
+        status: String(data.customer.status ?? 'Active'),
       });
-      if (res.ok) {
-        const body = await res.json() as ZiteCustomerData;
-        if (body && !body.error) setZiteData(body);
-      }
-    } catch (err) {
-      console.error('zite data sync failed', err);
+      setBills(readings.map((item, index) => ({
+        id: String(item.id ?? index),
+        billing_period: String(item.readingMonth ?? ''),
+        amount: Number(item.amountDue ?? 0),
+        due_date: String(item.readingMonth ?? ''),
+        status: String(item.billStatus ?? 'Unpaid'),
+      })).sort((a, b) => b.billing_period.localeCompare(a.billing_period)));
+      setPayments((data.payments ?? []).map((item, index) => ({
+        id: String(item.id ?? index),
+        amount: Number(item.amountPaid ?? 0),
+        method: String(item.paymentMethod ?? 'Mobile Money').toLowerCase().includes('mobile') ? 'mobile_money' : 'card',
+        status: String(item.status ?? 'Confirmed'),
+        receipt_number: String(item.receiptNumber ?? ''),
+        created_at: String(item.paymentTimestamp ?? item.paymentDate ?? ''),
+      })));
+      setZiteData({
+        customer: data.customer as ZiteField,
+        water_readings: readings as ZiteField[],
+        payments: (data.payments ?? []) as ZiteField[],
+        error: null,
+      });
+    } catch (error) {
+      console.error('Zite customer data load failed', error);
+      setAppError(error instanceof Error ? error.message : 'We could not load your WATSAN account. Please try again.');
+    } finally {
+      setDataLoading(false);
+      setZiteSyncing(false);
     }
-    setZiteSyncing(false);
   };
 
   const navigate = (next: Screen) => { setScreen(next); setDrawerOpen(false); };
   const showToast = (message: string) => { setToast(message); window.setTimeout(() => setToast(''), 2800); };
-  const signOut = async () => { await supabase.auth.signOut(); setAccount(null); setPayments([]); setScreen('home'); showToast('You have been signed out'); };
+  const handleLogin = (nextSession: PortalSession) => {
+    sessionStorage.setItem('watsan_customer_session', JSON.stringify(nextSession));
+    setSession(nextSession);
+    setModal(null);
+    setScreen('home');
+  };
+  const signOut = async () => {
+    if (session) {
+      try { await logoutCustomerPortal({ meterNumber: session.meterNumber, sessionToken: session.token }); } catch (error) { console.warn('Session revocation failed', error); }
+    }
+    sessionStorage.removeItem('watsan_customer_session');
+    setSession(null); setAccount(null); setPayments([]); setBills([]); setZiteData(null); setScreen('home');
+    showToast('You have been signed out');
+  };
 
   if (authLoading) return <div className="loading-shell"><LoaderCircle className="spin" size={30} /><span>Opening your WATSAN account…</span></div>;
-  if (!session) return <Welcome modal={modal} setModal={setModal} navigate={navigate} showToast={showToast} />;
+  if (!session) return <Welcome modal={modal} setModal={setModal} navigate={navigate} showToast={showToast} onLogin={handleLogin} />;
 
   const menuItems: MenuItem[] = [
     { label: 'Home', icon: Home, screen: 'home' },
@@ -142,28 +181,34 @@ function App() {
     { label: 'My complaints', icon: MessageSquare, screen: 'help' },
     { label: 'Notifications', icon: Bell, action: () => showToast('You are all caught up') },
   ];
-  const displayName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Customer';
+  const displayName = session.customer.fullName || 'WATSAN Customer';
 
   return <div className="app-shell portal-shell">
     <header className="topbar"><button className="icon-button icon-button--top" onClick={() => setDrawerOpen(true)} aria-label="Open menu"><Menu size={22} /></button><WatsanMark compact /><button className="icon-button icon-button--top" onClick={() => showToast('No new notifications')} aria-label="Notifications"><Bell size={19} /><span className="notification-dot" /></button></header>
     <main className="portal-content">
-      {appError && <div className="error-banner"><Info size={17} /><span>{appError}</span><button onClick={() => loadCustomerData(session.user.id)}>Retry</button></div>}
+      {appError && <div className="error-banner"><Info size={17} /><span>{appError}</span><button onClick={() => void loadCustomerData(session)}>Retry</button></div>}
       {dataLoading && !account ? <div className="loading-card"><LoaderCircle className="spin" size={22} /> Loading your account</div> : <>
         {screen === 'home' && <HomeScreen account={account} payments={payments} bills={bills} ziteData={ziteData} ziteSyncing={ziteSyncing} displayName={displayName} setModal={setModal} showBalance={showBalance} setShowBalance={setShowBalance} navigate={navigate} />}
         {screen === 'help' && <HelpScreen account={account} showToast={showToast} session={session} />}
         {screen === 'statements' && <StatementsScreen payments={payments} zitePayments={ziteData?.payments ?? []} showToast={showToast} />}
-        {screen === 'account' && <AccountScreen displayName={displayName} email={session.user.email ?? ''} showToast={showToast} signOut={signOut} />}
+        {screen === 'account' && <AccountScreen displayName={displayName} email={session.meterNumber} showToast={showToast} signOut={signOut} />}
       </>}
     </main>
     <nav className="bottom-nav"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account'} onClick={() => navigate('account')} /></nav>
     {drawerOpen && <Drawer close={() => setDrawerOpen(false)} items={menuItems} navigate={navigate} displayName={displayName} signOut={signOut} />}
-    {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} onPayment={async (method) => { if (!account) return false; const { data, error } = await supabase.rpc('pay_service_account', { p_service_account_id: account.id, p_method: method }); if (error || !data?.[0]) { console.error('payment failed', error); return false; } await loadCustomerData(session.user.id); return true; }} addAccount={async (accountNumber, address) => { const { data, error } = await supabase.from('service_accounts').insert({ account_number: accountNumber, service_address: address }).select('id, account_number, service_address, balance, due_date, status').maybeSingle(); if (error || !data) { console.error('account add failed', error); return false; } setAccount(data); return true; }} />}
+    {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={handleLogin} onPayment={async () => {
+      if (!session || !account || account.balance <= 0) return false;
+      const result = await initializeCustomerPayment({ meterNumber: session.meterNumber, sessionToken: session.token, amount: account.balance });
+      if (!result.success || !result.authorizationUrl) { showToast(result.error || 'Payment could not be started'); return false; }
+      window.location.assign(result.authorizationUrl);
+      return true;
+    }} />}
     {toast && <div className="toast"><Check size={17} /> {toast}</div>}
   </div>;
 }
 
-function Welcome({ modal, setModal, navigate, showToast }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void }) {
-  return <div className="app-shell welcome-shell"><div className="welcome-orb welcome-orb--one" /><div className="welcome-orb welcome-orb--two" /><header className="welcome-header"><WatsanMark /></header><main className="welcome-main"><div className="logo-hero"><img src={logoPath} alt="Tsrukpe Tota WATSAN" /></div><p className="eyebrow eyebrow--light">TSRUKPE TOTA WATSAN</p><h1>Reliable water services, right at your fingertips.</h1><p className="welcome-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p><div className="welcome-actions"><button className="button button--light" onClick={() => setModal('register')}>Create an account <ArrowRight size={18} /></button><button className="button button--outline-light" onClick={() => setModal('signin')}>Sign in</button></div><div className="trust-row"><ShieldCheck size={16} /> Secure account access <span /> <Zap size={16} /> Always available</div></main><footer className="welcome-footer"><span>Serving Tsrukpe Tota and surrounding communities</span><span className="footer-dot" /></footer>{modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onPayment={async () => false} addAccount={async (accountNumber, address) => { const { error } = await supabase.from('service_accounts').insert({ account_number: accountNumber, service_address: address }); return !error; }} showToast={showToast} />} </div>;
+function Welcome({ modal, setModal, navigate, showToast, onLogin }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void; onLogin: (session: PortalSession) => void }) {
+  return <div className="app-shell welcome-shell"><div className="welcome-orb welcome-orb--one" /><div className="welcome-orb welcome-orb--two" /><header className="welcome-header"><WatsanMark /></header><main className="welcome-main"><div className="logo-hero"><img src={logoPath} alt="Tsrukpe Tota WATSAN" /></div><p className="eyebrow eyebrow--light">TSRUKPE TOTA WATSAN</p><h1>Reliable water services, right at your fingertips.</h1><p className="welcome-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p><div className="welcome-actions"><button className="button button--light" onClick={() => setModal('signin')}>Access my account <ArrowRight size={18} /></button></div><div className="trust-row"><ShieldCheck size={16} /> Meter number + OTP verification <span /> <Zap size={16} /> Always available</div></main><footer className="welcome-footer"><span>Serving Tsrukpe Tota and surrounding communities</span><span className="footer-dot" /></footer>{modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}</div>;
 }
 
 function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayName, setModal, showBalance, setShowBalance, navigate }: { account: ServiceAccount | null; payments: Payment[]; bills: Bill[]; ziteData: ZiteCustomerData | null; ziteSyncing: boolean; displayName: string; setModal: (modal: Modal) => void; showBalance: boolean; setShowBalance: (show: boolean) => void; navigate: (screen: Screen) => void }) {
