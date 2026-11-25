@@ -1,0 +1,29 @@
+name: Validate WATSAN Customer Portal
+
+on:
+  push:
+    branches:
+      - watsan-zite-customer-portal
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build customer portal
+        run: npm run build
