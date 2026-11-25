@@ -59,7 +59,7 @@ export type PortalData = {
   payments: PortalPayment[];
 };
 
-export async function sendCustomerOtp(input: { meterNumber: string }) {
+export async function sendCustomerOtp(input: { meterNumber: string; phoneNumber: string }) {
   return callZite<{ success: boolean; message: string; maskedPhone?: string }>('sendCustomerOtp', input);
 }
 
