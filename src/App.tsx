@@ -49,7 +49,7 @@ type MenuItem = { label: string; icon: LucideIcon; screen?: Screen; action?: () 
 
 type AuthForm = { meterNumber: string; code: string };
 
-const logoPath = '/watsan-logo.png';
+const logoPath = `${import.meta.env.BASE_URL}watsan-logo.png`;
 const initialAuthForm: AuthForm = { meterNumber: '', code: '' };
 type PortalSession = { meterNumber: string; token: string; expiresAt: string; customer: { fullName: string; meterNumber: string } };
 
