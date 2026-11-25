@@ -140,7 +140,7 @@ function App() {
         created_at: String(item.paymentTimestamp ?? item.paymentDate ?? ''),
       })));
       setZiteData({
-        customer: data.customer as ZiteField,
+        customer: data.customer as unknown as ZiteField,
         water_readings: readings as ZiteField[],
         payments: (data.payments ?? []) as ZiteField[],
         error: null,
