@@ -142,7 +142,7 @@ function App() {
         balance: Math.max(0, Number(item.amountDue ?? 0) - Number(item.amountPaid ?? 0)),
         previous_reading: Number(item.previousReading ?? 0),
         current_reading: Number(item.currentReading ?? 0),
-        units_consumed: Number(item.unitsConsumed ?? 0),
+        units_consumed: Number(item.unitsConsumed ?? (Number(item.currentReading ?? 0) - Number(item.previousReading ?? 0))),
         rate_per_unit: Number(item.ratePerUnit ?? 5),
         status: String(item.billStatus ?? 'Unpaid').trim().toLowerCase(),
         notes: String(item.notes ?? ''),
