@@ -3093,3 +3093,101 @@ img, svg, video, canvas { max-width: 100%; }
     padding-bottom: 14px !important;
   }
 }
+
+
+/* Bills & payments — compact statement cards with a clear billing hierarchy. */
+.portal-shell .bill-history-list { gap: 9px !important; }
+.portal-shell .bill-history-card {
+  padding: 12px 13px !important;
+  gap: 10px !important;
+  border-radius: 13px !important;
+  border: 1px solid #e1e8ef !important;
+  box-shadow: 0 2px 7px rgba(20, 48, 76, .035) !important;
+}
+.portal-shell .bill-history-top { align-items: center !important; gap: 8px !important; }
+.portal-shell .bill-history-top strong { font-size: 13px !important; line-height: 1.25 !important; }
+.portal-shell .bill-history-top div span { font-size: 9.5px !important; margin-top: 2px !important; }
+.portal-shell .bill-history-top .bill-status {
+  padding: 4px 7px !important;
+  font-size: 8px !important;
+  line-height: 1.2 !important;
+}
+.portal-shell .bill-status--partial { background: #fff5df !important; color: #93651b !important; }
+.portal-shell .bill-reading-grid { gap: 6px !important; }
+.portal-shell .bill-reading-grid div {
+  padding: 8px 7px !important;
+  border-radius: 9px !important;
+}
+.portal-shell .bill-reading-grid small { font-size: 8px !important; line-height: 1.25 !important; }
+.portal-shell .bill-reading-grid b { font-size: 13px !important; margin-top: 4px !important; }
+.portal-shell .bill-history-total {
+  padding-top: 8px !important;
+  gap: 4px !important;
+}
+.portal-shell .bill-history-total span { font-size: 9px !important; line-height: 1.35 !important; }
+.portal-shell .bill-history-total strong { font-size: 11.5px !important; padding-top: 2px !important; }
+.portal-shell .bill-history-note {
+  padding: 7px 9px !important;
+  border-radius: 8px !important;
+  font-size: 8.5px !important;
+  line-height: 1.4 !important;
+}
+.portal-shell .statement-list { gap: 7px !important; }
+.portal-shell .statement-card {
+  padding: 10px 12px !important;
+  gap: 9px !important;
+  border-radius: 12px !important;
+}
+.portal-shell .statement-icon {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 9px !important;
+}
+.portal-shell .statement-icon svg { width: 16px !important; height: 16px !important; }
+.portal-shell .statement-details strong { font-size: 10px !important; }
+.portal-shell .statement-details span { font-size: 9px !important; margin: 2px 0 4px !important; }
+.portal-shell .statement-details small { font-size: 8.5px !important; }
+.portal-shell .statement-card .download-button {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+}
+.portal-shell .screen-stack > section { margin-bottom: 16px; }
+.portal-shell .screen-stack .section-heading { margin-bottom: 9px !important; }
+.portal-shell .screen-stack .section-heading h2 { font-size: 14px !important; }
+.portal-shell .screen-stack .activity-empty {
+  min-height: 48px !important;
+  padding: 13px 12px !important;
+  gap: 8px !important;
+  font-size: 9.5px !important;
+  line-height: 1.45 !important;
+}
+.portal-shell .screen-stack .activity-empty svg {
+  width: 17px !important;
+  height: 17px !important;
+  flex: 0 0 17px !important;
+}
+.portal-shell.theme-dark .bill-history-card,
+.portal-shell.theme-dark .statement-card {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+}
+.portal-shell.theme-dark .bill-history-top strong,
+.portal-shell.theme-dark .bill-history-total strong,
+.portal-shell.theme-dark .statement-details strong { color: var(--card-text) !important; }
+.portal-shell.theme-dark .bill-history-top div span,
+.portal-shell.theme-dark .bill-history-total span,
+.portal-shell.theme-dark .statement-details span,
+.portal-shell.theme-dark .statement-details small { color: var(--card-muted) !important; }
+.portal-shell.theme-dark .bill-history-note {
+  background: #3b3022 !important;
+  color: #e9c99b !important;
+}
+@media (max-width: 380px) {
+  .portal-shell .bill-history-card { padding: 10px !important; gap: 9px !important; }
+  .portal-shell .bill-history-top strong { font-size: 12px !important; }
+  .portal-shell .bill-reading-grid { gap: 5px !important; }
+  .portal-shell .bill-reading-grid div { padding: 7px 5px !important; }
+  .portal-shell .bill-reading-grid small { font-size: 7.5px !important; }
+  .portal-shell .bill-reading-grid b { font-size: 12px !important; }
+}
