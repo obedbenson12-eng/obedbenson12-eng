@@ -4356,3 +4356,20 @@ img, svg, video, canvas { max-width: 100%; }
   color:#075b91!important;
   background:#fff!important;
 }
+
+/* Match bottom navigation to the exact WATSAN top-header blue */
+.portal-shell .bottom-nav,
+.portal-shell.theme-dark .bottom-nav {
+  background:#0d3f87!important;
+  border-top-color:rgba(255,255,255,.16)!important;
+  box-shadow:0 -8px 26px rgba(13,63,135,.22)!important;
+}
+.portal-shell .bottom-nav .nav-button,
+.portal-shell.theme-dark .bottom-nav .nav-button {
+  color:rgba(255,255,255,.86)!important;
+}
+.portal-shell .bottom-nav .nav-button--active,
+.portal-shell.theme-dark .bottom-nav .nav-button--active {
+  color:#0d3f87!important;
+  background:#fff!important;
+}
