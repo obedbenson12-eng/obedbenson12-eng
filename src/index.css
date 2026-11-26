@@ -4392,3 +4392,29 @@ img, svg, video, canvas { max-width: 100%; }
 .welcome-shell .welcome-orb--two {
   background: rgba(74, 157, 226, .22) !important;
 }
+
+
+/* Customer sign-in backdrop: match the deep royal-blue GWCL reference style
+   while keeping the existing compact white login dialog readable. */
+.portal-shell .modal-backdrop:has(.modal-card--auth) {
+  background:
+    radial-gradient(ellipse at 50% 24%, rgba(74, 135, 235, .24) 0%, transparent 43%),
+    radial-gradient(ellipse at 8% 92%, rgba(7, 31, 105, .34) 0%, transparent 48%),
+    linear-gradient(155deg, #123f9b 0%, #103987 54%, #0b2f78 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.portal-shell .modal-backdrop:has(.modal-card--auth)::before {
+  content: "";
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  bottom: -105px;
+  height: 190px;
+  border-radius: 50% 50% 0 0 / 42% 42% 0 0;
+  background: rgba(255,255,255,.96);
+  pointer-events: none;
+}
+.portal-shell .modal-backdrop:has(.modal-card--auth) .modal-card--auth {
+  z-index: 1;
+}
