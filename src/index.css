@@ -1857,3 +1857,29 @@ img, svg, video, canvas { max-width: 100%; }
     gap: 4px !important;
   }
 }
+
+
+/* Keep the mobile bottom navigation centered and full-width in portrait and landscape.
+   Only constrain/center it on wide desktop screens. */
+@media (max-width: 1023px) {
+  .portal-shell .bottom-nav {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    transform: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+@media (min-width: 1024px) {
+  .portal-shell .bottom-nav {
+    left: 50% !important;
+    right: auto !important;
+    width: min(100%, 1180px) !important;
+    max-width: 1180px !important;
+    transform: translateX(-50%) !important;
+    box-sizing: border-box !important;
+  }
+}
