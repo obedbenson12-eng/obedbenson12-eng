@@ -19,6 +19,7 @@ import {
   Lightbulb,
   LoaderCircle,
   LogOut,
+  Mail,
   Menu,
   MessageSquare,
   Plus,
