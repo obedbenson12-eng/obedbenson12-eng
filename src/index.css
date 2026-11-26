@@ -4122,3 +4122,131 @@ img, svg, video, canvas { max-width: 100%; }
   .portal-shell .modal-card--auth form h2 { font-size: 23px !important; }
   .portal-shell .modal-card--auth form .modal-copy { margin-bottom: 20px !important; }
 }
+
+
+/* Final compact customer login popup */
+.portal-shell .modal-backdrop:has(.modal-card--auth) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  background: rgba(8, 24, 38, .58) !important;
+  backdrop-filter: blur(3px) !important;
+  -webkit-backdrop-filter: blur(3px) !important;
+}
+.portal-shell .modal-card--auth {
+  display: block !important;
+  position: relative !important;
+  width: min(100%, 370px) !important;
+  min-height: 0 !important;
+  max-height: min(86vh, 570px) !important;
+  margin: auto !important;
+  padding: 25px 27px 26px !important;
+  overflow-y: auto !important;
+  border: 1px solid #e3eaf0 !important;
+  border-radius: 13px !important;
+  background: #fff !important;
+  box-shadow: 0 18px 55px rgba(4, 28, 48, .24) !important;
+  animation: auth-popup-in .18s ease-out both !important;
+}
+.portal-shell .modal-card--auth .auth-brand-panel { display: none !important; }
+.portal-shell .modal-card--auth > .modal-brand {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 0 22px !important;
+  padding: 0 0 15px !important;
+  border-bottom: 1px solid #edf1f4 !important;
+}
+.portal-shell .modal-card--auth > .modal-brand .brand-mark {
+  display: flex !important;
+  gap: 9px !important;
+}
+.portal-shell .modal-card--auth > .modal-brand .brand-mark img {
+  width: 39px !important; height: 39px !important;
+  object-fit: contain !important;
+}
+.portal-shell .modal-card--auth > .modal-brand .brand-mark strong {
+  color: #123b59 !important; font-size: 12px !important; letter-spacing: .07em !important;
+}
+.portal-shell .modal-card--auth > .modal-brand .brand-mark small {
+  color: #668093 !important; font-size: 8px !important; letter-spacing: .1em !important;
+}
+.portal-shell .modal-card--auth > .modal-close {
+  top: 19px !important; right: 19px !important;
+  width: 29px !important; height: 29px !important;
+  border: 1px solid #e6edf2 !important; border-radius: 50% !important;
+  background: #f8fafb !important; color: #62788a !important;
+}
+.portal-shell .modal-card--auth > form {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+.portal-shell .modal-card--auth form > .eyebrow {
+  margin: 0 0 7px !important;
+  color: #08749b !important; font-size: 9px !important;
+  font-weight: 800 !important; letter-spacing: .13em !important;
+}
+.portal-shell .modal-card--auth form h2 {
+  margin: 0 0 8px !important;
+  color: #18374e !important; font-size: 22px !important;
+  line-height: 1.25 !important; font-weight: 700 !important;
+  letter-spacing: -.025em !important;
+}
+.portal-shell .modal-card--auth form .modal-copy {
+  max-width: 100% !important;
+  margin: 0 0 19px !important;
+  color: #6c7f8d !important; font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+.portal-shell .modal-card--auth form label {
+  display: flex !important; flex-direction: column !important;
+  gap: 7px !important; margin: 0 0 15px !important;
+  color: #354e60 !important; font-size: 11px !important; font-weight: 700 !important;
+}
+.portal-shell .modal-card--auth form label input {
+  height: 44px !important; padding: 0 12px !important;
+  border: 1px solid #d6e0e7 !important; border-radius: 7px !important;
+  background: #fff !important; color: #19394f !important;
+  font-size: 13px !important; box-shadow: none !important;
+}
+.portal-shell .modal-card--auth form label input:focus {
+  border-color: #1682a9 !important;
+  box-shadow: 0 0 0 3px rgba(22,130,169,.10) !important;
+}
+.portal-shell .modal-card--auth form .button--primary {
+  min-height: 45px !important; width: 100% !important;
+  margin-top: 2px !important; border-radius: 7px !important;
+  background: #075b87 !important; color: #fff !important;
+  box-shadow: none !important; font-size: 12px !important; font-weight: 700 !important;
+}
+.portal-shell .modal-card--auth form .text-button {
+  align-self: center !important; margin: 12px 0 0 !important;
+  color: #08749b !important; font-size: 11px !important;
+}
+.portal-shell .modal-card--auth .form-error {
+  margin: 0 0 12px !important; padding: 9px 10px !important;
+  border-radius: 7px !important; font-size: 11px !important;
+}
+.portal-shell.theme-dark .modal-card--auth {
+  border-color: #344b5e !important; background: #172b3c !important;
+}
+.portal-shell.theme-dark .modal-card--auth > .modal-brand { border-color: #304658 !important; }
+.portal-shell.theme-dark .modal-card--auth > .modal-brand .brand-mark strong { color: #edf5fa !important; }
+.portal-shell.theme-dark .modal-card--auth > .modal-brand .brand-mark small { color: #a9bdca !important; }
+.portal-shell.theme-dark .modal-card--auth form h2 { color: #f0f6fa !important; }
+.portal-shell.theme-dark .modal-card--auth form .modal-copy { color: #b5c5d0 !important; }
+.portal-shell.theme-dark .modal-card--auth form label { color: #d8e4eb !important; }
+.portal-shell.theme-dark .modal-card--auth form label input {
+  border-color: #40586a !important; background: #102232 !important; color: #f3f7fa !important;
+}
+@media (max-width: 520px) {
+  .portal-shell .modal-card--auth {
+    width: min(100%, 360px) !important;
+    padding: 22px 21px 22px !important;
+    border-radius: 12px !important;
+  }
+  .portal-shell .modal-card--auth > .modal-brand { margin-bottom: 19px !important; }
+  .portal-shell .modal-card--auth form h2 { font-size: 21px !important; }
+}
