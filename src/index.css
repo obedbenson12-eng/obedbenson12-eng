@@ -1049,3 +1049,48 @@ body { font-size: 15px; }
     box-shadow: 0 2px 8px rgba(16,48,76,.035) !important;
   }
 }
+
+
+/* Mobile scroll fix: the portal must not inherit the welcome screen's overflow clipping. */
+html, body, #root {
+  min-height: 100%;
+}
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#root {
+  overflow: visible;
+}
+.app-shell.portal-shell {
+  overflow: visible !important;
+  min-height: 100vh;
+  height: auto;
+}
+.portal-shell .portal-content {
+  overflow: visible !important;
+  min-height: 0;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.portal-shell .about-screen.about-redesign {
+  overflow: visible !important;
+  contain: none !important;
+  touch-action: pan-y;
+}
+@media (max-width: 650px) {
+  .portal-shell .about-redesign > section,
+  .portal-shell .about-redesign article {
+    transform: none !important;
+    filter: none !important;
+  }
+  .portal-shell .about-redesign {
+    will-change: auto !important;
+  }
+}
