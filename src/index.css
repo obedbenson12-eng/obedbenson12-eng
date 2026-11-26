@@ -243,3 +243,22 @@ h1, h2, p { margin-top: 0; } h1, h2 { font-family: 'Manrope', sans-serif; letter
   .about-screen .about-account-services,
   .about-screen .about-account-team { grid-template-columns: 1fr; }
 }
+
+/* WATSAN branded sidebar background */
+.drawer {
+  background-color: #07366f;
+  background-image: linear-gradient(180deg, rgba(4,31,68,.90), rgba(4,39,78,.94)), url("/obedbenson12-eng/watsan-sidebar-bg.svg");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+.drawer-head .brand-mark, .drawer-head .brand-mark small { color: #fff; }
+.drawer-head .icon-button { color: #fff; }
+.drawer-profile { background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.16); color: #fff; }
+.drawer-profile span { color: #c3dced; }
+.drawer .avatar--large { background: rgba(255,255,255,.18); color: #fff; }
+.drawer-item { color: #e8f5ff; }
+.drawer-item > svg:last-child { color: #9fcde9; }
+.drawer-item:hover { background: rgba(255,255,255,.14); color: #fff; }
+.drawer-bottom { border-top-color: rgba(255,255,255,.18); }
+.drawer-item--muted { color: #c5d8e8; }
