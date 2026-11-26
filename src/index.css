@@ -3615,3 +3615,20 @@ img, svg, video, canvas { max-width: 100%; }
     padding: 4px !important;
   }
 }
+
+
+/* About Us readability: strengthen text weight so small-screen copy remains clear. */
+.portal-shell .about-redesign p,
+.portal-shell .about-redesign .about-hero-meta span,
+.portal-shell .about-redesign .about-section-label small,
+.portal-shell .about-redesign .about-card-hint {
+  font-weight: 650 !important;
+}
+.portal-shell .about-redesign .about-kicker,
+.portal-shell .about-redesign .about-hero-mark,
+.portal-shell .about-redesign .about-section-label h2 {
+  font-weight: 750 !important;
+}
+.portal-shell .about-redesign .about-hero h1 {
+  font-weight: 800 !important;
+}
