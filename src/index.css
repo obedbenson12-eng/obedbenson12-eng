@@ -5396,3 +5396,9 @@ img, svg, video, canvas { max-width: 100%; }
 .watsan-login-professional .watsan-professional-trust svg {
   width:14px;height:14px;
 }
+
+
+/* Move the customer access content slightly lower without changing typography or sizing. */
+.watsan-login-professional .watsan-professional-main {
+  transform: translateY(12px);
+}
