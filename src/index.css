@@ -2557,3 +2557,51 @@ img, svg, video, canvas { max-width: 100%; }
   padding: 10px 10px !important;
   gap: 12px !important;
 }
+
+
+/* Clear, formal hierarchy for the WATSAN committee roster */
+.portal-shell .about-redesign .about-team-section { padding: 8px 0 4px !important; }
+.portal-shell .about-redesign .about-team-group { padding: 18px; border: 1px solid #dce8f1; border-radius: 16px; background: linear-gradient(145deg,#f8fbfe 0%,#ffffff 75%); }
+.portal-shell .about-redesign .about-team-group--operations { margin-top: 14px; background: #fff; }
+.portal-shell .about-redesign .about-team-group-heading { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.portal-shell .about-redesign .about-team-group-line { width:4px; height:34px; flex:0 0 4px; border-radius:8px; background:#14558a; }
+.portal-shell .about-redesign .about-team-group-heading > div { min-width:0; }
+.portal-shell .about-redesign .about-team-group-heading small { display:block; color:#628099; font-size:9px; font-weight:800; letter-spacing:.13em; }
+.portal-shell .about-redesign .about-team-group-heading p { margin:3px 0 0; color:#173e61; font-size:15px; font-weight:750; }
+.portal-shell .about-redesign .about-team-count { margin-left:auto; padding:6px 9px; border-radius:20px; color:#176095; background:#e8f2f9; font-size:9px; font-weight:800; letter-spacing:.05em; white-space:nowrap; }
+.portal-shell .about-redesign .about-team-grid--leadership { grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.portal-shell .about-redesign .about-team-grid--operations { grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.portal-shell .about-redesign .about-team-member { min-height:76px; padding:13px; border-radius:12px; box-shadow:0 3px 12px rgba(20,65,102,.035); transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+.portal-shell .about-redesign .about-team-member:hover { transform:translateY(-2px); border-color:#a9c9df; box-shadow:0 8px 18px rgba(20,65,102,.08); }
+.portal-shell .about-redesign .about-team-member--leader { min-height:92px; border-color:#cbddea; background:#fff; }
+.portal-shell .about-redesign .about-team-member--leader .about-team-initial { width:42px; height:42px; flex-basis:42px; color:#fff; background:linear-gradient(145deg,#14558a,#267db0); }
+.portal-shell .about-redesign .about-team-member strong { color:#1b4567; font-size:12px; line-height:1.35; overflow-wrap:anywhere; }
+.portal-shell .about-redesign .about-team-member small { color:#71879a; font-size:10px; line-height:1.4; }
+.portal-shell .about-redesign .about-team-index { color:#9aafbf; font-size:9px; }
+.portal-shell.theme-dark .about-redesign .about-team-group,
+.portal-shell.theme-dark .about-redesign .about-team-group--operations { background:#172f45; border-color:#36546e; }
+.portal-shell.theme-dark .about-redesign .about-team-group-heading p,
+.portal-shell.theme-dark .about-redesign .about-team-member strong { color:#e3eef7; }
+.portal-shell.theme-dark .about-redesign .about-team-member { background:#203c54; border-color:#36546e; }
+.portal-shell.theme-dark .about-redesign .about-team-member small { color:#b1c5d5; }
+@media (max-width:760px) {
+ .portal-shell .about-redesign .about-team-group { padding:13px; }
+ .portal-shell .about-redesign .about-team-grid--leadership { grid-template-columns:1fr; gap:8px; }
+ .portal-shell .about-redesign .about-team-grid--operations { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+ .portal-shell .about-redesign .about-team-member,
+ .portal-shell .about-redesign .about-team-member--leader { min-height:66px; padding:10px; gap:9px; }
+ .portal-shell .about-redesign .about-team-member--leader .about-team-initial { width:36px; height:36px; flex-basis:36px; }
+ .portal-shell .about-redesign .about-team-member strong { font-size:11px; }
+ .portal-shell .about-redesign .about-team-member small { font-size:9px; }
+ .portal-shell .about-redesign .about-team-count { font-size:8px; padding:5px 7px; }
+}
+@media (max-width:380px) {
+ .portal-shell .about-redesign .about-team-grid--operations { grid-template-columns:1fr; }
+ .portal-shell .about-redesign .about-team-group-heading { gap:8px; }
+ .portal-shell .about-redesign .about-team-group-heading small { font-size:8px; }
+}
+@media (max-width:900px) and (orientation:landscape) {
+ .portal-shell .about-redesign .about-team-grid--leadership { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .portal-shell .about-redesign .about-team-grid--operations { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .portal-shell .about-redesign .about-team-member { min-height:58px; padding:8px 10px; }
+}
