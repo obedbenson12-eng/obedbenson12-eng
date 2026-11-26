@@ -243,7 +243,7 @@ function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayNa
 
 
 function AboutScreen() {
-  return <div className="screen-stack">
+  return <div className="screen-stack about-screen">
     <PageIntro eyebrow="TSRUKPE TOTA WATSAN" title="About Us" copy="Learn about the community team responsible for water and sanitation services." />
     <section className="activity-card about-account-card"><h2>Who We Are</h2><p>The Tsrukpe-Tota Water and Sanitation (WATSAN) is a community-based organization established to manage and deliver clean water supply and proper sanitation services to residents of the Tsrukpe-Tota community.</p></section>
     <section className="about-account-values"><article className="activity-card"><span>OUR MISSION</span><h3>Reliable services for all</h3><p>To provide affordable, reliable, and sustainable water and sanitation services to every member of the Tsrukpe-Tota community, ensuring improved health and quality of life for all residents.</p></article><article className="activity-card"><span>OUR VISION</span><h3>A clean, healthy community</h3><p>A Tsrukpe-Tota community where every resident has consistent access to clean, safe water and proper sanitation — free from waterborne diseases and with a clean, healthy environment.</p></article></section>
