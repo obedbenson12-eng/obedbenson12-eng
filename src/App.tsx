@@ -340,8 +340,22 @@ function AboutScreen() {
     </section>
 
     <section className="about-services-section">
-      <div className="about-section-heading"><div><small>WHAT WE DO</small><h2>Our services</h2></div><p>Practical services that help keep the community water system dependable and accountable.</p></div>
-      <div className="about-services-grid">{services.map(([title,copy],index)=><article className="about-service-item about-interactive-card" key={title} role="button" tabIndex={0} onClick={() => openAboutCard('WATSAN SERVICE',title,copy,`This service forms part of the community's water and sanitation management. For current procedures, eligibility or service requests, contact the WATSAN office.`)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openAboutCard('WATSAN SERVICE',title,copy,`This service forms part of the community's water and sanitation management. For current procedures, eligibility or service requests, contact the WATSAN office.`); } }}><span className="about-service-number">{String(index+1).padStart(2,'0')}</span><div><h3>{title}</h3><p>{copy}</p><small className="about-card-hint">View details <ArrowRight size={13}/></small></div><ArrowRight className="about-service-arrow" size={17} /></article>)}</div>
+      <div className="about-section-heading"><div><small>WHAT WE DO</small><h2>Our services</h2></div><p>Organised services covering customer accounts, reliable water supply, community sanitation and responsible management.</p></div>
+      <div className="about-service-groups">
+        {[
+          { title: 'CUSTOMER & CONNECTION SERVICES', copy: 'Helping residents access and manage their water accounts.', items: [0, 1] },
+          { title: 'WATER SUPPLY & NETWORK CARE', copy: 'Supporting reliable supply, maintenance and service restoration.', items: [2, 3, 4] },
+          { title: 'SANITATION & PUBLIC HEALTH', copy: 'Encouraging a cleaner and healthier community.', items: [5, 7] },
+          { title: 'REVENUE & ACCOUNTABILITY', copy: 'Promoting transparent collection and proper records.', items: [6] },
+        ].map((group) => <div className="about-service-group" key={group.title}>
+          <div className="about-service-group-heading"><span className="about-service-group-mark" /><div><small>{group.title}</small><p>{group.copy}</p></div><span className="about-service-count">{group.items.length} {group.items.length === 1 ? 'SERVICE' : 'SERVICES'}</span></div>
+          <div className="about-services-grid">{group.items.map((index) => {
+            const [title, copy] = services[index];
+            const detail = "This service forms part of the community's water and sanitation management. For current procedures, eligibility or service requests, contact the WATSAN office.";
+            return <article className="about-service-item about-interactive-card" key={title} role="button" tabIndex={0} onClick={() => openAboutCard('WATSAN SERVICE', title, copy, detail)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openAboutCard('WATSAN SERVICE', title, copy, detail); } }}><span className="about-service-number">{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{copy}</p><small className="about-card-hint">View details <ArrowRight size={13} /></small></div><ArrowRight className="about-service-arrow" size={17} /></article>;
+          })}</div>
+        </div>)}
+      </div>
     </section>
 
     <section className="about-team-section">
