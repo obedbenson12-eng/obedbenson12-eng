@@ -2605,3 +2605,42 @@ img, svg, video, canvas { max-width: 100%; }
  .portal-shell .about-redesign .about-team-grid--operations { grid-template-columns:repeat(3,minmax(0,1fr)); }
  .portal-shell .about-redesign .about-team-member { min-height:58px; padding:8px 10px; }
 }
+
+
+/* Professional grouping and consistent hierarchy for About Us services */
+.portal-shell .about-redesign .about-services-section { padding: 8px 0 4px !important; }
+.portal-shell .about-redesign .about-service-groups { display:grid; gap:14px; }
+.portal-shell .about-redesign .about-service-group { padding:17px; border:1px solid #dce8f1; border-radius:16px; background:linear-gradient(145deg,#f8fbfe 0%,#fff 78%); }
+.portal-shell .about-redesign .about-service-group:nth-child(even) { background:#fff; }
+.portal-shell .about-redesign .about-service-group-heading { display:flex; align-items:center; gap:12px; margin-bottom:13px; }
+.portal-shell .about-redesign .about-service-group-mark { width:4px; height:34px; flex:0 0 4px; border-radius:8px; background:#14558a; }
+.portal-shell .about-redesign .about-service-group-heading > div { min-width:0; }
+.portal-shell .about-redesign .about-service-group-heading small { display:block; color:#628099; font-size:9px; font-weight:800; letter-spacing:.12em; }
+.portal-shell .about-redesign .about-service-group-heading p { margin:4px 0 0; color:#173e61; font-size:12px; line-height:1.45; }
+.portal-shell .about-redesign .about-service-count { margin-left:auto; padding:6px 9px; border-radius:20px; color:#176095; background:#e8f2f9; font-size:8px; font-weight:800; letter-spacing:.05em; white-space:nowrap; }
+.portal-shell .about-redesign .about-service-group .about-services-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.portal-shell .about-redesign .about-service-group .about-service-item { min-height:112px; padding:14px; border-radius:12px; background:#fff; }
+.portal-shell .about-redesign .about-service-group .about-service-item h3 { color:#1b4567; font-size:13px; line-height:1.35; }
+.portal-shell .about-redesign .about-service-group .about-service-item p { color:#71879a; font-size:11px; line-height:1.55; }
+.portal-shell.theme-dark .about-redesign .about-service-group,
+.portal-shell.theme-dark .about-redesign .about-service-group:nth-child(even) { background:#172f45; border-color:#36546e; }
+.portal-shell.theme-dark .about-redesign .about-service-group-heading p,
+.portal-shell.theme-dark .about-redesign .about-service-item h3 { color:#e3eef7; }
+.portal-shell.theme-dark .about-redesign .about-service-item { background:#203c54 !important; border-color:#36546e; }
+.portal-shell.theme-dark .about-redesign .about-service-item p { color:#b1c5d5; }
+@media (max-width:760px) {
+ .portal-shell .about-redesign .about-service-group { padding:12px; }
+ .portal-shell .about-redesign .about-service-group .about-services-grid { grid-template-columns:1fr; gap:8px; }
+ .portal-shell .about-redesign .about-service-group .about-service-item { min-height:0; padding:11px 12px; }
+ .portal-shell .about-redesign .about-service-group-heading { gap:8px; }
+ .portal-shell .about-redesign .about-service-group-heading small { font-size:8px; }
+ .portal-shell .about-redesign .about-service-count { font-size:7px; padding:5px 7px; }
+}
+@media (max-width:380px) {
+ .portal-shell .about-redesign .about-service-group-heading p { font-size:10px; }
+ .portal-shell .about-redesign .about-service-group .about-service-item { grid-template-columns:30px minmax(0,1fr) 15px; gap:9px; }
+}
+@media (max-width:900px) and (orientation:landscape) {
+ .portal-shell .about-redesign .about-service-group .about-services-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .portal-shell .about-redesign .about-service-group .about-service-item { min-height:88px; padding:10px; }
+}
