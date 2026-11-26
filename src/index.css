@@ -2496,6 +2496,7 @@ img, svg, video, canvas { max-width: 100%; }
 @media (max-height: 620px) {
   .portal-shell .drawer-head { padding-bottom: 12px !important; }
   .portal-shell .drawer-profile { padding: 9px 11px !important; margin-bottom: 10px !important; }
-  .portal-shell .drawer-item { padding-top: 9px !important; padding-bottom: 9px !important; }
+  /* Preserve the original sidebar item spacing and icon alignment. */
+  .portal-shell .drawer-item { padding: 13px 10px !important; gap: 12px !important; }
   .portal-shell .drawer-bottom { margin-top: 5px !important; padding-top: 6px !important; }
 }
