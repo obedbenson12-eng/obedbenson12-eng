@@ -262,3 +262,22 @@ h1, h2, p { margin-top: 0; } h1, h2 { font-family: 'Manrope', sans-serif; letter
 .drawer-item:hover { background: rgba(255,255,255,.14); color: #fff; }
 .drawer-bottom { border-top-color: rgba(255,255,255,.18); }
 .drawer-item--muted { color: #c5d8e8; }
+
+/* Overview page: reuse the existing WATSAN branded artwork as the page background. */
+.overview-screen {
+  min-height: calc(100vh - 90px);
+  padding: 18px;
+  margin: -8px -8px 0;
+  border-radius: 22px;
+  background-color: #07366f;
+  background-image: linear-gradient(180deg, rgba(5, 35, 76, .72), rgba(5, 42, 82, .82)), url('/obedbenson12-eng/watsan-sidebar-bg.svg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+.overview-screen .greeting-row h1 { color: #fff; }
+.overview-screen .greeting-row .eyebrow { color: #b9def4; }
+.overview-screen .greeting-row .muted { color: #e0edf7; }
+@media (max-width: 520px) {
+  .overview-screen { padding: 14px; margin-left: -6px; margin-right: -6px; border-radius: 16px; }
+}
