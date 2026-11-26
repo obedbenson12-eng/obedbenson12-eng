@@ -2019,3 +2019,206 @@ img, svg, video, canvas { max-width: 100%; }
   }
   .modal-card--payment .modal-brand { margin-bottom: 15px !important; }
 }
+
+
+/* About page correction: reset the old full-bleed offsets that pushed the
+   redesigned content outside the customer portal on narrow screens. */
+.portal-shell .portal-content > .about-screen.about-redesign {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 1120px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+  padding: 0 0 24px !important;
+  gap: 22px !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(ellipse at 95% 0%, rgba(75, 160, 211, .18), transparent 35%),
+    linear-gradient(160deg, #eaf3fa 0%, #f2f7fc 48%, #e4eff8 100%) !important;
+  border-radius: 0 !important;
+}
+.portal-shell .about-redesign,
+.portal-shell .about-redesign * {
+  box-sizing: border-box !important;
+  min-width: 0;
+}
+.portal-shell .about-redesign > section,
+.portal-shell .about-redesign > p {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.portal-shell .about-redesign .about-hero {
+  width: 100% !important;
+  max-width: 100% !important;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, 150px) !important;
+  gap: clamp(12px, 3vw, 28px) !important;
+  padding: clamp(22px, 4vw, 46px) !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+.portal-shell .about-redesign .about-hero-copy,
+.portal-shell .about-redesign .about-hero-mark { min-width: 0 !important; }
+.portal-shell .about-redesign .about-hero-copy > p,
+.portal-shell .about-redesign .about-intro-copy p,
+.portal-shell .about-redesign .about-purpose-card p,
+.portal-shell .about-redesign .about-service-item p,
+.portal-shell .about-redesign .about-section-heading > p {
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+.portal-shell .about-redesign .about-intro-grid {
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+  gap: clamp(16px, 3vw, 34px) !important;
+  padding: 10px 4px !important;
+}
+.portal-shell .about-redesign .about-purpose-grid,
+.portal-shell .about-redesign .about-services-grid,
+.portal-shell .about-redesign .about-team-grid {
+  width: 100% !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+.portal-shell .about-redesign .about-team-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+.portal-shell .about-redesign .about-purpose-card {
+  background: linear-gradient(145deg, #dcebf7 0%, #edf5fb 58%, #e4f0f8 100%) !important;
+  border: 1px solid #c7dceb !important;
+  box-shadow: 0 8px 22px rgba(20, 70, 112, .09) !important;
+  border-radius: 16px !important;
+}
+.portal-shell .about-redesign .about-service-item {
+  background: linear-gradient(145deg, #e1eef8 0%, #f0f6fb 100%) !important;
+  border: 1px solid #cbddea !important;
+  box-shadow: 0 5px 15px rgba(20, 70, 112, .06) !important;
+}
+.portal-shell .about-redesign .about-team-member {
+  background: linear-gradient(145deg, #dcebf7 0%, #edf5fb 100%) !important;
+  border: 1px solid #c7dceb !important;
+  box-shadow: 0 5px 15px rgba(20, 70, 112, .06) !important;
+}
+.portal-shell .about-redesign .about-contact-panel {
+  background: linear-gradient(120deg, #d5e8f6 0%, #e7f1f9 55%, #dcebf6 100%) !important;
+  border: 1px solid #bfd6e8 !important;
+  box-shadow: 0 8px 22px rgba(20, 70, 112, .08) !important;
+  min-width: 0 !important;
+}
+.portal-shell .about-redesign .about-section-label h2,
+.portal-shell .about-redesign .about-section-heading h2,
+.portal-shell .about-redesign .about-purpose-card h3,
+.portal-shell .about-redesign .about-service-item h3,
+.portal-shell .about-redesign .about-team-member strong,
+.portal-shell .about-redesign .about-contact-copy h2 {
+  overflow-wrap: anywhere !important;
+}
+.portal-shell .about-redesign .about-location-note {
+  color: #526f88 !important;
+  line-height: 1.6 !important;
+  padding: 0 8px !important;
+}
+@media (max-width: 650px) {
+  .portal-shell .portal-content > .about-screen.about-redesign {
+    gap: 18px !important;
+    padding: 0 0 20px !important;
+  }
+  .portal-shell .about-redesign .about-hero {
+    grid-template-columns: minmax(0, 1fr) !important;
+    min-height: 0 !important;
+    padding: 24px 19px !important;
+    gap: 16px !important;
+  }
+  .portal-shell .about-redesign .about-hero-mark {
+    justify-self: start !important;
+    flex-direction: row !important;
+    text-align: left !important;
+    gap: 11px !important;
+  }
+  .portal-shell .about-redesign .about-hero-mark img {
+    width: 58px !important;
+    padding: 5px !important;
+  }
+  .portal-shell .about-redesign .about-hero h1 {
+    font-size: clamp(26px, 7vw, 34px) !important;
+    overflow-wrap: normal !important;
+  }
+  .portal-shell .about-redesign .about-hero-meta {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .portal-shell .about-redesign .about-intro-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+  }
+  .portal-shell .about-redesign .about-intro-copy {
+    border-left: 0 !important;
+    border-top: 2px solid #c5dbea !important;
+    padding: 13px 2px 0 !important;
+  }
+  .portal-shell .about-redesign .about-purpose-grid,
+  .portal-shell .about-redesign .about-services-grid,
+  .portal-shell .about-redesign .about-team-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .portal-shell .about-redesign .about-purpose-card {
+    min-height: 0 !important;
+    padding: 19px !important;
+  }
+  .portal-shell .about-redesign .about-service-item {
+    grid-template-columns: 32px minmax(0, 1fr) 16px !important;
+    padding: 14px !important;
+  }
+  .portal-shell .about-redesign .about-team-member {
+    width: 100% !important;
+  }
+  .portal-shell .about-redesign .about-contact-panel {
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    padding: 17px !important;
+  }
+  .portal-shell .about-redesign .about-contact-actions {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .portal-shell .about-redesign .about-contact-actions a {
+    width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+}
+@media (min-width: 651px) and (max-width: 1023px) {
+  .portal-shell .about-redesign .about-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+.portal-shell.theme-dark .portal-content > .about-screen.about-redesign {
+  background: linear-gradient(155deg, #10283f 0%, #152f49 55%, #10283f 100%) !important;
+}
+.portal-shell.theme-dark .about-redesign .about-purpose-card,
+.portal-shell.theme-dark .about-redesign .about-service-item,
+.portal-shell.theme-dark .about-redesign .about-team-member {
+  background: linear-gradient(145deg, #1d3a55 0%, #213f5b 100%) !important;
+  border-color: #36546e !important;
+}
+.portal-shell.theme-dark .about-redesign .about-contact-panel {
+  background: linear-gradient(120deg, #1b3b57, #244963) !important;
+  border-color: #3a5c75 !important;
+}
+.portal-shell.theme-dark .about-redesign .about-section-label h2,
+.portal-shell.theme-dark .about-redesign .about-section-heading h2,
+.portal-shell.theme-dark .about-redesign .about-purpose-card h3,
+.portal-shell.theme-dark .about-redesign .about-service-item h3,
+.portal-shell.theme-dark .about-redesign .about-team-member strong,
+.portal-shell.theme-dark .about-redesign .about-contact-copy h2 {
+  color: #e7f1fa !important;
+}
+.portal-shell.theme-dark .about-redesign .about-intro-copy p,
+.portal-shell.theme-dark .about-redesign .about-purpose-card p,
+.portal-shell.theme-dark .about-redesign .about-service-item p,
+.portal-shell.theme-dark .about-redesign .about-section-heading > p,
+.portal-shell.theme-dark .about-redesign .about-team-member small,
+.portal-shell.theme-dark .about-redesign .about-contact-copy p {
+  color: #b6c9d9 !important;
+}
