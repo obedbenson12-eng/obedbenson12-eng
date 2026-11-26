@@ -5370,3 +5370,29 @@ img, svg, video, canvas { max-width: 100%; }
   margin:0; color:rgba(239,247,255,.84);
   font:500 14px/1.5 'Manrope',Arial,sans-serif;
 }
+
+/* Compact the welcome-screen actions and verification details. */
+.watsan-login-professional .watsan-professional-actions {
+  width:min(100%,330px);
+  gap:10px;
+}
+.watsan-login-professional .watsan-professional-actions button {
+  min-height:48px;
+  border-radius:11px;
+  font-size:12px;
+  gap:9px;
+}
+.watsan-login-professional .watsan-professional-demo-button span,
+.watsan-login-professional .watsan-demo-button span {
+  font-size:10px;
+}
+.watsan-login-professional .watsan-professional-trust {
+  width:min(100%,500px);
+  margin-top:19px;
+  justify-content:center;
+  gap:9px 13px;
+  font-size:10px;
+}
+.watsan-login-professional .watsan-professional-trust svg {
+  width:14px;height:14px;
+}
