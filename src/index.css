@@ -2647,3 +2647,20 @@ img, svg, video, canvas { max-width: 100%; }
 
 
 /* Site-wide typography refinement: 4% smaller type; micro-labels below 9px remain unchanged. */
+
+
+/* Account holder contact and service identifiers with clear leading icons */
+.portal-shell .account-holder-details > span {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  min-width: 0 !important;
+  line-height: 1.4 !important;
+}
+.portal-shell .account-holder-details > span svg {
+  flex: 0 0 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  color: #b9dcf3 !important;
+  stroke-width: 2.2 !important;
+}
