@@ -311,3 +311,21 @@ h1, h2, p { margin-top: 0; } h1, h2 { font-family: 'Manrope', sans-serif; letter
 .notifications-empty h2 { color: #173b63; font: 800 19px 'Manrope', sans-serif; margin: 0 0 8px; }
 .notifications-empty p { max-width: 390px; margin: 0 auto 18px; color: #667f96; font-size: 13px; line-height: 1.65; }
 .notifications-empty .button { margin: 0 auto; }
+
+/* Customer settings detail and security screens */
+.profile-details-card { background:#fff; border:1px solid #e2ebf2; border-radius:17px; padding:4px 16px 15px; box-shadow:0 8px 24px rgba(20,55,88,.045); }
+.profile-detail-row { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:15px 0; border-bottom:1px solid #edf1f5; }
+.profile-detail-row:last-of-type { border-bottom:0; }
+.profile-detail-row span { color:#7890a5; font-size:12px; flex:0 0 42%; }
+.profile-detail-row strong { color:#183b60; font-size:12px; text-align:right; overflow-wrap:anywhere; }
+.settings-note { margin:12px 0 0; padding:12px; border-radius:11px; background:#eef6fa; color:#58758d; font-size:11px; line-height:1.6; }
+.settings-contact-button { display:flex; justify-content:center; align-items:center; gap:9px; text-decoration:none; }
+.security-status-card { display:flex; align-items:flex-start; gap:13px; padding:16px; border-radius:16px; background:linear-gradient(135deg,#eaf7f1,#f3f9fc); border:1px solid #d6ebe2; }
+.security-status-icon { width:42px; height:42px; display:grid; place-items:center; flex-shrink:0; border-radius:13px; color:#14734f; background:#d8f0e4; }
+.security-status-card strong { color:#174a3a; font-size:13px; }
+.security-status-card p { color:#5f7d72; font-size:11px; line-height:1.55; margin:5px 0 0; }
+.security-actions { background:#fff; border:1px solid #e5edf4; border-radius:16px; overflow:hidden; }
+.security-actions .setting-row { text-decoration:none; }
+.security-actions .security-signout { color:#b84e49; }
+.security-actions .security-signout > span { color:#b84e49; background:#fff0ee; }
+@media(max-width:420px) { .profile-detail-row { gap:10px; } .profile-detail-row span { flex-basis:39%; font-size:11px; } .profile-detail-row strong { font-size:11px; } }
