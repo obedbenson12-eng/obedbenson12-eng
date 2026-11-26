@@ -4250,3 +4250,34 @@ img, svg, video, canvas { max-width: 100%; }
   .portal-shell .modal-card--auth > .modal-brand { margin-bottom: 19px !important; }
   .portal-shell .modal-card--auth form h2 { font-size: 21px !important; }
 }
+
+
+/* FAQ chat-style support interface */
+.faq-chat-panel{padding:18px!important;border-radius:18px!important;background:var(--surface, #fff)!important;box-shadow:0 12px 32px rgba(20,45,75,.09)!important}
+.faq-chat-eyebrow{display:block;font-size:9px;font-weight:800;letter-spacing:1.25px;color:#64809d;margin-bottom:5px}
+.faq-chat-panel .section-heading{align-items:flex-start;margin-bottom:16px}
+.faq-chat-panel .section-heading h2{margin:0;font-size:20px}
+.faq-chat-welcome{display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(28,105,170,.07);border:1px solid rgba(28,105,170,.12);border-radius:14px;margin-bottom:14px}
+.faq-chat-avatar{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;background:#155b91;color:#fff}
+.faq-chat-welcome strong{display:block;font-size:12px;margin:1px 0 3px}
+.faq-chat-welcome p{margin:0;font-size:12px;line-height:1.5;color:var(--muted,#64748b)}
+.faq-chat-messages{display:flex;flex-direction:column;gap:9px}
+.faq-chat-thread{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.faq-question-bubble{display:flex;align-items:center;justify-content:space-between;gap:12px;width:min(92%,440px);text-align:left;padding:12px 14px;border:1px solid rgba(29,101,157,.18);border-radius:16px 16px 4px 16px;background:#edf5fb;color:#173b58;font:inherit;font-size:12px;font-weight:650;line-height:1.45;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.faq-question-bubble svg{flex:0 0 auto;transition:transform .18s}
+.faq-question-bubble.is-active{background:#dcecf8;border-color:#6b9fc5}
+.faq-question-bubble.is-active svg{transform:rotate(90deg)}
+.faq-answer-row{display:flex;align-items:flex-start;gap:8px;width:100%;animation:faqChatIn .22s ease-out}
+.faq-chat-avatar--small{width:27px;height:27px;flex-basis:27px}
+.faq-answer-bubble{max-width:94%;padding:12px 14px;background:var(--surface-soft,#f4f6f8);border:1px solid var(--border,#e5eaf0);border-radius:4px 15px 15px 15px}
+.faq-answer-label{display:block;margin-bottom:5px;font-size:8px;font-weight:800;letter-spacing:1px;color:#64809d}
+.faq-answer-bubble p{margin:0;font-size:12px;line-height:1.65;color:var(--text,#263746)}
+.faq-contact-link{display:block;margin-top:15px;padding:12px 14px;border-radius:12px;background:#155b91;color:#fff!important;text-align:center;text-decoration:none;font-size:12px;font-weight:700}
+@keyframes faqChatIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.portal-shell.theme-dark .faq-chat-panel{background:var(--surface,#172536)!important}
+.portal-shell.theme-dark .faq-chat-welcome{background:rgba(74,144,198,.12);border-color:rgba(116,173,215,.2)}
+.portal-shell.theme-dark .faq-question-bubble{background:#203b52;border-color:#355a77;color:#e8f2fa}
+.portal-shell.theme-dark .faq-question-bubble.is-active{background:#2a506e;border-color:#6b9fc5}
+.portal-shell.theme-dark .faq-answer-bubble{background:#1d3041;border-color:#344b60}
+.portal-shell.theme-dark .faq-answer-bubble p{color:#e4edf5}
+@media(max-width:520px){.faq-chat-panel{padding:14px!important}.faq-question-bubble{width:96%;padding:11px 12px}.faq-answer-bubble{max-width:calc(100% - 35px)}}
