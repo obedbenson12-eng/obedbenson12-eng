@@ -5404,8 +5404,8 @@ img, svg, video, canvas { max-width: 100%; }
 }
 
 
-/* Move only the WATSAN logo and title lower; leave customer access controls in place. */
+/* Move only the WATSAN logo and title further down; leave customer access controls in place. */
 .watsan-login-professional .watsan-professional-brand {
   position:relative !important;
-  top:40px !important;
+  top:70px !important;
 }
