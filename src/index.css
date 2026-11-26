@@ -1883,3 +1883,139 @@ img, svg, video, canvas { max-width: 100%; }
     box-sizing: border-box !important;
   }
 }
+
+
+/* Secure payment sheet: keep it above fixed header/navigation and fully visible. */
+.portal-shell .modal-backdrop--payment,
+.welcome-shell .modal-backdrop--payment {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: max(16px, env(safe-area-inset-top)) 14px max(16px, env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  background: rgba(5, 24, 48, .72) !important;
+  backdrop-filter: blur(7px) !important;
+  -webkit-backdrop-filter: blur(7px) !important;
+}
+.modal-card--payment {
+  position: relative !important;
+  width: min(100%, 460px) !important;
+  max-width: 460px !important;
+  max-height: min(88dvh, 720px) !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  margin: auto !important;
+  padding: 26px 22px 24px !important;
+  border: 1px solid rgba(13, 63, 135, .10) !important;
+  border-radius: 24px !important;
+  background: #fff !important;
+  color: #17375d !important;
+  box-shadow: 0 24px 70px rgba(0, 20, 48, .32) !important;
+  animation: payment-card-in .22s ease-out !important;
+}
+.modal-card--payment .modal-brand {
+  margin: 0 48px 28px 0 !important;
+  padding: 11px 13px !important;
+  border-radius: 13px !important;
+  background: #f0f6fc !important;
+}
+.modal-card--payment .eyebrow {
+  color: #0d3f87 !important;
+  font-weight: 800 !important;
+  letter-spacing: .13em !important;
+}
+.modal-card--payment h2 {
+  color: #102f53 !important;
+  font-size: clamp(23px, 6vw, 29px) !important;
+  line-height: 1.15 !important;
+  margin: 0 0 9px !important;
+}
+.modal-card--payment .modal-copy {
+  color: #60768d !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  margin: 0 0 20px !important;
+}
+.modal-card--payment .payment-summary {
+  margin: 0 0 17px !important;
+  padding: 18px !important;
+  border: 1px solid #dce9f5 !important;
+  border-radius: 17px !important;
+  background: linear-gradient(145deg, #f4f8fd, #eaf3fb) !important;
+  gap: 7px !important;
+}
+.modal-card--payment .payment-summary span {
+  color: #627a93 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .07em !important;
+}
+.modal-card--payment .payment-summary strong {
+  color: #0d3f87 !important;
+  font-size: 20px !important;
+}
+.modal-card--payment .payment-summary small {
+  color: #627a93 !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+.modal-card--payment .button--primary {
+  width: 100% !important;
+  min-height: 52px !important;
+  justify-content: center !important;
+  border-radius: 13px !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 8px 18px rgba(13, 63, 135, .2) !important;
+}
+.modal-card--payment .secure-note {
+  color: #557b69 !important;
+  font-size: 10px !important;
+  line-height: 1.45 !important;
+  text-align: center !important;
+  margin-top: 15px !important;
+}
+.modal-card--payment .modal-close {
+  top: 20px !important;
+  right: 18px !important;
+  width: 38px !important;
+  height: 38px !important;
+  color: #365875 !important;
+  background: #edf3f8 !important;
+}
+.modal-card--payment .form-error {
+  margin: 0 0 13px !important;
+}
+@keyframes payment-card-in {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 480px) {
+  .portal-shell .modal-backdrop--payment,
+  .welcome-shell .modal-backdrop--payment {
+    align-items: center !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .modal-card--payment {
+    width: 100% !important;
+    max-height: 86dvh !important;
+    padding: 22px 18px 21px !important;
+    border-radius: 21px !important;
+  }
+  .modal-card--payment .modal-brand { margin-bottom: 23px !important; }
+}
+@media (max-height: 560px) {
+  .modal-card--payment {
+    max-height: 92dvh !important;
+    padding-top: 17px !important;
+    padding-bottom: 17px !important;
+  }
+  .modal-card--payment .modal-brand { margin-bottom: 15px !important; }
+}
