@@ -124,37 +124,47 @@ function App() {
     try {
       const data = await getCustomerPortalData({ meterNumber: activeSession.meterNumber, sessionToken: activeSession.token });
       const readings = data.water_readings ?? [];
+      const field = (record: ZiteField, keys: string[], fallback: unknown = null) =>
+        toFieldValue(record, keys, 'string') ?? toFieldValue(record, keys, 'number') ?? fallback;
+      const numberField = (record: ZiteField, keys: string[], fallback = 0) => {
+        const value = toFieldValue(record, keys, 'number');
+        return value == null ? fallback : Number(value);
+      };
       const outstanding = readings.reduce((sum, item) => {
-        const previous = Number(item.previousReading ?? 0);
-        const current = Number(item.currentReading ?? 0);
-        const units = Math.max(0, Number(item.unitsConsumed ?? (current - previous)));
-        const rate = Number(item.ratePerUnit ?? 5);
-        const storedTotal = item.amountDue == null ? units * rate + 2 : Number(item.amountDue);
-        return sum + Math.max(0, storedTotal - Number(item.amountPaid ?? 0));
+        const previous = numberField(item, ['Previous Reading', 'previousReading', 'Previous Meter Reading']);
+        const current = numberField(item, ['Current Reading', 'currentReading', 'Current Meter Reading']);
+        const units = Math.max(0, numberField(item, ['Units Consumed', 'unitsConsumed'], current - previous));
+        const rate = numberField(item, ['Rate Per Unit', 'ratePerUnit'], 5);
+        const totalValue = field(item, ['Amount Due', 'amountDue', 'Total Amount', 'Bill Amount']);
+        const storedTotal = totalValue == null ? units * rate + 2 : Number(totalValue);
+        const paid = numberField(item, ['Amount Paid', 'amountPaid', 'Total Paid']);
+        return sum + Math.max(0, storedTotal - paid);
       }, 0);
       const latestReading = [...readings].sort((a, b) =>
-        String(b.readingMonth ?? '').localeCompare(String(a.readingMonth ?? '')))[0];
+        String(field(b, ['Reading Month', 'readingMonth', 'Billing Period'], '')).localeCompare(String(field(a, ['Reading Month', 'readingMonth', 'Billing Period'], ''))))[0];
       setAccount({
         id: activeSession.meterNumber,
         account_number: activeSession.meterNumber,
-        service_address: String(data.customer.location ?? 'Tsrukpe-Tota'),
+        service_address: String(field(data.customer as ZiteField, ['Location', 'location', 'Service Address'], 'Tsrukpe-Tota')),
         balance: Math.round(outstanding * 100) / 100,
-        due_date: String(latestReading?.readingMonth ?? ''),
-        status: String(data.customer.status ?? 'Active'),
+        due_date: String(latestReading ? field(latestReading, ['Reading Month', 'readingMonth', 'Billing Period'], '') : ''),
+        status: String(field(data.customer as ZiteField, ['Status', 'status', 'Account Status'], 'Active')),
       });
       setBills(readings.map((item, index) => {
-        const previous = Number(item.previousReading ?? 0);
-        const current = Number(item.currentReading ?? 0);
-        const units = Math.max(0, Number(item.unitsConsumed ?? (current - previous)));
-        const rate = Number(item.ratePerUnit ?? 5);
+        const previous = numberField(item, ['Previous Reading', 'previousReading', 'Previous Meter Reading']);
+        const current = numberField(item, ['Current Reading', 'currentReading', 'Current Meter Reading']);
+        const units = Math.max(0, numberField(item, ['Units Consumed', 'unitsConsumed'], current - previous));
+        const rate = numberField(item, ['Rate Per Unit', 'ratePerUnit'], 5);
         const waterCharge = units * rate;
         const calculatedTotal = waterCharge + 2;
-        const total = item.amountDue == null ? calculatedTotal : Number(item.amountDue);
+        const totalValue = field(item, ['Amount Due', 'amountDue', 'Total Amount', 'Bill Amount']);
+        const total = totalValue == null ? calculatedTotal : Number(totalValue);
         const meterFee = Math.max(0, total - waterCharge);
-        const paid = Number(item.amountPaid ?? 0);
+        const paid = numberField(item, ['Amount Paid', 'amountPaid', 'Total Paid']);
+        const rawStatus = String(field(item, ['Bill Status', 'billStatus', 'Payment Status', 'Status'], 'Unpaid')).trim().toLowerCase();
         return {
-          id: String(item.id ?? index),
-          billing_period: String(item.readingMonth ?? ''),
+          id: String(field(item, ['id', 'ID', 'Record ID'], index)),
+          billing_period: String(field(item, ['Reading Month', 'readingMonth', 'Billing Period'], '')),
           amount: total,
           water_charge: waterCharge,
           meter_fee: meterFee,
@@ -165,17 +175,17 @@ function App() {
           current_reading: current,
           units_consumed: units,
           rate_per_unit: rate,
-          status: String(item.billStatus ?? 'Unpaid').trim().toLowerCase(),
-          notes: String(item.notes ?? ''),
+          status: rawStatus,
+          notes: String(field(item, ['Notes', 'notes'], '')),
         };
       }).sort((a, b) => b.billing_period.localeCompare(a.billing_period)));
       setPayments((data.payments ?? []).map((item, index) => ({
-        id: String(item.id ?? index),
-        amount: Number(item.amountPaid ?? 0),
-        method: String(item.paymentMethod ?? 'Mobile Money').toLowerCase().includes('mobile') ? 'mobile_money' : 'card',
-        status: String(item.status ?? 'Confirmed'),
-        receipt_number: String(item.receiptNumber ?? ''),
-        created_at: String(item.paymentTimestamp ?? item.paymentDate ?? ''),
+        id: String(field(item, ['id', 'ID', 'Record ID'], index)),
+        amount: numberField(item, ['Amount Paid', 'amountPaid', 'Amount', 'Payment Amount']),
+        method: String(field(item, ['Payment Method', 'paymentMethod'], 'Mobile Money')).toLowerCase().includes('mobile') ? 'mobile_money' : 'card',
+        status: String(field(item, ['Status', 'status', 'Payment Status'], 'Confirmed')),
+        receipt_number: String(field(item, ['Receipt Number', 'receiptNumber'], '')),
+        created_at: String(field(item, ['Payment Timestamp', 'paymentTimestamp', 'Payment Date', 'paymentDate'], '')),
       })));
       setZiteData({
         customer: data.customer as unknown as ZiteField,
