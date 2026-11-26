@@ -5438,3 +5438,20 @@ img, svg, video, canvas { max-width: 100%; }
     flex:0 0 90px !important;
   }
 }
+
+
+/* Installed PWA: keep the WATSAN logo and title at the top on launch. */
+@media (display-mode: standalone) {
+  .watsan-login-professional .watsan-professional-brand {
+    top:0 !important;
+    margin-top:0 !important;
+    padding-top:8px !important;
+  }
+}
+@media (display-mode: fullscreen) {
+  .watsan-login-professional .watsan-professional-brand {
+    top:0 !important;
+    margin-top:0 !important;
+    padding-top:8px !important;
+  }
+}
