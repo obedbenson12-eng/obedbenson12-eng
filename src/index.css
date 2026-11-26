@@ -4373,3 +4373,22 @@ img, svg, video, canvas { max-width: 100%; }
   color:#0d3f87!important;
   background:#fff!important;
 }
+
+
+/* Welcome screen: make the WATSAN app front clearly blue and branded. */
+.welcome-shell {
+  background:
+    radial-gradient(ellipse at 85% 18%, rgba(63, 160, 226, .30) 0%, transparent 38%),
+    radial-gradient(ellipse at 12% 82%, rgba(16, 116, 196, .30) 0%, transparent 42%),
+    linear-gradient(145deg, #0b4c9b 0%, #0d3f87 54%, #082f6b 100%) !important;
+  color: #fff !important;
+}
+.welcome-shell::before {
+  border-color: rgba(255,255,255,.14) !important;
+}
+.welcome-shell .welcome-orb--one {
+  background: rgba(92, 190, 238, .18) !important;
+}
+.welcome-shell .welcome-orb--two {
+  background: rgba(74, 157, 226, .22) !important;
+}
