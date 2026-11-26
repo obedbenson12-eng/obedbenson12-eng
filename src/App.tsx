@@ -269,7 +269,33 @@ function App() {
 }
 
 function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void; onLogin: (session: PortalSession) => void; onDemo: () => void }) {
-  return <div className="app-shell welcome-shell"><div className="welcome-orb welcome-orb--one" /><div className="welcome-orb welcome-orb--two" /><header className="welcome-header welcome-header--nav"><WatsanMark /></header><main className="welcome-main"><div className="logo-hero"><img src={logoPath} alt="Tsrukpe Tota WATSAN" /></div><p className="eyebrow eyebrow--light">TSRUKPE TOTA WATSAN</p><h1>Reliable water services, right at your fingertips.</h1><p className="welcome-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p><div className="welcome-actions"><button className="button button--light" onClick={() => setModal('signin')}>Access my account <ArrowRight size={18} /></button><button className="text-button" type="button" onClick={onDemo}>Enter demo portal (testing only)</button></div><div className="trust-row"><ShieldCheck size={16} /> Meter number + OTP verification <span /> <Zap size={16} /> Always available</div></main><footer className="welcome-footer"><span>Serving Tsrukpe Tota and surrounding communities</span><span className="footer-dot" /><span className="welcome-contact">WATSAN Office: <a href="tel:+233591189163">+233 59 118 9163</a></span></footer>{modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}</div>;
+  return <div className="app-shell welcome-shell welcome-reference-screen">
+    <button className="welcome-back-button" type="button" onClick={() => showToast('You are on the customer access screen.')} aria-label="Back">←</button>
+    <header className="reference-heading">
+      <h1>Get access to all products<br />and services offered<br />by TSRUKPE TOTA WATSAN</h1>
+    </header>
+    <main className="reference-device-stage">
+      <div className="reference-phone">
+        <div className="reference-phone-speaker"><span /></div>
+        <div className="reference-phone-screen">
+          <div className="reference-statusbar"><span>9:41</span><span>●  ▮▮  ▰</span></div>
+          <div className="reference-app-content">
+            <div className="reference-logo"><img src={logoPath} alt="Tsrukpe-Tota WATSAN logo" /></div>
+            <h2>Customer App</h2>
+            <p>Tsrukpe-Tota Water &amp; Sanitation</p>
+            <div className="reference-actions">
+              <button type="button" className="reference-register" onClick={() => showToast('Customer registration is handled by the WATSAN office. Please contact the office for a new connection.')}>Register</button>
+              <button type="button" className="reference-signin" onClick={() => setModal('signin')}>Sign In</button>
+            </div>
+          </div>
+          <div className="reference-phone-wave"><span>Powered by <strong>Tsrukpe-Tota WATSAN</strong></span></div>
+          <div className="reference-phone-nav"><i /><i /><i /></div>
+        </div>
+      </div>
+    </main>
+    <footer className="reference-outer-wave"><span>TSRUKPE TOTA · COMMUNITY WATER &amp; SANITATION</span></footer>
+    {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}
+  </div>;
 }
 
 function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayName, setModal, showBalance, setShowBalance, navigate, onRefresh }: { account: ServiceAccount | null; payments: Payment[]; bills: Bill[]; ziteData: ZiteCustomerData | null; ziteSyncing: boolean; displayName: string; setModal: (modal: Modal) => void; showBalance: boolean; setShowBalance: (show: boolean) => void; navigate: (screen: Screen) => void; onRefresh: () => void }) {
