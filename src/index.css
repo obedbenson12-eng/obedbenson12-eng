@@ -2544,3 +2544,16 @@ img, svg, video, canvas { max-width: 100%; }
   padding: 13px 10px !important;
   gap: 12px !important;
 }
+
+
+/* Tighter vertical rhythm for the main sidebar navigation links */
+.portal-shell .drawer-items {
+  display: grid !important;
+  gap: 2px !important;
+  align-content: start !important;
+}
+.portal-shell .drawer-items > .drawer-item {
+  min-height: 40px !important;
+  padding: 9px 10px !important;
+  gap: 12px !important;
+}
