@@ -22,6 +22,8 @@ import {
   LogOut,
   Mail,
   Menu,
+  Moon,
+  Sun,
   MessageSquare,
   Plus,
   PhoneCall,
@@ -73,6 +75,8 @@ function App() {
   const [screen, setScreen] = useState<Screen>('home');
   const [modal, setModal] = useState<Modal>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => { try { return localStorage.getItem('watsan_theme') === 'dark'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('watsan_theme', darkMode ? 'dark' : 'light'); } catch { /* Theme still works for this session. */ } }, [darkMode]);
   const [showBalance, setShowBalance] = useState(true);
   const [toast, setToast] = useState('');
   const [account, setAccount] = useState<ServiceAccount | null>(null);
@@ -232,8 +236,8 @@ function App() {
   ];
   const displayName = session.customer.fullName || 'WATSAN Customer';
 
-  return <div className="app-shell portal-shell">
-    <header className="topbar"><button className="icon-button icon-button--top" onClick={() => setDrawerOpen(true)} aria-label="Open menu"><Menu size={22} /></button><WatsanMark compact /><button className="icon-button icon-button--top" onClick={() => navigate('notifications')} aria-label="Open notifications"><Bell size={19} /><span className="notification-dot" /></button></header>
+  return <div className={`app-shell portal-shell${darkMode ? " theme-dark" : ""}`}>
+    <header className="topbar"><button className="icon-button icon-button--top" onClick={() => setDrawerOpen(true)} aria-label="Open menu"><Menu size={22} /></button><WatsanMark compact /><div className="topbar-actions"><button className="theme-toggle" type="button" onClick={() => setDarkMode(value => !value)} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} title={darkMode ? "Switch to light mode" : "Switch to dark mode"}><span className="theme-toggle-icon">{darkMode ? <Sun size={17} /> : <Moon size={17} />}</span><span className="theme-toggle-label">{darkMode ? "Light" : "Dark"}</span></button><button className="icon-button icon-button--top" onClick={() => navigate('notifications')} aria-label="Open notifications"><Bell size={19} /><span className="notification-dot" /></button></div></header>
     <main className="portal-content">
       {appError && <div className="error-banner"><Info size={17} /><span>{appError}</span><button onClick={() => void loadCustomerData(session)}>Retry</button></div>}
       {dataLoading && !account ? <div className="loading-card"><LoaderCircle className="spin" size={22} /> Loading your account</div> : <>
