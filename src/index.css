@@ -1615,3 +1615,94 @@ body {
     padding-top: 126px !important;
   }
 }
+
+
+/* Responsive layout system: phone, tablet, laptop, desktop and rotation */
+html { width: 100%; min-width: 320px; }
+body, #root { width: 100%; max-width: 100%; }
+img, svg, video, canvas { max-width: 100%; }
+.portal-shell { width: 100%; max-width: 1180px; }
+.portal-shell .topbar { width: 100%; }
+.portal-shell .portal-content { width: 100%; min-width: 0; }
+.portal-shell .screen-stack,
+.portal-shell .overview-screen,
+.portal-shell section,
+.portal-shell article { min-width: 0; }
+.portal-shell .overview-screen > *,
+.portal-shell .screen-stack > * { max-width: 100%; }
+.portal-shell input,
+.portal-shell select,
+.portal-shell textarea { max-width: 100%; min-width: 0; }
+.portal-shell .bottom-nav { max-width: 1180px; }
+
+/* Compact phones */
+@media (max-width: 380px) {
+  .portal-shell .topbar { height: 66px; min-height: 66px; padding: 10px 13px; }
+  .portal-shell .brand-mark--compact img { width: 30px; height: 30px; }
+  .portal-shell .brand-mark--compact strong { font-size: 9px; }
+  .portal-shell .portal-content { padding-left: 13px; padding-right: 13px; }
+  .portal-shell .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .portal-shell .quick-action { min-height: 82px; }
+  .portal-shell .usage-reading-grid,
+  .portal-shell .bill-reading-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .portal-shell .balance-card,
+  .portal-shell .account-holder-card { padding: 16px; }
+  .portal-shell .account-holder-payment strong { font-size: clamp(22px, 7vw, 27px); }
+  .portal-shell .bottom-nav { padding-left: 8px; padding-right: 8px; }
+}
+
+/* Standard phones */
+@media (min-width: 381px) and (max-width: 650px) {
+  .portal-shell .portal-content { padding-left: 16px; padding-right: 16px; }
+  .portal-shell .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .portal-shell .bottom-nav { width: 100%; }
+}
+
+/* Tablets: use available width without stretching text or cards */
+@media (min-width: 651px) and (max-width: 1023px) {
+  .portal-shell { max-width: 100%; }
+  .portal-shell .portal-content { padding: 30px clamp(24px, 4vw, 44px) 120px; }
+  .portal-shell .screen-stack { max-width: 900px; }
+  .portal-shell .quick-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .portal-shell .about-redesign .about-hero { grid-template-columns: minmax(0, 1fr) 130px; }
+  .portal-shell .about-redesign .about-intro-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+}
+
+/* Wide laptop and desktop */
+@media (min-width: 1024px) {
+  .portal-shell { max-width: 1280px; }
+  .portal-shell .portal-content { padding-left: clamp(42px, 5vw, 72px); padding-right: clamp(42px, 5vw, 72px); }
+  .portal-shell .screen-stack { max-width: 1120px; }
+  .portal-shell .bottom-nav { width: min(100%, 1280px); }
+}
+
+/* Landscape phones: reclaim vertical space and use the wider screen */
+@media (max-width: 900px) and (orientation: landscape) {
+  .portal-shell .topbar { height: 60px; min-height: 60px; padding-top: 8px; padding-bottom: 8px; }
+  .portal-shell .portal-content { padding-top: 18px; padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .portal-shell .screen-stack { gap: 16px; }
+  .portal-shell .welcome-header { padding-top: 14px; }
+  .portal-shell .welcome-main { margin-top: 12px; padding-top: 22px; padding-bottom: 22px; }
+  .portal-shell .quick-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .portal-shell .bottom-nav { height: 60px; padding-top: 5px; padding-bottom: max(5px, env(safe-area-inset-bottom)); }
+  .portal-shell .bottom-nav .nav-button { min-height: 46px; gap: 2px; }
+  .portal-shell .about-redesign .about-hero { min-height: 210px !important; }
+}
+
+/* Landscape phones with short viewports */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .portal-shell .portal-content { padding-top: 14px; }
+  .portal-shell .bottom-nav { height: 54px; }
+  .portal-shell .bottom-nav .nav-button svg { width: 17px; height: 17px; }
+  .portal-shell .bottom-nav .nav-button span { font-size: 10px; }
+}
+
+/* Tablet/desktop landscape: retain readable line lengths */
+@media (min-width: 901px) and (orientation: landscape) {
+  .portal-shell .portal-content { padding-top: 32px; }
+}
+
+/* Respect device safe areas and prevent horizontal page scrolling after rotation */
+@supports (height: 100dvh) {
+  .portal-shell, .welcome-shell { min-height: 100dvh; }
+}
