@@ -33,7 +33,7 @@ import {
 } from 'lucide-react';
 
 
-type Screen = 'home' | 'help' | 'statements' | 'account' | 'about' | 'notifications';
+type Screen = 'home' | 'help' | 'statements' | 'account' | 'about' | 'notifications' | 'personal' | 'security';
 type Modal = 'signin' | 'pay' | 'success' | null;
 type ServiceAccount = { id: string; account_number: string; service_address: string; balance: number; due_date: string; status: string };
 type Payment = { id: string; amount: number; method: string; status: string; receipt_number: string; created_at: string };
@@ -230,6 +230,8 @@ function App() {
         {screen === 'account' && <AccountScreen displayName={displayName} email={session.meterNumber} showToast={showToast} signOut={signOut} navigate={navigate} />}
         {screen === 'about' && <AboutScreen />}
         {screen === 'notifications' && <NotificationsScreen navigate={navigate} />}
+        {screen === 'personal' && <PersonalDetailsScreen session={session} customer={ziteData?.customer ?? null} />}
+        {screen === 'security' && <SecurityScreen session={session} customer={ziteData?.customer ?? null} signOut={signOut} />}
       </>}
     </main>
     <nav className="bottom-nav"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account'} onClick={() => navigate('account')} /></nav>
@@ -301,7 +303,62 @@ function NotificationsScreen({ navigate }: { navigate: (screen: Screen) => void 
   </div>;
 }
 
-function AccountScreen({ displayName, email, showToast, signOut, navigate }: { displayName: string; email: string; showToast: (message: string) => void; signOut: () => void; navigate: (screen: Screen) => void }) { return <div className="screen-stack"><PageIntro eyebrow="PREFERENCES" title="Settings" copy="Manage your profile and service preferences." /><div className="profile-card"><div className="profile-avatar"><UserRound size={26} /></div><div><strong>{displayName}</strong><p>{email}</p></div><ChevronRight size={18} /></div><div className="settings-list"><SettingRow icon={UserRound} title="Personal details" onClick={() => showToast('Personal details are managed from your account')} /><SettingRow icon={Bell} title="Notifications" onClick={() => showToast('Notifications are on')} /><SettingRow icon={ShieldCheck} title="Security and privacy" onClick={() => showToast('Your account is secure')} /><SettingRow icon={Info} title="About WATSAN" onClick={() => navigate('about')} /></div><button className="signout-button" onClick={signOut}><LogOut size={18} /> Sign out</button></div>; }
+
+function customerValue(customer: ZiteField | null, keys: string[], fallback = 'Not available') {
+  if (!customer) return fallback;
+  for (const key of keys) {
+    const value = customer[key];
+    if (value !== undefined && value !== null && String(value).trim()) return String(value);
+  }
+  return fallback;
+}
+
+function PersonalDetailsScreen({ session, customer }: { session: PortalSession; customer: ZiteField | null }) {
+  const name = session.customer.fullName || customerValue(customer, ['Full Name','fullName','Customer Name','name'], 'WATSAN Customer');
+  const phone = customerValue(customer, ['Phone Number','phoneNumber','Phone','phone','Mobile Number','mobileNumber']);
+  const address = customerValue(customer, ['Location','location','Address','address','Service Address','serviceAddress'], 'Tsrukpe-Tota');
+  const requestBody = encodeURIComponent(`Hello WATSAN Office, I would like to request an update to my customer personal details.\nMeter number: ${session.meterNumber}\nName: ${name}\nRegistered phone: ${phone}\nPlease contact me to verify this request.`);
+  return <div className="screen-stack">
+    <PageIntro eyebrow="MY PROFILE" title="Personal details" copy="Review the customer information linked to your WATSAN meter account." />
+    <section className="profile-details-card">
+      <div className="profile-detail-row"><span>Full name</span><strong>{name}</strong></div>
+      <div className="profile-detail-row"><span>Meter number</span><strong>{session.meterNumber}</strong></div>
+      <div className="profile-detail-row"><span>Registered phone number</span><strong>{phone}</strong></div>
+      <div className="profile-detail-row"><span>Service address</span><strong>{address}</strong></div>
+      <p className="settings-note">For your protection, these details are read-only. WATSAN must verify and approve changes to your registered information. Your meter number cannot be changed through the customer portal.</p>
+    </section>
+    <a className="button button--primary settings-contact-button" href={`mailto:watsancommitteetsrukpetota@gmail.com?subject=Request%20to%20update%20customer%20details&body=${requestBody}`}> <Mail size={17}/> Request a details update</a>
+  </div>;
+}
+
+function SecurityScreen({ session, customer, signOut }: { session: PortalSession; customer: ZiteField | null; signOut: () => void }) {
+  const phone = customerValue(customer, ['Phone Number','phoneNumber','Phone','phone','Mobile Number','mobileNumber']);
+  const expiry = new Date(session.expiresAt);
+  const exportAccountData = () => {
+    const payload = { exportedAt: new Date().toISOString(), customerName: session.customer.fullName, meterNumber: session.meterNumber, registeredPhone: phone, sessionExpiresAt: session.expiresAt, note: 'This export contains the profile/session details currently available in this browser. Request official billing records from WATSAN.' };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a'); link.href = url; link.download = `watsan-account-information-${session.meterNumber}.json`; link.click(); URL.revokeObjectURL(url);
+  };
+  const reportHref = `mailto:watsancommitteetsrukpetota@gmail.com?subject=Suspicious%20account%20activity&body=${encodeURIComponent(`Hello WATSAN, I want to report suspicious activity on my customer account. Meter number: ${session.meterNumber}. Please contact me to verify my identity.`)}`;
+  return <div className="screen-stack">
+    <PageIntro eyebrow="ACCOUNT PROTECTION" title="Security & privacy" copy="Understand how your account is protected and manage access on this device." />
+    <section className="security-status-card"><div className="security-status-icon"><ShieldCheck size={23}/></div><div><strong>OTP-protected access</strong><p>Your account is accessed using a one-time verification code sent to your registered phone.</p></div></section>
+    <section className="profile-details-card">
+      <div className="profile-detail-row"><span>Verification phone</span><strong>{phone}</strong></div>
+      <div className="profile-detail-row"><span>Current session</span><strong>Signed in on this device</strong></div>
+      <div className="profile-detail-row"><span>Session expiry</span><strong>{Number.isNaN(expiry.getTime()) ? 'Not available' : expiry.toLocaleString('en-GH')}</strong></div>
+      <div className="profile-detail-row"><span>Password</span><strong>Not used — OTP login</strong></div>
+      <p className="settings-note">This portal currently shows the session active in this browser only. It does not yet provide a list of other devices or a remote “sign out all devices” control.</p>
+    </section>
+    <div className="security-actions">
+      <button className="setting-row" onClick={exportAccountData}><span><Download size={18}/></span><strong>Download available account information</strong><ChevronRight size={17}/></button>
+      <a className="setting-row security-link" href={reportHref}><span><ShieldCheck size={18}/></span><strong>Report suspicious activity</strong><ChevronRight size={17}/></a>
+      <button className="setting-row security-signout" onClick={signOut}><span><LogOut size={18}/></span><strong>Sign out of this device</strong><ChevronRight size={17}/></button>
+    </div>
+  </div>;
+}
+
+function AccountScreen({ displayName, email, showToast, signOut, navigate }: { displayName: string; email: string; showToast: (message: string) => void; signOut: () => void; navigate: (screen: Screen) => void }) { return <div className="screen-stack"><PageIntro eyebrow="PREFERENCES" title="Settings" copy="Manage your profile and service preferences." /><div className="profile-card"><div className="profile-avatar"><UserRound size={26} /></div><div><strong>{displayName}</strong><p>Meter number: {email}</p></div><ChevronRight size={18} /></div><div className="settings-list"><SettingRow icon={UserRound} title="Personal details" onClick={() => navigate('personal')} /><SettingRow icon={Bell} title="Notifications" onClick={() => navigate('notifications')} /><SettingRow icon={ShieldCheck} title="Security and privacy" onClick={() => navigate('security')} /><SettingRow icon={Info} title="About WATSAN" onClick={() => navigate('about')} /></div><button className="signout-button" onClick={signOut}><LogOut size={18} /> Sign out</button></div>; }
 
 function ModalContent({ modal, close, setModal, navigate, onPayment, onLogin, showToast }: { modal: Modal; close: () => void; setModal?: (modal: Modal) => void; navigate?: (screen: Screen) => void; onPayment: () => Promise<boolean>; onLogin: (session: PortalSession) => void; showToast?: (message: string) => void }) {
   const [form, setForm] = useState(initialAuthForm);
