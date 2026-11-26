@@ -3735,3 +3735,83 @@ img, svg, video, canvas { max-width: 100%; }
     radial-gradient(ellipse at 8% 100%, rgba(23, 105, 154, .28) 0%, rgba(23, 105, 154, 0) 42%),
     linear-gradient(122deg, #061d36 0%, #092f51 50%, #0b4567 100%) !important;
 }
+
+
+/* Quick Access — four distinct water-service action tiles */
+.portal-shell .overview-screen .quick-grid {
+  gap: 10px !important;
+}
+.portal-shell .overview-screen .quick-action {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 112px !important;
+  padding: 13px 7px 12px !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 15px !important;
+  color: #fff !important;
+  box-shadow: 0 7px 16px rgba(16, 52, 86, .12) !important;
+  transition: transform .18s ease, box-shadow .18s ease !important;
+}
+.portal-shell .overview-screen .quick-action::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  width: 78px !important;
+  height: 78px !important;
+  right: -35px !important;
+  top: -38px !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 12px rgba(255,255,255,.055), 0 0 0 25px rgba(255,255,255,.035) !important;
+}
+.portal-shell .overview-screen .quick-action:nth-child(1) {
+  background: linear-gradient(145deg, #07508a 0%, #087ba6 100%) !important;
+}
+.portal-shell .overview-screen .quick-action:nth-child(2) {
+  background: linear-gradient(145deg, #17457d 0%, #376fa8 100%) !important;
+}
+.portal-shell .overview-screen .quick-action:nth-child(3) {
+  background: linear-gradient(145deg, #08766f 0%, #159b91 100%) !important;
+}
+.portal-shell .overview-screen .quick-action:nth-child(4) {
+  background: linear-gradient(145deg, #31528b 0%, #5579b4 100%) !important;
+}
+.portal-shell .overview-screen .quick-action > span {
+  width: 36px !important;
+  height: 36px !important;
+  margin: 0 auto 10px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #fff !important;
+  background: rgba(255,255,255,.17) !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  box-shadow: 0 3px 9px rgba(0,0,0,.08) !important;
+}
+.portal-shell .overview-screen .quick-action strong {
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  color: #fff !important;
+  font-size: 10.8px !important;
+  line-height: 1.25 !important;
+  font-weight: 750 !important;
+  text-align: center !important;
+}
+.portal-shell .overview-screen .quick-action:active {
+  transform: translateY(1px) scale(.985) !important;
+}
+.portal-shell.theme-dark .overview-screen .quick-action {
+  border-color: rgba(190,225,245,.20) !important;
+  box-shadow: 0 7px 18px rgba(0,0,0,.22) !important;
+}
+@media (min-width: 521px) {
+  .portal-shell .overview-screen .quick-action { min-height: 120px !important; }
+  .portal-shell .overview-screen .quick-action strong { font-size: 12px !important; }
+}
+@media (max-width: 380px) {
+  .portal-shell .overview-screen .quick-grid { gap: 7px !important; }
+  .portal-shell .overview-screen .quick-action { min-height: 102px !important; padding: 11px 4px !important; }
+  .portal-shell .overview-screen .quick-action strong { font-size: 9.8px !important; }
+}
