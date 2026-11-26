@@ -2222,3 +2222,167 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.theme-dark .about-redesign .about-contact-copy p {
   color: #b6c9d9 !important;
 }
+
+
+/* Interactive About Us cards and polished detail pop-up */
+.portal-shell .about-redesign .about-interactive-card {
+  cursor: pointer !important;
+  position: relative !important;
+  outline: none !important;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, filter .22s ease !important;
+  -webkit-tap-highlight-color: transparent;
+}
+.portal-shell .about-redesign .about-interactive-card:hover,
+.portal-shell .about-redesign .about-interactive-card:focus-visible {
+  transform: translateY(-4px) !important;
+  border-color: #78add0 !important;
+  box-shadow: 0 14px 28px rgba(13, 63, 135, .16) !important;
+  filter: saturate(1.06);
+}
+.portal-shell .about-redesign .about-interactive-card:active {
+  transform: scale(.985) !important;
+}
+.portal-shell .about-redesign .about-card-hint {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin-top: 12px !important;
+  color: #14558a !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .03em !important;
+}
+.portal-shell .about-redesign .about-service-item .about-service-arrow {
+  transition: transform .2s ease !important;
+}
+.portal-shell .about-redesign .about-service-item:hover .about-service-arrow {
+  transform: translateX(4px) !important;
+}
+.portal-shell .about-detail-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom)) !important;
+  overflow-y: auto !important;
+  background: rgba(5, 25, 45, .68) !important;
+  -webkit-backdrop-filter: blur(9px) !important;
+  backdrop-filter: blur(9px) !important;
+  animation: aboutOverlayIn .18s ease both !important;
+}
+.portal-shell .about-detail-modal {
+  position: relative !important;
+  width: min(100%, 490px) !important;
+  max-height: min(82dvh, 680px) !important;
+  overflow-y: auto !important;
+  margin: auto !important;
+  padding: 32px !important;
+  border: 1px solid rgba(255,255,255,.8) !important;
+  border-radius: 24px !important;
+  background: linear-gradient(150deg, #ffffff 0%, #f1f7fc 58%, #e3f0f9 100%) !important;
+  box-shadow: 0 28px 80px rgba(0, 20, 42, .34), inset 0 1px 0 #fff !important;
+  color: #183d5c !important;
+  animation: aboutModalPop .28s cubic-bezier(.2,.8,.2,1) both !important;
+}
+.portal-shell .about-detail-close {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  border: 1px solid #d5e4ef !important;
+  border-radius: 50% !important;
+  background: #eaf3f9 !important;
+  color: #174b74 !important;
+  cursor: pointer !important;
+}
+.portal-shell .about-detail-symbol {
+  display: grid !important;
+  place-items: center !important;
+  width: 58px !important;
+  height: 58px !important;
+  margin-bottom: 22px !important;
+  border-radius: 18px !important;
+  color: #fff !important;
+  background: linear-gradient(145deg, #0d3f87, #2879ad) !important;
+  box-shadow: 0 9px 20px rgba(13,63,135,.2) !important;
+}
+.portal-shell .about-detail-eyebrow {
+  display: block !important;
+  margin-bottom: 9px !important;
+  color: #3479a8 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  letter-spacing: .17em !important;
+}
+.portal-shell .about-detail-modal h2 {
+  margin: 0 42px 13px 0 !important;
+  color: #123b60 !important;
+  font-size: clamp(23px, 5vw, 30px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -.035em !important;
+  overflow-wrap: anywhere !important;
+}
+.portal-shell .about-detail-body {
+  margin: 0 !important;
+  color: #526f87 !important;
+  font-size: 14px !important;
+  line-height: 1.8 !important;
+}
+.portal-shell .about-detail-divider {
+  height: 1px !important;
+  margin: 22px 0 !important;
+  background: linear-gradient(90deg, #b8d3e6, transparent) !important;
+}
+.portal-shell .about-detail-extra {
+  margin: 0 0 24px !important;
+  padding: 15px 16px !important;
+  border: 1px solid #d2e3ef !important;
+  border-radius: 13px !important;
+  background: linear-gradient(135deg, #e6f1f8, #f5f9fc) !important;
+  color: #45647d !important;
+  font-size: 12px !important;
+  line-height: 1.75 !important;
+}
+.portal-shell .about-detail-done {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  width: 100% !important;
+  min-height: 48px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  color: #fff !important;
+  background: linear-gradient(110deg, #0d3f87, #176da4) !important;
+  box-shadow: 0 8px 18px rgba(13,63,135,.2) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+}
+@keyframes aboutOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes aboutModalPop { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 520px) {
+  .portal-shell .about-detail-overlay { padding: 14px !important; }
+  .portal-shell .about-detail-modal {
+    width: 100% !important;
+    max-height: 84dvh !important;
+    padding: 25px 21px 21px !important;
+    border-radius: 21px !important;
+  }
+  .portal-shell .about-detail-symbol { width: 50px !important; height: 50px !important; margin-bottom: 17px !important; }
+  .portal-shell .about-detail-body { font-size: 13px !important; }
+}
+.portal-shell.theme-dark .about-detail-modal {
+  background: linear-gradient(150deg, #18344d 0%, #1c3d59 58%, #214864 100%) !important;
+  border-color: #41627b !important;
+}
+.portal-shell.theme-dark .about-detail-modal h2 { color: #f0f7fc !important; }
+.portal-shell.theme-dark .about-detail-body,
+.portal-shell.theme-dark .about-detail-extra { color: #c3d5e3 !important; }
+.portal-shell.theme-dark .about-detail-extra { background: #23445e !important; border-color: #42627a !important; }
+.portal-shell.theme-dark .about-detail-close { background: #274963 !important; border-color: #45657d !important; color: #eaf4fb !important; }
+.portal-shell.theme-dark .about-redesign .about-card-hint { color: #9fd1f2 !important; }
