@@ -5402,3 +5402,10 @@ img, svg, video, canvas { max-width: 100%; }
 .watsan-login-professional .watsan-professional-main {
   transform: translate3d(0, 64px, 0) !important;
 }
+
+
+/* Move only the WATSAN logo and title lower; leave customer access controls in place. */
+.watsan-login-professional .watsan-professional-brand {
+  position:relative !important;
+  top:40px !important;
+}
