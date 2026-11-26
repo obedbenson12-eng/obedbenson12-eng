@@ -277,6 +277,7 @@ function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { mo
       <div className="watsan-brand-caption"><strong>CUSTOMER APP</strong><span>TSRUKPE TOTA WATSAN</span></div>
     </header>
     <main className="watsan-professional-main">
+      <div className="watsan-customer-access-copy"><h1>CUSTOMER ACCESS</h1><p>Access all WATSAN services</p></div>
       <div className="watsan-professional-actions">
         <button type="button" className="watsan-access-button" onClick={() => setModal('signin')}>Access my account <ArrowRight size={19} /></button>
         <button type="button" className="watsan-demo-button" onClick={onDemo}>Enter demo portal <span>(testing only)</span></button>
