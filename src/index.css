@@ -5017,3 +5017,9 @@ img, svg, video, canvas { max-width: 100%; }
   .watsan-login-reference .watsan-login-actions button { min-height: 54px; font-size: 17px; }
   .watsan-login-reference .watsan-login-logo { top: 18.5%; width: 132px; height: 132px; }
 }
+
+/* Align the emblem near the upper fifth, as in the supplied in-phone screen. */
+.watsan-login-reference .watsan-login-logo { top: 11.8% !important; }
+@media (max-width: 480px) {
+  .watsan-login-reference .watsan-login-logo { top: 11.8% !important; }
+}
