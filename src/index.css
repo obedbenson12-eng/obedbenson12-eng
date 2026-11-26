@@ -5356,3 +5356,17 @@ img, svg, video, canvas { max-width: 100%; }
   .watsan-login-professional .watsan-professional-copy {margin-bottom:15px;}
   .watsan-login-professional .watsan-professional-trust {margin-top:13px;}
 }
+
+/* Centered customer access message on the welcome screen. */
+.watsan-login-professional .watsan-customer-access-copy {
+  width:100%; margin:0 auto 28px; text-align:center;
+}
+.watsan-login-professional .watsan-customer-access-copy h1 {
+  margin:0 0 9px; color:#fff;
+  font:800 clamp(21px,4.8vw,27px)/1.2 'Manrope',Arial,sans-serif;
+  letter-spacing:.12em;
+}
+.watsan-login-professional .watsan-customer-access-copy p {
+  margin:0; color:rgba(239,247,255,.84);
+  font:500 14px/1.5 'Manrope',Arial,sans-serif;
+}
