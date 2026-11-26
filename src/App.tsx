@@ -236,7 +236,7 @@ function App() {
         {screen === 'security' && <SecurityScreen session={session} customer={ziteData?.customer ?? null} signOut={signOut} />}
       </>}
     </main>
-    <nav className="bottom-nav"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account'} onClick={() => navigate('account')} /></nav>
+    <nav className="bottom-nav" aria-label="Main navigation"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account' || screen === 'personal' || screen === 'notifications' || screen === 'security'} onClick={() => navigate('account')} /></nav>
     {drawerOpen && <Drawer close={() => setDrawerOpen(false)} items={menuItems} navigate={navigate} displayName={displayName} signOut={signOut} />}
     {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={handleLogin} onPayment={async () => {
       if (!session || session.isDemo || !account || account.balance <= 0) { showToast('Payments are disabled in demo mode'); return false; }
