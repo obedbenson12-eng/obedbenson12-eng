@@ -2447,3 +2447,55 @@ img, svg, video, canvas { max-width: 100%; }
 }
 .portal-shell.theme-dark .about-redesign .about-who-card { background: linear-gradient(135deg, #1d3a55 0%, #213f5b 100%) !important; border-color: #36546e !important; }
 .portal-shell.theme-dark .about-redesign .about-who-card .about-intro-copy { border-color: #42627a !important; }
+
+
+/* Keep every sidebar action reachable on short screens */
+.portal-shell .drawer-backdrop {
+  align-items: stretch !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+}
+.portal-shell .drawer {
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  padding-top: max(16px, env(safe-area-inset-top)) !important;
+  padding-bottom: max(14px, env(safe-area-inset-bottom)) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.portal-shell .drawer-head,
+.portal-shell .drawer-profile {
+  flex: 0 0 auto !important;
+}
+.portal-shell .drawer-items {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 0 2px 10px !important;
+}
+.portal-shell .drawer-bottom {
+  flex: 0 0 auto !important;
+  margin-top: 8px !important;
+  padding-top: 10px !important;
+  padding-bottom: 2px !important;
+  background: transparent !important;
+}
+.portal-shell .drawer-bottom .drawer-item {
+  min-height: 46px !important;
+  padding-top: 11px !important;
+  padding-bottom: 11px !important;
+}
+@media (max-height: 620px) {
+  .portal-shell .drawer-head { padding-bottom: 12px !important; }
+  .portal-shell .drawer-profile { padding: 9px 11px !important; margin-bottom: 10px !important; }
+  .portal-shell .drawer-item { padding-top: 9px !important; padding-bottom: 9px !important; }
+  .portal-shell .drawer-bottom { margin-top: 5px !important; padding-top: 6px !important; }
+}
