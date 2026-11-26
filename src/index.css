@@ -3968,3 +3968,157 @@ img, svg, video, canvas { max-width: 100%; }
   .portal-shell .modal-card--auth .modal-brand { margin-bottom: 23px !important; }
   .portal-shell .modal-card--auth form h2 { font-size: 23px !important; }
 }
+
+
+/* Customer sign-in — split-panel, institutional WATSAN design */
+.portal-shell .modal-card--auth {
+  display: grid !important;
+  grid-template-columns: minmax(250px, .88fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  width: min(100%, 760px) !important;
+  min-height: 440px !important;
+  max-height: min(90vh, 720px) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #dce6ed !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  box-shadow: 0 30px 90px rgba(0, 20, 39, .34) !important;
+}
+.portal-shell .modal-card--auth .auth-brand-panel {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 440px;
+  padding: 30px 27px 25px;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(111,205,235,.24), transparent 34%),
+    radial-gradient(circle at 5% 95%, rgba(32,142,181,.30), transparent 38%),
+    linear-gradient(145deg, #062e52 0%, #075985 57%, #08799a 100%);
+}
+.portal-shell .modal-card--auth .auth-brand-panel::before,
+.portal-shell .modal-card--auth .auth-brand-panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.portal-shell .modal-card--auth .auth-brand-panel::before {
+  width: 270px; height: 270px; right: -145px; top: 95px;
+  box-shadow: 0 0 0 22px rgba(255,255,255,.035), 0 0 0 48px rgba(255,255,255,.025);
+}
+.portal-shell .modal-card--auth .auth-brand-panel::after {
+  width: 190px; height: 190px; left: -120px; bottom: -75px;
+  box-shadow: 0 0 0 18px rgba(255,255,255,.035), 0 0 0 38px rgba(255,255,255,.025);
+}
+.portal-shell .modal-card--auth .auth-brand-panel .brand-mark {
+  gap: 10px !important;
+  color: #fff !important;
+}
+.portal-shell .modal-card--auth .auth-brand-panel .brand-mark img {
+  width: 46px !important; height: 46px !important; object-fit: contain;
+  padding: 3px; border-radius: 10px; background: rgba(255,255,255,.96);
+}
+.portal-shell .modal-card--auth .auth-brand-panel .brand-mark strong { color: #fff !important; font-size: 13px !important; letter-spacing: .08em; }
+.portal-shell .modal-card--auth .auth-brand-panel .brand-mark small { color: #c7e5f3 !important; font-size: 8px !important; letter-spacing: .13em; }
+.portal-shell .modal-card--auth .auth-brand-message { margin: auto 0; padding: 35px 0 28px; }
+.portal-shell .modal-card--auth .auth-brand-kicker {
+  display: block; margin-bottom: 15px; color: #9bdcf0;
+  font-size: 9px; font-weight: 800; letter-spacing: .16em;
+}
+.portal-shell .modal-card--auth .auth-brand-message h3 {
+  margin: 0 0 14px; color: #fff; font-size: clamp(25px, 3vw, 33px);
+  line-height: 1.16; font-weight: 750; letter-spacing: -.035em;
+}
+.portal-shell .modal-card--auth .auth-brand-message h3 em { color: #a9e5f3; font-style: normal; }
+.portal-shell .modal-card--auth .auth-brand-message p {
+  max-width: 255px; margin: 0 0 25px; color: #d0e7f1;
+  font-size: 12px; line-height: 1.7;
+}
+.portal-shell .modal-card--auth .auth-trust-item {
+  display: flex; align-items: center; gap: 10px; margin-top: 13px;
+  color: #e5f4fa; font-size: 10px; font-weight: 600;
+}
+.portal-shell .modal-card--auth .auth-trust-item svg { color: #9be0ef; flex: 0 0 auto; }
+.portal-shell .modal-card--auth .auth-brand-footer {
+  padding-top: 15px; border-top: 1px solid rgba(255,255,255,.18);
+  color: #b7dce9; font-size: 8px; font-weight: 750; letter-spacing: .16em;
+}
+.portal-shell .modal-card--auth > .modal-brand {
+  grid-column: 2; grid-row: 1; margin: 0 !important;
+  padding: 34px 40px 0 !important; border: 0 !important;
+}
+.portal-shell .modal-card--auth > .modal-brand .brand-mark { display: none !important; }
+.portal-shell .modal-card--auth > form {
+  grid-column: 2; grid-row: 2; align-self: center;
+  padding: 15px 40px 38px !important;
+}
+.portal-shell .modal-card--auth > .modal-close {
+  z-index: 5; top: 20px !important; right: 20px !important;
+}
+.portal-shell .modal-card--auth form h2 { font-size: 26px !important; }
+.portal-shell .modal-card--auth form .modal-copy { margin-bottom: 27px !important; }
+.portal-shell .modal-card--auth form label { margin-bottom: 20px !important; }
+.portal-shell .modal-card--auth form label input {
+  height: 51px !important; border-radius: 8px !important;
+}
+.portal-shell .modal-card--auth form .button--primary {
+  min-height: 51px !important; border-radius: 8px !important;
+  background: linear-gradient(105deg, #075985, #087da4) !important;
+}
+.portal-shell .modal-card--auth form .button--primary:hover {
+  background: linear-gradient(105deg, #06466e, #066987) !important;
+}
+.portal-shell.theme-dark .modal-card--auth {
+  background: #142536 !important; border-color: #31495d !important;
+}
+.portal-shell.theme-dark .modal-card--auth > .modal-brand { border-color: transparent !important; }
+@media (max-width: 620px) {
+  .portal-shell .modal-card--auth {
+    display: flex !important; flex-direction: column !important;
+    width: min(100%, 430px) !important; min-height: 0 !important;
+    max-height: 92vh !important; overflow-y: auto !important;
+    border-radius: 16px !important;
+  }
+  .portal-shell .modal-card--auth .auth-brand-panel {
+    min-height: 0 !important; padding: 17px 20px 16px !important;
+    flex: 0 0 auto !important;
+  }
+  .portal-shell .modal-card--auth .auth-brand-panel .brand-mark img {
+    width: 36px !important; height: 36px !important;
+  }
+  .portal-shell .modal-card--auth .auth-brand-message { padding: 18px 0 8px !important; }
+  .portal-shell .modal-card--auth .auth-brand-kicker { margin-bottom: 7px !important; font-size: 8px !important; }
+  .portal-shell .modal-card--auth .auth-brand-message h3 {
+    margin-bottom: 7px !important; font-size: 22px !important;
+  }
+  .portal-shell .modal-card--auth .auth-brand-message p {
+    max-width: 100% !important; margin-bottom: 9px !important;
+    font-size: 10px !important; line-height: 1.5 !important;
+  }
+  .portal-shell .modal-card--auth .auth-trust-item {
+    display: inline-flex !important; margin: 5px 12px 0 0 !important;
+    font-size: 9px !important;
+  }
+  .portal-shell .modal-card--auth .auth-brand-footer { display: none !important; }
+  .portal-shell .modal-card--auth > .modal-brand {
+    display: none !important;
+  }
+  .portal-shell .modal-card--auth > form {
+    padding: 24px 22px 25px !important;
+  }
+  .portal-shell .modal-card--auth > .modal-close {
+    top: 13px !important; right: 13px !important;
+    width: 30px !important; height: 30px !important;
+  }
+  .portal-shell .modal-card--auth form h2 { font-size: 23px !important; }
+  .portal-shell .modal-card--auth form .modal-copy { margin-bottom: 20px !important; }
+}
