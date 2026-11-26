@@ -1586,3 +1586,32 @@ body {
   isolation: isolate;
   box-shadow: 0 4px 14px rgba(5, 35, 72, .14);
 }
+
+
+/* Fixed header: use viewport positioning rather than sticky so page scrolling
+   cannot carry the WATSAN brand bar off-screen on mobile browsers. */
+.portal-shell .topbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%);
+  width: 100% !important;
+  max-width: 1180px !important;
+  height: 72px !important;
+  min-height: 72px !important;
+  box-sizing: border-box !important;
+  z-index: 10000 !important;
+}
+.portal-shell .portal-content {
+  padding-top: 102px !important;
+}
+@media (min-width: 700px) {
+  .portal-shell .topbar {
+    top: 24px !important;
+    width: min(100%, 1180px) !important;
+  }
+  .portal-shell .portal-content {
+    padding-top: 126px !important;
+  }
+}
