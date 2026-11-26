@@ -1193,3 +1193,18 @@ body {
   background: #14558a !important;
   color: #fff !important;
 }
+
+
+/* Customer profile management and clear three-state bill labels */
+.bill-status--partial { background: #fff4d8; color: #95610b; }
+.profile-card--managed { gap: 14px; padding: 18px; align-items: center; border-color: #cbdfee; background: linear-gradient(135deg,#f5faff 0%,#ffffff 100%); }
+.managed-avatar-wrap { position: relative; flex: 0 0 76px; width: 76px; height: 76px; }
+.managed-avatar { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; color: #14558a; background: #e2eff8; border: 3px solid #c5dced; }
+.managed-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.managed-avatar-upload { position: absolute; right: -2px; bottom: -2px; width: 30px; height: 30px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 50%; background: #14558a; color: #fff; cursor: pointer; }
+.managed-profile-copy { min-width: 0; flex: 1; }
+.managed-profile-copy strong { display: block; color: #153d62; font-size: 15px; overflow-wrap: anywhere; }
+.managed-profile-copy p { color: #71879b; font-size: 11px; margin: 5px 0 8px; overflow-wrap: anywhere; }
+.managed-upload-link,.managed-remove-link { display: inline-block; padding: 0; margin: 0 12px 0 0; border: 0; background: transparent; color: #14558a; font-size: 11px; font-weight: 800; cursor: pointer; text-decoration: underline; }
+.managed-remove-link { color: #a94c45; }
+@media (max-width: 380px) { .profile-card--managed { padding: 13px; gap: 10px; } .managed-avatar-wrap,.managed-avatar { width: 64px; height: 64px; flex-basis: 64px; } }
