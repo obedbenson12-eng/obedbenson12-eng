@@ -274,7 +274,7 @@ function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { mo
     <div className="watsan-login-glow watsan-login-glow--two" />
     <header className="watsan-professional-brand">
       <div className="watsan-professional-logo"><img src={logoPath} alt="Tsrukpe-Tota WATSAN logo" /></div>
-      <span>TSRUKPE TOTA WATSAN</span>
+      <div className="watsan-brand-caption"><strong>CUSTOMER APP</strong><span>TSRUKPE TOTA WATSAN</span></div>
     </header>
     <main className="watsan-professional-main">
       <div className="watsan-professional-kicker"><span /> COMMUNITY WATER SERVICES</div>
