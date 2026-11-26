@@ -269,16 +269,31 @@ function App() {
 }
 
 function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void; onLogin: (session: PortalSession) => void; onDemo: () => void }) {
-  return <div className="app-shell welcome-shell watsan-login-reference watsan-login-professional watsan-brand-only">
+  return <div className="app-shell welcome-shell watsan-login-reference watsan-login-professional">
     <div className="watsan-login-glow watsan-login-glow--one" />
     <div className="watsan-login-glow watsan-login-glow--two" />
-    <main className="watsan-brand-only-center">
+    <header className="watsan-professional-brand">
       <div className="watsan-professional-logo"><img src={logoPath} alt="Tsrukpe-Tota WATSAN logo" /></div>
-      <div className="watsan-brand-caption">
-        <strong>TSRUKPE TOTA WATSAN</strong>
-        <span>CUSTOMER APP</span>
+      <div className="watsan-brand-caption"><strong>CUSTOMER APP</strong><span>TSRUKPE TOTA WATSAN</span></div>
+    </header>
+    <main className="watsan-professional-main">
+      <div className="watsan-professional-kicker"><span /> COMMUNITY WATER SERVICES</div>
+      <h1>Reliable water services,<br /><em>right at your fingertips.</em></h1>
+      <p className="watsan-professional-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p>
+      <div className="watsan-professional-actions">
+        <button type="button" className="watsan-access-button" onClick={() => setModal('signin')}>Access my account <ArrowRight size={19} /></button>
+        <button type="button" className="watsan-demo-button" onClick={onDemo}>Enter demo portal <span>(testing only)</span></button>
+      </div>
+      <div className="watsan-professional-trust">
+        <span><ShieldCheck size={17} /> Meter number + OTP verification</span>
+        <i />
+        <span><Zap size={17} /> Always available</span>
       </div>
     </main>
+    <footer className="watsan-professional-footer">
+      <span>Serving Tsrukpe-Tota and surrounding communities</span>
+      <a href="tel:+233591189163">WATSAN Office · +233 59 118 9163</a>
+    </footer>
     {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}
   </div>;
 }
