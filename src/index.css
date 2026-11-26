@@ -3663,3 +3663,75 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell .account-holder-card .zite-sync {
   box-shadow: none !important;
 }
+
+
+/* Account Holder card — refined water-inspired premium background */
+.portal-shell .overview-screen > .account-holder-card {
+  isolation: isolate !important;
+  overflow: hidden !important;
+  position: relative !important;
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(111, 207, 238, .27) 0%, rgba(111, 207, 238, 0) 34%),
+    radial-gradient(ellipse at 8% 100%, rgba(35, 135, 183, .34) 0%, rgba(35, 135, 183, 0) 42%),
+    linear-gradient(122deg, #082b50 0%, #0c4778 48%, #12618b 100%) !important;
+  border: 1px solid rgba(174, 222, 246, .24) !important;
+  box-shadow: 0 12px 28px rgba(8, 43, 80, .20) !important;
+}
+.portal-shell .overview-screen > .account-holder-card::before {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  width: 250px !important;
+  height: 250px !important;
+  right: -105px !important;
+  top: -145px !important;
+  border: 1px solid rgba(220, 246, 255, .20) !important;
+  border-radius: 50% !important;
+  box-shadow:
+    0 0 0 18px rgba(220, 246, 255, .035),
+    0 0 0 38px rgba(220, 246, 255, .03),
+    0 0 0 60px rgba(220, 246, 255, .025) !important;
+}
+.portal-shell .overview-screen > .account-holder-card::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  width: 190px !important;
+  height: 90px !important;
+  right: -25px !important;
+  bottom: -44px !important;
+  border-radius: 50% !important;
+  border-top: 1px solid rgba(224, 247, 255, .20) !important;
+  box-shadow:
+    0 -9px 0 -8px rgba(224, 247, 255, .16),
+    0 -19px 0 -18px rgba(224, 247, 255, .13),
+    0 -29px 0 -28px rgba(224, 247, 255, .10) !important;
+}
+.portal-shell .overview-screen > .account-holder-card > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+.portal-shell .overview-screen > .account-holder-card .account-holder-details > span {
+  color: #e0f0fa !important;
+}
+.portal-shell .overview-screen > .account-holder-card .account-holder-payment small {
+  color: #c1e1f2 !important;
+}
+.portal-shell .overview-screen > .account-holder-card .account-holder-payment strong {
+  color: #ffffff !important;
+}
+.portal-shell .overview-screen > .account-holder-card .account-holder-footer {
+  color: #d6eaf6 !important;
+}
+.portal-shell .overview-screen > .account-holder-card .zite-sync {
+  color: #b5d8eb !important;
+}
+.portal-shell.theme-dark .overview-screen > .account-holder-card {
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(79, 177, 216, .22) 0%, rgba(79, 177, 216, 0) 34%),
+    radial-gradient(ellipse at 8% 100%, rgba(23, 105, 154, .28) 0%, rgba(23, 105, 154, 0) 42%),
+    linear-gradient(122deg, #061d36 0%, #092f51 50%, #0b4567 100%) !important;
+}
