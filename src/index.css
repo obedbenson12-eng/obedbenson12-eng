@@ -1569,3 +1569,20 @@ body {
   .portal-shell .bill-history-card,
   .portal-shell .statement-card { transition: none !important; }
 }
+
+
+/* Keep the WATSAN brand header visible while the customer scrolls. */
+.portal-shell {
+  position: relative;
+}
+.portal-shell > .topbar,
+.portal-shell .topbar {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  flex-shrink: 0;
+  width: 100%;
+  isolation: isolate;
+  box-shadow: 0 4px 14px rgba(5, 35, 72, .14);
+}
