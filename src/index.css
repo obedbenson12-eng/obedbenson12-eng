@@ -1236,3 +1236,6 @@ body {
 .account-holder-heading { justify-content: flex-start; }
 .account-holder-chip { display: none; }
 .account-holder-payment .balance-refresh:disabled { opacity: .7; cursor: wait; }
+
+/* Exact match to the customer portal logo header: solid WATSAN navy blue. */
+.portal-shell .overview-screen > .account-holder-card { background: #0d3f87 !important; background-image: none !important; }
