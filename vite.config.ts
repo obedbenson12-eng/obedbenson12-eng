@@ -2,12 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 
-// Bolt serves previews from the domain root. GitHub Pages serves this
-// repository under /obedbenson12-eng/, so its production build needs that base.
-const base = process.env.GITHUB_ACTIONS ? '/obedbenson12-eng/' : '/';
-
+// This repository is the owner's GitHub Pages user-site repository,
+// so the site is served from the domain root, not /obedbenson12-eng/.
 export default defineConfig({
-  base,
+  base: '/',
   plugins: [react()],
   resolve: {
     alias: {
