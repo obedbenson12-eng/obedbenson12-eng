@@ -52,6 +52,8 @@ type ZiteCustomerData = {
   payments: ZiteField[];
   error: string | null;
 };
+const CediIcon = (({ size = 19, color = 'currentColor' }: { size?: number; color?: string }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true"><text x="12" y="18" textAnchor="middle" fontSize="19" fontWeight="700" fontFamily="Arial, sans-serif" fill={color}>₵</text></svg>) as LucideIcon;
+
 type MenuItem = { label: string; icon: LucideIcon; screen?: Screen; action?: () => void };
 
 type AuthForm = { meterNumber: string; code: string };
@@ -231,7 +233,7 @@ function App() {
   const menuItems: MenuItem[] = [
     { label: 'Home', icon: Home, screen: 'home' },
     { label: 'Pay my bill', icon: WalletCards, action: () => setModal('pay') },
-    { label: 'Transaction history', icon: Receipt, screen: 'statements' },
+    { label: 'Transaction history', icon: CediIcon, screen: 'statements' },
     { label: 'My complaints', icon: MessageSquare, screen: 'help' },
     { label: 'About WATSAN', icon: Info, screen: 'about' },
     { label: 'Notifications', icon: Bell, screen: 'notifications' },
