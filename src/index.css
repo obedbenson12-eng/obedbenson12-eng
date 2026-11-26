@@ -303,3 +303,11 @@ h1, h2, p { margin-top: 0; } h1, h2 { font-family: 'Manrope', sans-serif; letter
 .overview-screen .activity-empty { color: #60758a !important; }
 .overview-screen .section-heading h2 { color: #ffffff !important; }
 .overview-screen .section-heading button { color: #d9efff !important; }
+
+
+/* Notifications page */
+.notifications-empty { text-align: center; padding: 30px 22px; }
+.notifications-empty-icon { width: 58px; height: 58px; margin: 0 auto 15px; display: grid; place-items: center; border-radius: 18px; color: #0d4b86; background: #e8f3fa; }
+.notifications-empty h2 { color: #173b63; font: 800 19px 'Manrope', sans-serif; margin: 0 0 8px; }
+.notifications-empty p { max-width: 390px; margin: 0 auto 18px; color: #667f96; font-size: 13px; line-height: 1.65; }
+.notifications-empty .button { margin: 0 auto; }
