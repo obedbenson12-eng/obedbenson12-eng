@@ -126,8 +126,8 @@ function App() {
         const current = Number(item.currentReading ?? 0);
         const units = Math.max(0, Number(item.unitsConsumed ?? (current - previous)));
         const rate = Number(item.ratePerUnit ?? 5);
-        const total = units * rate + 2;
-        return sum + Math.max(0, total - Number(item.amountPaid ?? 0));
+        const storedTotal = item.amountDue == null ? units * rate + 2 : Number(item.amountDue);
+        return sum + Math.max(0, storedTotal - Number(item.amountPaid ?? 0));
       }, 0);
       const latestReading = [...readings].sort((a, b) =>
         String(b.readingMonth ?? '').localeCompare(String(a.readingMonth ?? '')))[0];
@@ -145,8 +145,9 @@ function App() {
         const units = Math.max(0, Number(item.unitsConsumed ?? (current - previous)));
         const rate = Number(item.ratePerUnit ?? 5);
         const waterCharge = units * rate;
-        const meterFee = 2;
-        const total = waterCharge + meterFee;
+        const calculatedTotal = waterCharge + 2;
+        const total = item.amountDue == null ? calculatedTotal : Number(item.amountDue);
+        const meterFee = Math.max(0, total - waterCharge);
         const paid = Number(item.amountPaid ?? 0);
         return {
           id: String(item.id ?? index),
