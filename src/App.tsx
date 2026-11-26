@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { sendCustomerOtp, verifyCustomerOtp, getCustomerPortalData, logoutCustomerPortal, initializeCustomerPayment, verifyCustomerPayment } from '@/lib/zite';
+import { sendCustomerOtp, verifyCustomerOtp, getCustomerPortalData, logoutCustomerPortal, initializeCustomerPayment, verifyCustomerPayment, initializeDemoPayment, verifyDemoPayment } from '@/lib/zite';
 import {
   ArrowRight,
   Bell,
@@ -110,12 +110,26 @@ function App() {
     if (!reference || !session) return;
     void (async () => {
       try {
-        const result = await verifyCustomerPayment({ meterNumber: session.meterNumber, sessionToken: session.token, reference });
-        if (result.verified) {
-          showToast(result.status === 'already_recorded' ? 'Payment already recorded' : 'Payment confirmed successfully');
-          await loadCustomerData(session);
+        if (session.isDemo) {
+          const result = await verifyDemoPayment({ meterNumber: session.meterNumber, reference });
+          if (result.verified) {
+            const paidAmount = Number(result.amount ?? 0);
+            setBills(current => current.map(bill => bill.id === 'demo-bill-1'
+              ? { ...bill, amount_paid: Math.min(bill.amount, bill.amount_paid + paidAmount), balance: Math.max(0, bill.balance - paidAmount), status: bill.balance <= paidAmount ? 'paid' : 'part-paid' }
+              : bill));
+            setPayments(current => [{ id: reference, amount: paidAmount, method: 'mobile_money', status: 'Test payment successful', receipt_number: result.receiptNumber ?? 'DEMO-RECEIPT', created_at: new Date().toISOString() }, ...current]);
+            showToast('Test payment verified — demo account only');
+          } else {
+            showToast('Test payment not confirmed. No account records were changed.');
+          }
         } else {
-          showToast('Payment is not yet confirmed. Please refresh in a moment.');
+          const result = await verifyCustomerPayment({ meterNumber: session.meterNumber, sessionToken: session.token, reference });
+          if (result.verified) {
+            showToast(result.status === 'already_recorded' ? 'Payment already recorded' : 'Payment confirmed successfully');
+            await loadCustomerData(session);
+          } else {
+            showToast('Payment is not yet confirmed. Please refresh in a moment.');
+          }
         }
       } catch {
         showToast('We could not verify the payment yet. Please contact WATSAN before paying again.');
@@ -258,7 +272,16 @@ function App() {
     <nav className="bottom-nav" aria-label="Main navigation"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account' || screen === 'personal' || screen === 'notifications' || screen === 'security'} onClick={() => navigate('account')} /></nav>
     {drawerOpen && <Drawer close={() => setDrawerOpen(false)} items={menuItems} navigate={navigate} displayName={displayName} email={session.meterNumber} signOut={signOut} />}
     {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={handleLogin} onPayment={async () => {
-      if (!session || session.isDemo || !account || account.balance <= 0) { showToast('Payments are disabled in demo mode'); return false; }
+      if (!session || !account) return false;
+      if (session.isDemo) {
+        const demoOutstanding = bills.reduce((sum, bill) => sum + Math.max(0, bill.balance), 0);
+        if (demoOutstanding <= 0) { showToast('The demo bill has already been paid.'); return false; }
+        const result = await initializeDemoPayment({ meterNumber: session.meterNumber, amount: demoOutstanding });
+        if (!result.success || !result.authorizationUrl) { showToast(result.error || 'Test payment could not be started'); return false; }
+        window.location.assign(result.authorizationUrl);
+        return true;
+      }
+      if (account.balance <= 0) return false;
       const result = await initializeCustomerPayment({ meterNumber: session.meterNumber, sessionToken: session.token, amount: account.balance });
       if (!result.success || !result.authorizationUrl) { showToast(result.error || 'Payment could not be started'); return false; }
       window.location.assign(result.authorizationUrl);
