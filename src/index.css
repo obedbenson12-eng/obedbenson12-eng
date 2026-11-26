@@ -669,3 +669,85 @@ body { font-size: 15px; }
   background: rgba(255,255,255,.15);
 }
 .portal-shell .bottom-nav .nav-button--active svg { color: #fff; }
+
+
+/* Accessibility pass: keep every About Us text area readable over backgrounds */
+.portal-shell .about-redesign {
+  color: #17324a !important;
+  background: #f3f7fb !important;
+  padding: 4px 2px 18px !important;
+}
+.portal-shell .about-redesign p,
+.portal-shell .about-redesign h2,
+.portal-shell .about-redesign h3,
+.portal-shell .about-redesign strong,
+.portal-shell .about-redesign small,
+.portal-shell .about-redesign span {
+  text-shadow: none !important;
+}
+.portal-shell .about-redesign .about-hero {
+  background: #103f68 !important;
+  color: #ffffff !important;
+}
+.portal-shell .about-redesign .about-hero h1,
+.portal-shell .about-redesign .about-hero h1 em,
+.portal-shell .about-redesign .about-hero-copy > p,
+.portal-shell .about-redesign .about-hero-meta span,
+.portal-shell .about-redesign .about-hero-mark,
+.portal-shell .about-redesign .about-kicker {
+  color: #ffffff !important;
+}
+.portal-shell .about-redesign .about-hero h1 em { color: #d8efff !important; }
+.portal-shell .about-redesign .about-intro-grid,
+.portal-shell .about-redesign .about-purpose-card,
+.portal-shell .about-redesign .about-service-item,
+.portal-shell .about-redesign .about-team-member {
+  background: #ffffff !important;
+  opacity: 1 !important;
+}
+.portal-shell .about-redesign .about-intro-grid {
+  padding: 25px !important;
+  border: 1px solid #d9e5ef !important;
+  border-radius: 16px !important;
+  box-shadow: 0 5px 18px rgba(16, 48, 76, .06) !important;
+}
+.portal-shell .about-redesign .about-section-label h2,
+.portal-shell .about-redesign .about-section-heading h2,
+.portal-shell .about-redesign .about-purpose-card h3,
+.portal-shell .about-redesign .about-service-item h3,
+.portal-shell .about-redesign .about-team-member strong,
+.portal-shell .about-redesign .about-contact-copy h2 {
+  color: #123653 !important;
+}
+.portal-shell .about-redesign .about-intro-copy p,
+.portal-shell .about-redesign .about-purpose-card p,
+.portal-shell .about-redesign .about-section-heading > p,
+.portal-shell .about-redesign .about-service-item p,
+.portal-shell .about-redesign .about-team-member small,
+.portal-shell .about-redesign .about-contact-copy p {
+  color: #405a70 !important;
+}
+.portal-shell .about-redesign .about-section-label small,
+.portal-shell .about-redesign .about-section-heading small,
+.portal-shell .about-redesign .about-contact-copy small,
+.portal-shell .about-redesign .about-purpose-card > span {
+  color: #155b89 !important;
+}
+.portal-shell .about-redesign .about-purpose-card,
+.portal-shell .about-redesign .about-service-item,
+.portal-shell .about-redesign .about-team-member {
+  border: 1px solid #d5e1eb !important;
+  box-shadow: 0 4px 14px rgba(16, 48, 76, .045) !important;
+}
+.portal-shell .about-redesign .about-contact-panel {
+  background: #e5f0f8 !important;
+  border: 1px solid #c8dceB !important;
+}
+.portal-shell .about-redesign .about-location-note { color: #425b70 !important; }
+.portal-shell .about-redesign a:focus-visible {
+  outline: 3px solid #f0b429 !important;
+  outline-offset: 3px !important;
+}
+@media (max-width: 520px) {
+  .portal-shell .about-redesign .about-intro-grid { padding: 18px 15px !important; }
+}
