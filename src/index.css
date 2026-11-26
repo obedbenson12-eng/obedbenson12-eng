@@ -651,3 +651,21 @@ body { font-size: 15px; }
  .about-contact-actions a { min-height:42px; }
  .about-location-note { font-size:8px; letter-spacing:.08em; }
 }
+
+
+/* Match the bottom navigation to the WATSAN blue header */
+.portal-shell .bottom-nav {
+  background: #123f6b !important;
+  border-top: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 -6px 20px rgba(8,35,61,.18);
+}
+.portal-shell .bottom-nav .nav-button {
+  color: #d6e6f2;
+  background: transparent;
+}
+.portal-shell .bottom-nav .nav-button svg { color: currentColor; }
+.portal-shell .bottom-nav .nav-button--active {
+  color: #fff;
+  background: rgba(255,255,255,.15);
+}
+.portal-shell .bottom-nav .nav-button--active svg { color: #fff; }
