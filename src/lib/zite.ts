@@ -79,6 +79,14 @@ export async function initializeCustomerPayment(input: { meterNumber: string; se
   return callZite<{ success: boolean; authorizationUrl?: string; reference?: string; error?: string }>('initializeCustomerPayment', input);
 }
 
+export async function initializeDemoPayment(input: { meterNumber: string; amount: number }) {
+  return callZite<{ success: boolean; authorizationUrl?: string; reference?: string; error?: string }>('initializeDemoPayment', input);
+}
+
+export async function verifyDemoPayment(input: { meterNumber: string; reference: string }) {
+  return callZite<{ verified: boolean; status: string; amount?: number; receiptNumber?: string }>('verifyDemoPayment', input);
+}
+
 export async function verifyCustomerPayment(input: { meterNumber: string; sessionToken: string; reference: string }) {
   return callZite<{ verified: boolean; status: string; amount?: number; receiptNumber?: string; billBalance?: number }>('verifyCustomerPayment', input);
 }
