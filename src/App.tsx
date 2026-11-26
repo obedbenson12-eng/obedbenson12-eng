@@ -33,7 +33,7 @@ import {
 } from 'lucide-react';
 
 
-type Screen = 'home' | 'help' | 'statements' | 'account' | 'about';
+type Screen = 'home' | 'help' | 'statements' | 'account' | 'about' | 'notifications';
 type Modal = 'signin' | 'pay' | 'success' | null;
 type ServiceAccount = { id: string; account_number: string; service_address: string; balance: number; due_date: string; status: string };
 type Payment = { id: string; amount: number; method: string; status: string; receipt_number: string; created_at: string };
@@ -215,12 +215,12 @@ function App() {
     { label: 'Transaction history', icon: Receipt, screen: 'statements' },
     { label: 'My complaints', icon: MessageSquare, screen: 'help' },
     { label: 'About WATSAN', icon: Info, screen: 'about' },
-    { label: 'Notifications', icon: Bell, action: () => showToast('You are all caught up') },
+    { label: 'Notifications', icon: Bell, screen: 'notifications' },
   ];
   const displayName = session.customer.fullName || 'WATSAN Customer';
 
   return <div className="app-shell portal-shell">
-    <header className="topbar"><button className="icon-button icon-button--top" onClick={() => setDrawerOpen(true)} aria-label="Open menu"><Menu size={22} /></button><WatsanMark compact /><button className="icon-button icon-button--top" onClick={() => showToast('No new notifications')} aria-label="Notifications"><Bell size={19} /><span className="notification-dot" /></button></header>
+    <header className="topbar"><button className="icon-button icon-button--top" onClick={() => setDrawerOpen(true)} aria-label="Open menu"><Menu size={22} /></button><WatsanMark compact /><button className="icon-button icon-button--top" onClick={() => navigate('notifications')} aria-label="Open notifications"><Bell size={19} /><span className="notification-dot" /></button></header>
     <main className="portal-content">
       {appError && <div className="error-banner"><Info size={17} /><span>{appError}</span><button onClick={() => void loadCustomerData(session)}>Retry</button></div>}
       {dataLoading && !account ? <div className="loading-card"><LoaderCircle className="spin" size={22} /> Loading your account</div> : <>
@@ -229,6 +229,7 @@ function App() {
         {screen === 'statements' && <StatementsScreen bills={bills} payments={payments} zitePayments={ziteData?.payments ?? []} showToast={showToast} />}
         {screen === 'account' && <AccountScreen displayName={displayName} email={session.meterNumber} showToast={showToast} signOut={signOut} navigate={navigate} />}
         {screen === 'about' && <AboutScreen />}
+        {screen === 'notifications' && <NotificationsScreen navigate={navigate} />}
       </>}
     </main>
     <nav className="bottom-nav"><NavButton icon={Home} label="Home" active={screen === 'home'} onClick={() => navigate('home')} /><NavButton icon={MessageSquare} label="Help" active={screen === 'help'} onClick={() => navigate('help')} /><NavButton icon={Settings} label="Settings" active={screen === 'account'} onClick={() => navigate('account')} /></nav>
@@ -287,6 +288,18 @@ function StatementsScreen({ bills, payments, zitePayments, showToast }: { bills:
   const hasZitePayments = zitePayments.length > 0;
   const formatPeriod = (value: string) => value ? new Date(`${value.slice(0, 10)}T12:00:00`).toLocaleDateString('en-GH', { month: 'long', year: 'numeric' }) : 'Billing period unavailable';
   return <div className="screen-stack"><div className="page-title-row"><PageIntro eyebrow="YOUR RECORDS" title="Bills & Payments" copy="View every monthly water bill, meter reading, outstanding amount and payment." /><button className="mini-icon mini-icon--gold" onClick={() => showToast('Statement request received')} aria-label="Request statement"><Plus size={20} /></button></div><section><SectionHeading title="Monthly bills" /><div className="bill-history-list">{bills.length ? bills.map((bill) => <article className="bill-history-card" key={bill.id}><div className="bill-history-top"><div><strong>{formatPeriod(bill.billing_period)}</strong><span>Monthly water bill</span></div><span className={`bill-status bill-status--${bill.balance > 0 ? 'owing' : 'paid'}`}>{bill.balance > 0 ? (bill.amount_paid > 0 ? 'Part-paid' : 'Unpaid') : 'Paid'}</span></div><div className="bill-reading-grid"><div><small>Previous reading</small><b>{String(Math.round(bill.previous_reading)).padStart(4, '0')}</b></div><div><small>Current reading</small><b>{String(Math.round(bill.current_reading)).padStart(4, '0')}</b></div><div><small>Units used</small><b>{bill.units_consumed}</b></div></div><div className="bill-history-total bill-history-breakdown"><span>Water: GH₵ {bill.water_charge.toFixed(2)} · Meter fee: GH₵ {bill.meter_fee.toFixed(2)}</span><span>Total: GH₵ {bill.amount.toFixed(2)} · Paid: GH₵ {bill.amount_paid.toFixed(2)}</span><strong>Balance: GH₵ {bill.balance.toFixed(2)}</strong></div>{bill.notes && <p className="bill-history-note">{bill.notes}</p>}</article>) : <div className="activity-empty"><Receipt size={20} /><span>No bills have been issued to this account yet. Your next bill will appear here after the WATSAN meter-reading and billing process.</span></div>}</div></section><section><SectionHeading title="Payment history" /><div className="statement-list">{payments.length ? payments.map((payment) => <div className="statement-card" key={payment.id}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>Payment receipt</strong><span>{new Date(payment.created_at).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })} · {payment.receipt_number}</span><small><span className="paid-dot" /> {payment.status} · GHS {Number(payment.amount).toFixed(2)}</small></div><button className="download-button" onClick={() => showToast('Receipt download is being prepared')}><Download size={16} /></button></div>) : <div className="activity-empty"><Receipt size={20} /><span>No payments yet. Your receipts will appear here.</span></div>}</div></section>{hasZitePayments && <><SectionHeading title="Additional payment records" /><div className="statement-list">{zitePayments.map((payment, i) => <div className="statement-card" key={`zite-${i}`}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>{toFieldValue(payment, ['Description', 'Type', 'Payment Type'], 'string') as string ?? 'Payment'}</strong><span>{toFieldValue(payment, ['Date', 'Payment Date'], 'string') as string ?? '—'}</span><small><span className="paid-dot" /> {toFieldValue(payment, ['Status', 'Payment Status'], 'string') as string ?? 'completed'} · GHS {Number(toFieldValue(payment, ['Amount', 'Payment Amount'], 'number') ?? 0).toFixed(2)}</small></div></div>)}</div></>}</div>; }
+
+function NotificationsScreen({ navigate }: { navigate: (screen: Screen) => void }) {
+  return <div className="screen-stack">
+    <PageIntro eyebrow="ACCOUNT UPDATES" title="Notifications" copy="Important updates about your water service, bills and payments will appear here." />
+    <section className="activity-card notifications-empty">
+      <div className="notifications-empty-icon"><Bell size={25} /></div>
+      <h2>No notifications yet</h2>
+      <p>You are all caught up. New billing reminders, payment confirmations and service announcements will appear here when they are issued.</p>
+      <button className="button button--primary" onClick={() => navigate('home')}>Back to overview <ArrowRight size={16} /></button>
+    </section>
+  </div>;
+}
 
 function AccountScreen({ displayName, email, showToast, signOut, navigate }: { displayName: string; email: string; showToast: (message: string) => void; signOut: () => void; navigate: (screen: Screen) => void }) { return <div className="screen-stack"><PageIntro eyebrow="PREFERENCES" title="Settings" copy="Manage your profile and service preferences." /><div className="profile-card"><div className="profile-avatar"><UserRound size={26} /></div><div><strong>{displayName}</strong><p>{email}</p></div><ChevronRight size={18} /></div><div className="settings-list"><SettingRow icon={UserRound} title="Personal details" onClick={() => showToast('Personal details are managed from your account')} /><SettingRow icon={Bell} title="Notifications" onClick={() => showToast('Notifications are on')} /><SettingRow icon={ShieldCheck} title="Security and privacy" onClick={() => showToast('Your account is secure')} /><SettingRow icon={Info} title="About WATSAN" onClick={() => navigate('about')} /></div><button className="signout-button" onClick={signOut}><LogOut size={18} /> Sign out</button></div>; }
 
