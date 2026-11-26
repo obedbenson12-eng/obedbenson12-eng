@@ -3191,3 +3191,35 @@ img, svg, video, canvas { max-width: 100%; }
   .portal-shell .bill-reading-grid small { font-size: 7.5px !important; }
   .portal-shell .bill-reading-grid b { font-size: 12px !important; }
 }
+
+
+/* Customer support page — smaller, clearer service cards and contact panel. */
+.portal-shell .screen-stack > .support-card {
+  padding: 12px 13px !important; min-height: 68px !important; gap: 10px !important;
+  border-radius: 12px !important; box-shadow: 0 3px 10px rgba(13,43,75,.10) !important;
+}
+.portal-shell .screen-stack > .support-card .support-icon { width:36px!important;height:36px!important;flex:0 0 36px!important;border-radius:10px!important; }
+.portal-shell .screen-stack > .support-card .support-icon svg { width:19px!important;height:19px!important; }
+.portal-shell .screen-stack > .support-card strong { font-size:11px!important; }
+.portal-shell .screen-stack > .support-card p { font-size:9px!important;line-height:1.35!important;margin-top:3px!important; }
+.portal-shell .screen-stack > .support-card .circle-arrow { width:28px!important;height:28px!important;flex:0 0 28px!important; }
+.portal-shell .screen-stack > .support-list { margin-top:11px!important;border-radius:12px!important;box-shadow:0 2px 8px rgba(20,48,76,.035)!important; }
+.portal-shell .screen-stack > .support-list .help-item { min-height:59px!important;padding:9px 11px!important;gap:9px!important; }
+.portal-shell .screen-stack > .support-list .help-item-icon { width:30px!important;height:30px!important;flex:0 0 30px!important;border-radius:9px!important; }
+.portal-shell .screen-stack > .support-list .help-item-icon svg { width:16px!important;height:16px!important; }
+.portal-shell .screen-stack > .support-list .help-item strong { font-size:10px!important;margin-bottom:2px!important; }
+.portal-shell .screen-stack > .support-list .help-item small { font-size:8.5px!important;line-height:1.35!important; }
+.portal-shell .screen-stack > .contact-panel { margin-top:11px!important;padding:12px 14px!important;border-radius:12px!important;box-shadow:0 2px 8px rgba(20,48,76,.035)!important; }
+.portal-shell .screen-stack > .contact-panel .eyebrow { font-size:8px!important;letter-spacing:.11em!important;margin-bottom:5px!important; }
+.portal-shell .screen-stack > .contact-panel strong { font-size:18px!important;line-height:1.2!important;margin-bottom:3px!important; }
+.portal-shell .screen-stack > .contact-panel p:last-child { font-size:9px!important;line-height:1.4!important; }
+.portal-shell .screen-stack > .issue-form { padding:13px!important;gap:11px!important;border-radius:12px!important; }
+.portal-shell .screen-stack > .issue-form label { font-size:9px!important;gap:5px!important; }
+.portal-shell .screen-stack > .issue-form select,.portal-shell .screen-stack > .issue-form textarea { font-size:10px!important;padding:9px 10px!important;border-radius:9px!important; }
+.portal-shell .screen-stack > .issue-form textarea { min-height:76px!important; }
+.portal-shell .screen-stack > .issue-form .button { min-height:40px!important;font-size:10px!important; }
+@media(max-width:380px){
+ .portal-shell .screen-stack > .support-card{padding:10px!important}
+ .portal-shell .screen-stack > .support-list .help-item{padding:8px 9px!important}
+ .portal-shell .screen-stack > .contact-panel strong{font-size:16px!important}
+}
