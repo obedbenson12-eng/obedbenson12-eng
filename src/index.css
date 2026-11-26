@@ -3374,3 +3374,59 @@ img, svg, video, canvas { max-width: 100%; }
     margin-bottom: 5px !important;
   }
 }
+
+
+/* Improve About Us readability with larger classic Roman-style serif typography. */
+.portal-shell .about-redesign .about-hero h1,
+.portal-shell .about-redesign .about-who-card .about-section-label h2 {
+  font-family: "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -.02em !important;
+}
+.portal-shell .about-redesign .about-kicker {
+  font-size: 10.5px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+}
+.portal-shell .about-redesign .about-hero-copy > p {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+.portal-shell .about-redesign .about-hero-meta span {
+  font-size: 10.5px !important;
+}
+.portal-shell .about-redesign .about-hero-mark { font-size: 9px !important; }
+.portal-shell .about-redesign .about-who-card .about-section-label small {
+  font-size: 9.5px !important;
+  letter-spacing: .13em !important;
+  font-weight: 800 !important;
+}
+.portal-shell .about-redesign .about-who-card .about-section-label h2 {
+  font-size: clamp(17px, 2vw, 20px) !important;
+  line-height: 1.35 !important;
+}
+.portal-shell .about-redesign .about-who-card .about-intro-copy p {
+  font-size: 12.5px !important;
+  line-height: 1.65 !important;
+}
+.portal-shell .about-redesign .about-who-card .about-card-hint {
+  font-size: 10px !important;
+}
+@media (max-width: 650px) {
+  .portal-shell .about-redesign .about-kicker { font-size: 9.5px !important; }
+  .portal-shell .about-redesign .about-hero-copy > p {
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+  }
+  .portal-shell .about-redesign .about-hero-meta span { font-size: 9px !important; }
+  .portal-shell .about-redesign .about-hero-mark { font-size: 7.5px !important; }
+  .portal-shell .about-redesign .about-who-card .about-section-label small { font-size: 9px !important; }
+  .portal-shell .about-redesign .about-who-card .about-section-label h2 {
+    font-size: 17px !important;
+    line-height: 1.35 !important;
+  }
+  .portal-shell .about-redesign .about-who-card .about-intro-copy p {
+    font-size: 11.8px !important;
+    line-height: 1.55 !important;
+  }
+  .portal-shell .about-redesign .about-who-card .about-card-hint { font-size: 9.5px !important; }
+}
