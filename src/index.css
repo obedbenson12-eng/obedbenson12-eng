@@ -3632,3 +3632,11 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell .about-redesign .about-hero h1 {
   font-weight: 800 !important;
 }
+
+
+/* Site-wide Roman typography: EB Garamond across all written content. */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap');
+html, body, #root,
+#root *:not(svg):not(svg *) {
+  font-family: 'EB Garamond', Georgia, serif !important;
+}
