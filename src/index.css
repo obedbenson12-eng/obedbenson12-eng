@@ -3650,3 +3650,16 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.theme-dark .reading-card .usage-cost {
   padding-top: 0 !important;
 }
+
+
+/* Account Holder card: remove all internal horizontal divider lines in every theme. */
+.portal-shell .account-holder-card .account-holder-payment,
+.portal-shell .account-holder-card .account-holder-footer,
+.portal-shell .account-holder-card .zite-sync {
+  border-top: 0 !important;
+}
+.portal-shell .account-holder-card .account-holder-payment,
+.portal-shell .account-holder-card .account-holder-footer,
+.portal-shell .account-holder-card .zite-sync {
+  box-shadow: none !important;
+}
