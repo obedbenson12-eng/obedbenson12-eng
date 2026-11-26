@@ -5,6 +5,7 @@ import { sendCustomerOtp, verifyCustomerOtp, getCustomerPortalData, logoutCustom
 import {
   ArrowRight,
   Bell,
+  Camera,
   Check,
   ChevronDown,
   ChevronRight,
@@ -335,10 +336,19 @@ function HelpScreen({ account, showToast, session }: { account: ServiceAccount |
   return <div className="screen-stack"><PageIntro eyebrow="SUPPORT" title="How can we help?" copy="Our team is ready to help with your account, payments and water service." /><div className="support-card"><div className="support-icon"><Headphones size={26} /></div><div><strong>Speak to our team</strong><p>Monday — Friday, 8:00 AM to 5:00 PM</p></div><button className="circle-arrow" onClick={() => showToast('Call +233 59 118 9163 for support')}><ArrowRight size={17} /></button></div><div className="support-list"><HelpItem icon={MessageSquare} title="Report a water issue" copy="Tell us about a leak, low pressure or service interruption." onClick={() => setFormOpen(true)} /><HelpItem icon={FileText} title="Request a statement" copy="Get a clear record of your recent water payments." onClick={() => showToast('Statement request received')} /><HelpItem icon={CircleHelp} title="Frequently asked questions" copy="Find quick answers about bills, meters and payments." onClick={() => showToast('FAQ section coming soon')} /></div>{formOpen && <form className="issue-form" onSubmit={submitRequest}><div className="section-heading"><h2>Send a request</h2><button type="button" onClick={() => setFormOpen(false)} aria-label="Close"><X size={18} /></button></div><label>Request type<select value={requestType} onChange={(event) => setRequestType(event.target.value)}><option value="water_issue">Water issue</option><option value="billing">Billing question</option><option value="other">Other</option></select></label><label>How can we help?<textarea required minLength={5} maxLength={2000} value={description} onChange={(event) => setDescription(event.target.value)} placeholder="Describe the issue or question" /></label><button className="button button--primary" disabled={submitting}>{submitting ? <LoaderCircle className="spin" size={18} /> : <SendIcon />} {submitting ? 'Sending…' : 'Send request'}</button></form>}<div className="contact-panel"><p className="eyebrow">EMERGENCY WATER LINE</p><strong>+233 59 118 9163</strong><p>For urgent leaks and supply concerns.</p></div><span className="sr-only">Signed in as {session.meterNumber}</span></div>;
 }
 
+function getBillPaymentState(bill: Pick<Bill, 'amount' | 'amount_paid' | 'balance'>): 'paid' | 'partial' | 'unpaid' {
+  const total = Math.max(0, Number(bill.amount) || 0);
+  const paid = Math.max(0, Number(bill.amount_paid) || 0);
+  const balance = Math.max(0, Number(bill.balance) || 0);
+  if (total > 0 && (balance <= 0.009 || paid >= total - 0.009)) return 'paid';
+  if (paid > 0 && balance > 0.009) return 'partial';
+  return 'unpaid';
+}
+
 function StatementsScreen({ bills, payments, zitePayments, showToast }: { bills: Bill[]; payments: Payment[]; zitePayments: ZiteField[]; showToast: (message: string) => void }) {
   const hasZitePayments = zitePayments.length > 0;
   const formatPeriod = (value: string) => value ? new Date(`${value.slice(0, 10)}T12:00:00`).toLocaleDateString('en-GH', { month: 'long', year: 'numeric' }) : 'Billing period unavailable';
-  return <div className="screen-stack"><div className="page-title-row"><PageIntro eyebrow="YOUR RECORDS" title="Bills & Payments" copy="View every monthly water bill, meter reading, outstanding amount and payment." /><button className="mini-icon mini-icon--gold" onClick={() => showToast('Statement request received')} aria-label="Request statement"><Plus size={20} /></button></div><section><SectionHeading title="Monthly bills" /><div className="bill-history-list">{bills.length ? bills.map((bill) => <article className="bill-history-card" key={bill.id}><div className="bill-history-top"><div><strong>{formatPeriod(bill.billing_period)}</strong><span>Monthly water bill</span></div><span className={`bill-status bill-status--${bill.balance > 0 ? 'owing' : 'paid'}`}>{bill.balance > 0 ? (bill.amount_paid > 0 ? 'Part-paid' : 'Unpaid') : 'Paid'}</span></div><div className="bill-reading-grid"><div><small>Previous reading</small><b>{String(Math.round(bill.previous_reading)).padStart(4, '0')}</b></div><div><small>Current reading</small><b>{String(Math.round(bill.current_reading)).padStart(4, '0')}</b></div><div><small>Units used</small><b>{bill.units_consumed}</b></div></div><div className="bill-history-total bill-history-breakdown"><span>Water: GH₵ {bill.water_charge.toFixed(2)} · Meter fee: GH₵ {bill.meter_fee.toFixed(2)}</span><span>Total: GH₵ {bill.amount.toFixed(2)} · Paid: GH₵ {bill.amount_paid.toFixed(2)}</span><strong>Balance: GH₵ {bill.balance.toFixed(2)}</strong></div>{bill.notes && <p className="bill-history-note">{bill.notes}</p>}</article>) : <div className="activity-empty"><Receipt size={20} /><span>No bills have been issued to this account yet. Your next bill will appear here after the WATSAN meter-reading and billing process.</span></div>}</div></section><section><SectionHeading title="Payment history" /><div className="statement-list">{payments.length ? payments.map((payment) => <div className="statement-card" key={payment.id}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>Payment receipt</strong><span>{new Date(payment.created_at).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })} · {payment.receipt_number}</span><small><span className="paid-dot" /> {payment.status} · GH₵ {Number(payment.amount).toFixed(2)}</small></div><button className="download-button" onClick={() => showToast('Receipt download is being prepared')}><Download size={16} /></button></div>) : <div className="activity-empty"><Receipt size={20} /><span>No payments yet. Your receipts will appear here.</span></div>}</div></section>{hasZitePayments && <><SectionHeading title="Additional payment records" /><div className="statement-list">{zitePayments.map((payment, i) => <div className="statement-card" key={`zite-${i}`}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>{toFieldValue(payment, ['Description', 'Type', 'Payment Type'], 'string') as string ?? 'Payment'}</strong><span>{toFieldValue(payment, ['Date', 'Payment Date'], 'string') as string ?? '—'}</span><small><span className="paid-dot" /> {toFieldValue(payment, ['Status', 'Payment Status'], 'string') as string ?? 'completed'} · GH₵ {Number(toFieldValue(payment, ['Amount', 'Payment Amount'], 'number') ?? 0).toFixed(2)}</small></div></div>)}</div></>}</div>; }
+  return <div className="screen-stack"><div className="page-title-row"><PageIntro eyebrow="YOUR RECORDS" title="Bills & Payments" copy="View every monthly water bill, meter reading, outstanding amount and payment." /><button className="mini-icon mini-icon--gold" onClick={() => showToast('Statement request received')} aria-label="Request statement"><Plus size={20} /></button></div><section><SectionHeading title="Monthly bills" /><div className="bill-history-list">{bills.length ? bills.map((bill) => <article className="bill-history-card" key={bill.id}><div className="bill-history-top"><div><strong>{formatPeriod(bill.billing_period)}</strong><span>Monthly water bill</span></div><span className={`bill-status bill-status--${getBillPaymentState(bill) === 'paid' ? 'paid' : getBillPaymentState(bill) === 'partial' ? 'partial' : 'owing'}`}>{getBillPaymentState(bill) === 'paid' ? 'Fully paid' : getBillPaymentState(bill) === 'partial' ? 'Partially paid' : 'Unpaid'}</span></div><div className="bill-reading-grid"><div><small>Previous reading</small><b>{String(Math.round(bill.previous_reading)).padStart(4, '0')}</b></div><div><small>Current reading</small><b>{String(Math.round(bill.current_reading)).padStart(4, '0')}</b></div><div><small>Units used</small><b>{bill.units_consumed}</b></div></div><div className="bill-history-total bill-history-breakdown"><span>Water: GH₵ {bill.water_charge.toFixed(2)} · Meter fee: GH₵ {bill.meter_fee.toFixed(2)}</span><span>Total: GH₵ {bill.amount.toFixed(2)} · Paid: GH₵ {bill.amount_paid.toFixed(2)}</span><strong>Balance: GH₵ {bill.balance.toFixed(2)}</strong></div>{bill.notes && <p className="bill-history-note">{bill.notes}</p>}</article>) : <div className="activity-empty"><Receipt size={20} /><span>No bills have been issued to this account yet. Your next bill will appear here after the WATSAN meter-reading and billing process.</span></div>}</div></section><section><SectionHeading title="Payment history" /><div className="statement-list">{payments.length ? payments.map((payment) => <div className="statement-card" key={payment.id}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>Payment receipt</strong><span>{new Date(payment.created_at).toLocaleDateString('en-GH', { day: 'numeric', month: 'long', year: 'numeric' })} · {payment.receipt_number}</span><small><span className="paid-dot" /> {payment.status} · GH₵ {Number(payment.amount).toFixed(2)}</small></div><button className="download-button" onClick={() => showToast('Receipt download is being prepared')}><Download size={16} /></button></div>) : <div className="activity-empty"><Receipt size={20} /><span>No payments yet. Your receipts will appear here.</span></div>}</div></section>{hasZitePayments && <><SectionHeading title="Additional payment records" /><div className="statement-list">{zitePayments.map((payment, i) => <div className="statement-card" key={`zite-${i}`}><div className="statement-icon"><FileText size={20} /></div><div className="statement-details"><strong>{toFieldValue(payment, ['Description', 'Type', 'Payment Type'], 'string') as string ?? 'Payment'}</strong><span>{toFieldValue(payment, ['Date', 'Payment Date'], 'string') as string ?? '—'}</span><small><span className="paid-dot" /> {toFieldValue(payment, ['Status', 'Payment Status'], 'string') as string ?? 'completed'} · GH₵ {Number(toFieldValue(payment, ['Amount', 'Payment Amount'], 'number') ?? 0).toFixed(2)}</small></div></div>)}</div></>}</div>; }
 
 function NotificationsScreen({ navigate }: { navigate: (screen: Screen) => void }) {
   return <div className="screen-stack">
@@ -407,7 +417,66 @@ function SecurityScreen({ session, customer, signOut }: { session: PortalSession
   </div>;
 }
 
-function AccountScreen({ displayName, email, showToast, signOut, navigate }: { displayName: string; email: string; showToast: (message: string) => void; signOut: () => void; navigate: (screen: Screen) => void }) { return <div className="screen-stack"><PageIntro eyebrow="PREFERENCES" title="Settings" copy="Manage your profile and service preferences." /><div className="profile-card"><div className="profile-avatar"><UserRound size={26} /></div><div><strong>{displayName}</strong><p>Meter number: {email}</p></div><ChevronRight size={18} /></div><div className="settings-list"><SettingRow icon={UserRound} title="Personal details" onClick={() => navigate('personal')} /><SettingRow icon={Bell} title="Notifications" onClick={() => navigate('notifications')} /><SettingRow icon={ShieldCheck} title="Security and privacy" onClick={() => navigate('security')} /><SettingRow icon={Info} title="About WATSAN" onClick={() => navigate('about')} /></div><button className="signout-button" onClick={signOut}><LogOut size={18} /> Sign out</button></div>; }
+function AccountScreen({ displayName, email, showToast, signOut, navigate }: { displayName: string; email: string; showToast: (message: string) => void; signOut: () => void; navigate: (screen: Screen) => void }) {
+  const photoKey = `watsan_profile_photo_${email}`;
+  const [photo, setPhoto] = useState(() => {
+    try { return localStorage.getItem(photoKey) || ''; } catch { return ''; }
+  });
+  const [photoError, setPhotoError] = useState('');
+  const handlePhoto = (event: { target: HTMLInputElement }) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { setPhotoError('Please select an image file.'); return; }
+    if (file.size > 8 * 1024 * 1024) { setPhotoError('Please choose an image smaller than 8 MB.'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        const scale = Math.min(1, 360 / Math.max(image.width, image.height));
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext('2d');
+        if (!context) { setPhotoError('Could not process this image.'); return; }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const compressed = canvas.toDataURL('image/jpeg', 0.76);
+        try {
+          localStorage.setItem(photoKey, compressed);
+          setPhoto(compressed);
+          setPhotoError('');
+          showToast('Profile picture saved on this device');
+        } catch {
+          setPhotoError('Browser storage is full. Try a smaller picture.');
+        }
+      };
+      image.onerror = () => setPhotoError('Could not open this image.');
+      image.src = String(reader.result);
+    };
+    reader.onerror = () => setPhotoError('Could not read this image.');
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  };
+  const removePhoto = () => {
+    try { localStorage.removeItem(photoKey); setPhoto(''); setPhotoError(''); showToast('Profile picture removed'); }
+    catch { setPhotoError('Could not remove the picture.'); }
+  };
+  return <div className="screen-stack">
+    <PageIntro eyebrow="CUSTOMER PROFILE" title="Profile management" copy="Manage your profile picture and account preferences." />
+    <section className="profile-card profile-card--managed">
+      <div className="managed-avatar-wrap">
+        <div className="managed-avatar">{photo ? <img src={photo} alt="Your profile" /> : <UserRound size={34} />}</div>
+        <label className="managed-avatar-upload" htmlFor="watsan-customer-photo" aria-label="Upload profile picture"><Camera size={16} /></label>
+        <input id="watsan-customer-photo" type="file" accept="image/*" onChange={handlePhoto} hidden />
+      </div>
+      <div className="managed-profile-copy"><strong>{displayName}</strong><p>Meter number: {email}</p><label className="managed-upload-link" htmlFor="watsan-customer-photo">Upload or change picture</label>{photo && <button className="managed-remove-link" type="button" onClick={removePhoto}>Remove picture</button>}</div>
+      <ChevronRight size={18} />
+    </section>
+    {photoError && <p className="form-error" role="alert">{photoError}</p>}
+    <p className="settings-note">Your picture is currently saved in this browser on this device. It is not yet synchronised with the WATSAN management database.</p>
+    <div className="settings-list"><SettingRow icon={UserRound} title="Personal details" onClick={() => navigate('personal')} /><SettingRow icon={Bell} title="Notifications" onClick={() => navigate('notifications')} /><SettingRow icon={ShieldCheck} title="Security and privacy" onClick={() => navigate('security')} /><SettingRow icon={Info} title="About WATSAN" onClick={() => navigate('about')} /></div>
+    <button className="signout-button" onClick={signOut}><LogOut size={18} /> Sign out</button>
+  </div>;
+}
 
 function ModalContent({ modal, close, setModal, navigate, onPayment, onLogin, showToast }: { modal: Modal; close: () => void; setModal?: (modal: Modal) => void; navigate?: (screen: Screen) => void; onPayment: () => Promise<boolean>; onLogin: (session: PortalSession) => void; showToast?: (message: string) => void }) {
   const [form, setForm] = useState(initialAuthForm);
