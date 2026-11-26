@@ -474,3 +474,78 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+
+/* Typography refinement: larger, clearer text without oversized display styling */
+body { font-size: 15px; }
+.portal-content { font-size: 15px; }
+.page-intro h1 { font-size: clamp(30px, 4vw, 34px); line-height: 1.18; letter-spacing: -.025em; }
+.greeting-row h1 { font-size: clamp(27px, 3.5vw, 31px); line-height: 1.2; }
+.page-intro .muted, .greeting-row .muted { font-size: 15px; line-height: 1.6; }
+.eyebrow { font-size: 11px; letter-spacing: .12em; }
+.section-heading h2 { font-size: 19px; line-height: 1.3; }
+.section-heading button { font-size: 13px; }
+.balance-top span { font-size: 12px; }
+.balance-card > strong { font-size: 38px; }
+.balance-card > p { font-size: 14px; line-height: 1.5; }
+.balance-bottom { font-size: 13px; }
+.balance-bottom button { font-size: 13px; }
+.bill-top strong { font-size: 18px; }
+.bill-amount span, .bill-due { font-size: 14px; }
+.bill-amount strong { font-size: 25px; }
+.account-strip strong { font-size: 18px; }
+.account-strip p { font-size: 14px; }
+.quick-action { min-height: 100px; padding: 14px 7px; }
+.quick-action strong { font-size: 13px; line-height: 1.35; }
+.activity-row { padding: 16px; }
+.activity-row strong { font-size: 14px; }
+.activity-row small { font-size: 12px; }
+.activity-row b { font-size: 14px; }
+.activity-empty { font-size: 14px; }
+.reading-row span { font-size: 14px; }
+.reading-row strong { font-size: 16px; }
+.usage-highlight strong { font-size: 35px; }
+.usage-highlight span { font-size: 13px; }
+.usage-reading-grid small, .bill-reading-grid small { font-size: 11px; }
+.usage-reading-grid b, .bill-reading-grid b { font-size: 16px; }
+.usage-cost span { font-size: 13px; }
+.usage-cost strong { font-size: 17px; }
+.bill-history-top strong { font-size: 17px; }
+.bill-history-top div span { font-size: 13px; }
+.bill-status { font-size: 11px; }
+.bill-history-total span { font-size: 12px; }
+.bill-history-total strong { font-size: 15px; }
+.help-item strong { font-size: 15px; }
+.help-item small { font-size: 13px; line-height: 1.5; }
+.setting-row strong { font-size: 15px; }
+.profile-card strong { font-size: 16px; }
+.profile-card p { font-size: 13px; }
+.profile-detail-row span, .profile-detail-row strong { font-size: 14px; }
+.settings-note { font-size: 13px; line-height: 1.65; }
+.security-status-card strong { font-size: 15px; }
+.security-status-card p { font-size: 13px; line-height: 1.65; }
+.nav-button { font-size: 12px; }
+.drawer-item span { font-size: 15px; }
+.drawer-profile strong { font-size: 15px; }
+.drawer-profile span { font-size: 13px; }
+.modal-card h2 { font-size: 29px; }
+.modal-copy { font-size: 15px; line-height: 1.6; }
+.modal-card label, .issue-form label { font-size: 13px; }
+.modal-card input, .modal-card select, .issue-form select, .issue-form textarea { font-size: 15px; }
+.form-error { font-size: 13px; }
+.text-button { font-size: 14px; }
+.secure-note { font-size: 12px; }
+.about-lead { font-size: 17px; }
+.about-panel p, .about-values p { font-size: 15px; }
+.about-services span { font-size: 14px; }
+.committee-grid small { font-size: 10px; }
+.committee-grid strong { font-size: 12px; }
+.committee-grid article span { font-size: 12px; }
+.about-contact p, .about-contact a:not(.about-contact-button) { font-size: 14px; }
+@media (max-width: 520px) {
+  .page-intro h1 { font-size: 29px; }
+  .greeting-row h1 { font-size: 26px; }
+  .balance-card > strong { font-size: 34px; }
+  .quick-action strong { font-size: 12px; }
+  .profile-detail-row span, .profile-detail-row strong { font-size: 13px; }
+}
