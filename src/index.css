@@ -820,3 +820,44 @@ body { font-size: 15px; }
     border-radius: 14px;
   }
 }
+
+
+/* Reliable fixed bottom navigation and mobile tap targets */
+.portal-shell .bottom-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: 0 !important;
+  transform: translateX(-50%);
+  width: min(100%, 560px) !important;
+  z-index: 100 !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: space-around !important;
+  pointer-events: auto !important;
+  padding-bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  touch-action: manipulation;
+}
+.portal-shell .bottom-nav .nav-button {
+  position: relative;
+  z-index: 101;
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto !important;
+  min-height: 52px;
+  padding: 7px 8px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto !important;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(255,255,255,.18);
+}
+.portal-shell .bottom-nav .nav-button svg,
+.portal-shell .bottom-nav .nav-button span {
+  pointer-events: none;
+}
+.portal-shell .portal-content {
+  padding-bottom: calc(106px + env(safe-area-inset-bottom));
+}
