@@ -5397,16 +5397,11 @@ img, svg, video, canvas { max-width: 100%; }
   width:14px;height:14px;
 }
 
-
-/* Move the customer access content slightly lower without changing typography or sizing. */
-.watsan-login-professional .watsan-professional-main {
-  transform: translateY(12px);
 }
 
 
-/* Apply a visible downward offset to the full customer-access group. */
+
+/* Final placement: move the complete customer-access group down visibly. */
 .watsan-login-professional .watsan-professional-main {
-  position:relative !important;
-  top:32px !important;
-  transform:none !important;
+  transform: translate3d(0, 64px, 0) !important;
 }
