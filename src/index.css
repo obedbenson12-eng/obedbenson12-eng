@@ -4575,3 +4575,299 @@ img, svg, video, canvas { max-width: 100%; }
   .welcome-shell .modal-card--auth > .modal-brand { margin-bottom: 18px !important; }
   .welcome-shell .modal-card--auth > .modal-brand .brand-mark img { width: 62px !important; height: 62px !important; }
 }
+
+
+/* Reference-matched WATSAN customer app welcome / sign-in entry screen */
+.welcome-reference-screen {
+  position: relative !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100svh !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 0 20px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  background: #103b91 !important;
+}
+.welcome-reference-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, rgba(37,91,188,.28), transparent 55%), linear-gradient(145deg,#123f9b,#0d3484);
+}
+.welcome-reference-screen .welcome-back-button {
+  position: absolute;
+  z-index: 3;
+  top: max(18px, env(safe-area-inset-top));
+  left: max(18px, env(safe-area-inset-left));
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #092b70;
+  font: 400 38px/1 Arial,sans-serif;
+  box-shadow: 0 5px 16px rgba(0,0,0,.18);
+}
+.welcome-reference-screen .reference-heading {
+  width: min(100%, 560px);
+  margin: 98px auto 0;
+  text-align: center;
+  flex: 0 0 auto;
+}
+.welcome-reference-screen .reference-heading h1 {
+  margin: 0;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: clamp(25px, 5.2vw, 39px);
+  font-weight: 400;
+  line-height: 1.23;
+  letter-spacing: -.025em;
+}
+.welcome-reference-screen .reference-device-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0 95px;
+}
+.welcome-reference-screen .reference-phone {
+  position: relative;
+  width: min(74vw, 350px);
+  height: min(61vh, 690px);
+  min-height: 420px;
+  padding: 13px 10px 17px;
+  border: 5px solid #252525;
+  border-radius: 48px;
+  background: linear-gradient(120deg,#777,#151515 14%,#090909 80%,#555);
+  box-shadow: 0 12px 28px rgba(0,0,0,.45), inset 0 0 0 2px #777;
+}
+.welcome-reference-screen .reference-phone-speaker {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 5px;
+  border-radius: 8px;
+  background: #080808;
+  z-index: 2;
+}
+.welcome-reference-screen .reference-phone-speaker span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  right: 62px;
+  top: -2px;
+  background: #101c30;
+  box-shadow: inset 0 0 3px #5c6573;
+}
+.welcome-reference-screen .reference-phone-screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 34px;
+  background: #103b91;
+  display: flex;
+  flex-direction: column;
+}
+.welcome-reference-screen .reference-statusbar {
+  height: 25px;
+  flex: 0 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: rgba(255,255,255,.9);
+  background: #0c307d;
+  font: 10px Arial,sans-serif;
+}
+.welcome-reference-screen .reference-app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px 55px;
+  text-align: center;
+}
+.welcome-reference-screen .reference-logo {
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 55px;
+  border-radius: 50%;
+  background: transparent;
+  display: grid;
+  place-items: center;
+}
+.welcome-reference-screen .reference-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.12));
+}
+.welcome-reference-screen .reference-app-content h2 {
+  margin: 0 0 8px;
+  color: #fff;
+  font: 400 clamp(19px,3.5vw,25px)/1.25 Arial,sans-serif;
+  letter-spacing: 0;
+}
+.welcome-reference-screen .reference-app-content p {
+  margin: 0 0 22px;
+  color: rgba(255,255,255,.94);
+  font: 12px Arial,sans-serif;
+}
+.welcome-reference-screen .reference-actions {
+  width: min(100%, 230px);
+  display: grid;
+  gap: 10px;
+}
+.welcome-reference-screen .reference-actions button {
+  min-height: 43px;
+  border-radius: 28px;
+  font: 14px Arial,sans-serif;
+}
+.welcome-reference-screen .reference-register {
+  color: #17336d;
+  background: #fff;
+}
+.welcome-reference-screen .reference-signin {
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.85);
+}
+.welcome-reference-screen .reference-phone-wave {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 27px;
+  height: 92px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 17px;
+  color: #21334f;
+  background: #fff;
+  border-radius: 52% 48% 0 0 / 55% 40% 0 0;
+  font: 9px Arial,sans-serif;
+}
+.welcome-reference-screen .reference-phone-wave::before {
+  content: "";
+  position: absolute;
+  width: 68%;
+  height: 62px;
+  left: -5%;
+  top: -20px;
+  border-radius: 50%;
+  background: #fff;
+}
+.welcome-reference-screen .reference-phone-wave span { position: relative; z-index: 1; }
+.welcome-reference-screen .reference-phone-wave strong { text-decoration: underline; font-weight: 400; }
+.welcome-reference-screen .reference-phone-nav {
+  position: absolute;
+  height: 27px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: #f5f5f5;
+}
+.welcome-reference-screen .reference-phone-nav i {
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid #777;
+  border-radius: 50%;
+}
+.welcome-reference-screen .reference-phone-nav i:first-child,
+.welcome-reference-screen .reference-phone-nav i:last-child {
+  border-radius: 1px;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+}
+.welcome-reference-screen .reference-outer-wave {
+  position: absolute;
+  z-index: -1;
+  left: -8%;
+  right: -8%;
+  bottom: -95px;
+  height: 150px;
+  border-radius: 50% 50% 0 0;
+  background: rgba(255,255,255,.04);
+}
+.welcome-reference-screen .reference-outer-wave span {
+  display: none;
+}
+/* The sign-in action opens a separate, compact white OTP dialog. */
+.welcome-reference-screen .modal-backdrop:has(.modal-card--auth) {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 30 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  background: rgba(5,20,54,.72) !important;
+  backdrop-filter: blur(4px) !important;
+}
+.welcome-reference-screen .modal-backdrop:has(.modal-card--auth)::before { display: none !important; }
+.welcome-reference-screen .modal-card--auth {
+  width: min(100%,370px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: 88dvh !important;
+  padding: 24px !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  color: #17375d !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.3) !important;
+}
+.welcome-reference-screen .modal-card--auth > .modal-brand {
+  justify-content: flex-start !important;
+  margin: 0 0 18px !important;
+  padding: 0 0 12px !important;
+  border-bottom: 1px solid #edf1f4 !important;
+}
+.welcome-reference-screen .modal-card--auth > .modal-brand .brand-mark {
+  flex-direction: row !important;
+  color: #123b59 !important;
+  text-align: left !important;
+}
+.welcome-reference-screen .modal-card--auth > .modal-brand .brand-mark img { width: 39px !important; height: 39px !important; }
+.welcome-reference-screen .modal-card--auth > .modal-brand .brand-mark strong { color: #123b59 !important; font-size: 12px !important; }
+.welcome-reference-screen .modal-card--auth > .modal-brand .brand-mark small { color: #668093 !important; font-size: 8px !important; }
+.welcome-reference-screen .modal-card--auth > .modal-close { top: 18px !important; left: auto !important; right: 18px !important; width: 30px !important; height: 30px !important; background: #f0f4f7 !important; color: #60758a !important; }
+.welcome-reference-screen .modal-card--auth form h2,
+.welcome-reference-screen .modal-card--auth form .modal-copy,
+.welcome-reference-screen .modal-card--auth form label { text-align: left !important; }
+.welcome-reference-screen .modal-card--auth form h2 { color: #18374e !important; font-size: 22px !important; }
+.welcome-reference-screen .modal-card--auth form .modal-copy { color: #6c7f8d !important; }
+.welcome-reference-screen .modal-card--auth form label { color: #354e60 !important; }
+.welcome-reference-screen .modal-card--auth form label input { border-radius: 8px !important; }
+.welcome-reference-screen .modal-card--auth form .button--primary { border-radius: 9px !important; background: #103b91 !important; color: #fff !important; }
+@media (max-height: 760px) {
+  .welcome-reference-screen .reference-heading { margin-top: 82px; }
+  .welcome-reference-screen .reference-device-stage { padding-top: 18px; padding-bottom: 65px; }
+  .welcome-reference-screen .reference-phone { height: min(57vh, 580px); min-height: 360px; }
+  .welcome-reference-screen .reference-logo { margin-bottom: 28px; width: 84px; height: 84px; }
+}
+@media (max-width: 390px) {
+  .welcome-reference-screen { padding-left: 14px !important; padding-right: 14px !important; }
+  .welcome-reference-screen .reference-heading { margin-top: 88px; }
+  .welcome-reference-screen .reference-heading h1 { font-size: 24px; }
+  .welcome-reference-screen .reference-phone { width: min(78vw,330px); }
+}
