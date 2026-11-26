@@ -2754,3 +2754,251 @@ img, svg, video, canvas { max-width: 100%; }
     padding: 11px 12px !important;
   }
 }
+
+
+/* Refined overview cards: compact spacing, clear hierarchy and consistent surfaces. */
+.portal-shell .overview-screen > .account-strip,
+.portal-shell .overview-screen > .bill-card,
+.portal-shell .overview-screen > .reading-card,
+.portal-shell .overview-screen > .activity-card {
+  border-radius: 13px !important;
+  padding: 14px 16px !important;
+  margin-top: 11px !important;
+  box-shadow: 0 3px 12px rgba(20, 48, 76, .055) !important;
+}
+.portal-shell .overview-screen > .account-strip {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 0 !important;
+  border: 1px solid #e1e9f0 !important;
+  background: #fff !important;
+}
+.portal-shell .overview-screen > .account-strip .eyebrow,
+.portal-shell .overview-screen > .bill-card .eyebrow {
+  font-size: 8.5px !important;
+  letter-spacing: .1em !important;
+  font-weight: 800 !important;
+}
+.portal-shell .overview-screen > .account-strip strong {
+  display: block !important;
+  margin-top: 4px !important;
+  color: #173e61 !important;
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+}
+.portal-shell .overview-screen > .account-strip p {
+  margin: 3px 0 0 !important;
+  color: #74869a !important;
+  font-size: 10px !important;
+}
+.portal-shell .overview-screen > .bill-card {
+  border: 1px solid #e1e9f0 !important;
+  background: #fff !important;
+}
+.portal-shell .overview-screen > .bill-card .bill-top {
+  margin-bottom: 9px !important;
+}
+.portal-shell .overview-screen > .bill-card .bill-top strong {
+  font-size: 10px !important;
+  color: #536b80 !important;
+}
+.portal-shell .overview-screen > .bill-card .bill-amount {
+  padding: 9px 11px !important;
+  border-radius: 9px !important;
+  background: #f3f7fb !important;
+}
+.portal-shell .overview-screen > .bill-card .bill-amount span {
+  font-size: 10px !important;
+  color: #64788c !important;
+}
+.portal-shell .overview-screen > .bill-card .bill-amount strong {
+  font-size: 23px !important;
+  line-height: 1.2 !important;
+  color: #173e61 !important;
+}
+.portal-shell .overview-screen > .bill-card .bill-due {
+  margin: 8px 0 10px !important;
+  color: #75869a !important;
+  font-size: 9.5px !important;
+  line-height: 1.4 !important;
+}
+.portal-shell .overview-screen > .bill-card .button {
+  min-height: 36px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 10px !important;
+}
+.portal-shell .overview-screen > .reading-card {
+  border: 1px solid #e1e9f0 !important;
+  background: #fff !important;
+}
+.portal-shell .overview-screen > .reading-card .reading-top {
+  margin-bottom: 2px !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-period {
+  margin: 3px 0 9px !important;
+  font-size: 9px !important;
+  color: #8292a3 !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-highlight {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  margin: 0 0 10px !important;
+  padding: 9px 11px !important;
+  border-radius: 9px !important;
+  background: #eef6fb !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-highlight strong {
+  font-size: 24px !important;
+  line-height: 1 !important;
+  color: #14558a !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-highlight span {
+  font-size: 9.5px !important;
+  color: #58748c !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-reading-grid {
+  gap: 7px !important;
+  margin: 0 0 9px !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-reading-grid > div {
+  padding: 8px 9px !important;
+  border: 1px solid #e7edf2 !important;
+  border-radius: 8px !important;
+  background: #fbfcfd !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-reading-grid small {
+  font-size: 8px !important;
+  line-height: 1.3 !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-reading-grid b {
+  margin-top: 4px !important;
+  font-size: 12px !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-cost {
+  padding: 7px 1px !important;
+  font-size: 9.5px !important;
+  line-height: 1.35 !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-cost strong {
+  font-size: 10.5px !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-cost--total {
+  margin-top: 3px !important;
+  padding: 9px 10px !important;
+  border-radius: 8px !important;
+  background: #f2f6fa !important;
+}
+.portal-shell .overview-screen > .reading-card .usage-cost--total strong {
+  font-size: 13px !important;
+  color: #173e61 !important;
+}
+.portal-shell .overview-screen .quick-grid {
+  gap: 9px !important;
+  margin-top: 8px !important;
+}
+.portal-shell .overview-screen .quick-action {
+  min-height: 66px !important;
+  padding: 10px 9px !important;
+  gap: 7px !important;
+  border: 1px solid #e1e9f0 !important;
+  border-radius: 11px !important;
+  background: #fff !important;
+  box-shadow: 0 2px 9px rgba(20,48,76,.04) !important;
+}
+.portal-shell .overview-screen .quick-action > span {
+  width: 29px !important;
+  height: 29px !important;
+  border-radius: 8px !important;
+}
+.portal-shell .overview-screen .quick-action > span svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+.portal-shell .overview-screen .quick-action strong {
+  font-size: 9.5px !important;
+  line-height: 1.25 !important;
+}
+.portal-shell .overview-screen .activity-card {
+  border: 1px solid #e1e9f0 !important;
+  background: #fff !important;
+}
+.portal-shell .overview-screen .activity-empty {
+  min-height: 54px !important;
+  gap: 8px !important;
+  font-size: 10px !important;
+  color: #7b8b9b !important;
+}
+.portal-shell .overview-screen .activity-empty svg {
+  width: 17px !important;
+  height: 17px !important;
+}
+.portal-shell .overview-screen .info-banner {
+  margin-top: 11px !important;
+  padding: 12px 14px !important;
+  border-radius: 11px !important;
+}
+.portal-shell .overview-screen .info-banner strong {
+  font-size: 11px !important;
+}
+.portal-shell .overview-screen .info-banner p {
+  margin-top: 2px !important;
+  font-size: 9px !important;
+}
+.portal-shell.theme-dark .overview-screen > .account-strip,
+.portal-shell.theme-dark .overview-screen > .bill-card,
+.portal-shell.theme-dark .overview-screen > .reading-card,
+.portal-shell.theme-dark .overview-screen .quick-action,
+.portal-shell.theme-dark .overview-screen .activity-card {
+  background: #192638 !important;
+  border-color: #30445a !important;
+}
+.portal-shell.theme-dark .overview-screen > .account-strip strong,
+.portal-shell.theme-dark .overview-screen > .bill-card .bill-amount strong,
+.portal-shell.theme-dark .overview-screen > .reading-card .usage-cost--total strong {
+  color: #e5eef7 !important;
+}
+.portal-shell.theme-dark .overview-screen > .bill-card .bill-amount,
+.portal-shell.theme-dark .overview-screen > .reading-card .usage-highlight,
+.portal-shell.theme-dark .overview-screen > .reading-card .usage-cost--total,
+.portal-shell.theme-dark .overview-screen > .reading-card .usage-reading-grid > div {
+  background: #22364c !important;
+  border-color: #344b62 !important;
+}
+@media (max-width: 760px) {
+  .portal-shell .overview-screen > .account-strip,
+  .portal-shell .overview-screen > .bill-card,
+  .portal-shell .overview-screen > .reading-card,
+  .portal-shell .overview-screen > .activity-card {
+    padding: 11px 12px !important;
+    margin-top: 9px !important;
+    border-radius: 11px !important;
+  }
+  .portal-shell .overview-screen > .bill-card .bill-amount strong {
+    font-size: 20px !important;
+  }
+  .portal-shell .overview-screen > .reading-card .usage-highlight {
+    padding: 8px 9px !important;
+    margin-bottom: 8px !important;
+  }
+  .portal-shell .overview-screen > .reading-card .usage-highlight strong {
+    font-size: 21px !important;
+  }
+  .portal-shell .overview-screen > .reading-card .usage-reading-grid {
+    gap: 5px !important;
+  }
+  .portal-shell .overview-screen > .reading-card .usage-reading-grid > div {
+    padding: 7px !important;
+  }
+  .portal-shell .overview-screen .quick-grid {
+    gap: 7px !important;
+  }
+  .portal-shell .overview-screen .quick-action {
+    min-height: 58px !important;
+    padding: 8px 6px !important;
+  }
+  .portal-shell .overview-screen .quick-action strong {
+    font-size: 8.8px !important;
+  }
+}
