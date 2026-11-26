@@ -751,3 +751,72 @@ body { font-size: 15px; }
 @media (max-width: 520px) {
   .portal-shell .about-redesign .about-intro-grid { padding: 18px 15px !important; }
 }
+
+
+/* Water-inspired About Us backdrop: decorative, while all copy stays on solid cards */
+.portal-shell .about-screen.about-redesign {
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 18px 12px 26px !important;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 8% 7%, rgba(66, 169, 226, .20) 0, transparent 31%),
+    radial-gradient(ellipse at 94% 29%, rgba(25, 112, 174, .14) 0, transparent 28%),
+    radial-gradient(ellipse at 12% 76%, rgba(89, 185, 225, .15) 0, transparent 30%),
+    linear-gradient(145deg, #eaf5fc 0%, #f7fbff 43%, #e3f1fa 100%) !important;
+}
+.portal-shell .about-screen.about-redesign::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .48;
+  background:
+    repeating-radial-gradient(ellipse at 88% 12%, transparent 0 22px, rgba(31, 125, 184, .10) 23px 24px, transparent 25px 42px),
+    repeating-radial-gradient(ellipse at 4% 88%, transparent 0 28px, rgba(31, 125, 184, .08) 29px 30px, transparent 31px 52px);
+}
+.portal-shell .about-screen.about-redesign::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 250px;
+  height: 250px;
+  right: -110px;
+  top: 42%;
+  border: 1px solid rgba(25, 112, 174, .13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px rgba(25, 112, 174, .035), 0 0 0 38px rgba(25, 112, 174, .025), 0 0 0 60px rgba(25, 112, 174, .02);
+}
+.portal-shell .about-screen.about-redesign > * {
+  position: relative;
+  z-index: 1;
+}
+.portal-shell .about-redesign .about-intro-grid,
+.portal-shell .about-redesign .about-purpose-card,
+.portal-shell .about-redesign .about-service-item,
+.portal-shell .about-redesign .about-team-member,
+.portal-shell .about-redesign .about-contact-panel {
+  background: rgba(255, 255, 255, .97) !important;
+  backdrop-filter: blur(5px);
+}
+.portal-shell .about-redesign .about-intro-grid,
+.portal-shell .about-redesign .about-purpose-card,
+.portal-shell .about-redesign .about-service-item,
+.portal-shell .about-redesign .about-team-member {
+  border-color: rgba(119, 166, 198, .48) !important;
+  box-shadow: 0 8px 24px rgba(21, 76, 116, .075) !important;
+}
+.portal-shell .about-redesign .about-contact-panel {
+  background: linear-gradient(110deg, #ffffff 0%, #eaf5fc 100%) !important;
+  border-color: #c4ddec !important;
+  box-shadow: 0 8px 24px rgba(21, 76, 116, .08) !important;
+}
+@media (max-width: 520px) {
+  .portal-shell .about-screen.about-redesign {
+    padding: 12px 8px 20px !important;
+    border-radius: 14px;
+  }
+}
