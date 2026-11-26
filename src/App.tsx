@@ -269,31 +269,19 @@ function App() {
 }
 
 function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { modal: Modal; setModal: (modal: Modal) => void; navigate: (screen: Screen) => void; showToast: (message: string) => void; onLogin: (session: PortalSession) => void; onDemo: () => void }) {
-  return <div className="app-shell welcome-shell welcome-reference-screen">
-    <button className="welcome-back-button" type="button" onClick={() => showToast('You are on the customer access screen.')} aria-label="Back">←</button>
-    <header className="reference-heading">
-      <h1>Get access to all products<br />and services offered<br />by TSRUKPE TOTA WATSAN</h1>
-    </header>
-    <main className="reference-device-stage">
-      <div className="reference-phone">
-        <div className="reference-phone-speaker"><span /></div>
-        <div className="reference-phone-screen">
-          <div className="reference-statusbar"><span>9:41</span><span>●  ▮▮  ▰</span></div>
-          <div className="reference-app-content">
-            <div className="reference-logo"><img src={logoPath} alt="Tsrukpe-Tota WATSAN logo" /></div>
-            <h2>Customer App</h2>
-            <p>Tsrukpe-Tota Water &amp; Sanitation</p>
-            <div className="reference-actions">
-              <button type="button" className="reference-register" onClick={() => showToast('Customer registration is handled by the WATSAN office. Please contact the office for a new connection.')}>Register</button>
-              <button type="button" className="reference-signin" onClick={() => setModal('signin')}>Sign In</button>
-            </div>
-          </div>
-          <div className="reference-phone-wave"><span>Powered by <strong>Tsrukpe-Tota WATSAN</strong></span></div>
-          <div className="reference-phone-nav"><i /><i /><i /></div>
-        </div>
+  return <div className="app-shell welcome-shell watsan-login-reference">
+    <main className="watsan-login-content">
+      <div className="watsan-login-logo">
+        <img src={logoPath} alt="Tsrukpe-Tota Water and Sanitation logo" />
       </div>
+      <section className="watsan-login-actions">
+        <h1>Customer App</h1>
+        <p>Tsrukpe-Tota Water &amp; Sanitation</p>
+        <button type="button" className="watsan-register-button" onClick={() => showToast('For a new water connection, please contact the WATSAN office on +233 59 118 9163.')}>Register</button>
+        <button type="button" className="watsan-signin-button" onClick={() => setModal('signin')}>Sign In</button>
+      </section>
     </main>
-    <footer className="reference-outer-wave"><span>TSRUKPE TOTA · COMMUNITY WATER &amp; SANITATION</span></footer>
+    <div className="watsan-login-wave" aria-hidden="true"><span /></div>
     {modal && <ModalContent modal={modal} close={() => setModal(null)} setModal={setModal} navigate={navigate} onLogin={onLogin} onPayment={async () => false} showToast={showToast} />}
   </div>;
 }
