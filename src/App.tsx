@@ -23,6 +23,7 @@ import {
   Menu,
   MessageSquare,
   Plus,
+  PhoneCall,
   Receipt,
   RefreshCw,
   Settings,
@@ -266,16 +267,63 @@ function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayNa
 
 
 function AboutScreen() {
-  return <div className="screen-stack about-screen">
-    <PageIntro eyebrow="TSRUKPE TOTA WATSAN" title="About Us" copy="Learn about the community team responsible for water and sanitation services." />
-    <section className="activity-card about-account-card"><h2>Who We Are</h2><p>The Tsrukpe-Tota Water and Sanitation (WATSAN) is a community-based organization established to manage and deliver clean water supply and proper sanitation services to residents of the Tsrukpe-Tota community.</p></section>
-    <section className="about-account-values"><article className="activity-card"><span>OUR MISSION</span><h3>Reliable services for all</h3><p>To provide affordable, reliable, and sustainable water and sanitation services to every member of the Tsrukpe-Tota community, ensuring improved health and quality of life for all residents.</p></article><article className="activity-card"><span>OUR VISION</span><h3>A clean, healthy community</h3><p>A Tsrukpe-Tota community where every resident has consistent access to clean, safe water and proper sanitation — free from waterborne diseases and with a clean, healthy environment.</p></article></section>
-    <section className="activity-card about-account-card"><h2>Our Services</h2><div className="about-account-services">{['Monthly Water Bill Collection','New Water Connection','Reconnection Services','Sanitation Levy Collection','Water Quality Monitoring','Community Sanitation Programs','Pipe Repair & Maintenance','Revenue Transparency & Accountability'].map(item => <span key={item}>{item}</span>)}</div></section>
-    <section className="activity-card about-account-card"><h2>Committee Members</h2><div className="about-account-team">{[['AMEWOTSE EDWIN','Committee Chairman'],['SETORDZI GODSWAY','Committee Secretary'],['AGBELE FAUSTINE','Treasurer'],['AGBELE ERIC','Operations Officer'],['BETE LAWRENCE','Operations Officer'],['ANKU LAUD ERNEST','Meter Reader'],['ATUBRA BARNABAS','Meter Reader'],['AMETONU RHEA','Revenue Collector'],['KPOH MARY','Revenue Collector']].map(([name,role])=><div key={name}><strong>{name}</strong><span>{role}</span></div>)}</div></section>
-    <section className="activity-card about-account-card"><h2>Contact WATSAN</h2><p>Tsrukpe Tota, North-Dayi District, Volta Region</p><p><a href="tel:+233591189163">+233 591 189 163</a></p><p><a href="mailto:watsancommitteetsrukpetota@gmail.com">watsancommitteetsrukpetota@gmail.com</a></p></section>
+  const services = [
+    ['Monthly water billing', 'Meter reading, bill preparation and clear account records.'],
+    ['New water connections', 'Guidance and support for residents applying for a water connection.'],
+    ['Reconnection services', 'Support with restoring service after outstanding bills are settled.'],
+    ['Water quality monitoring', 'Community-focused monitoring to help protect safe water supply.'],
+    ['Pipe repairs and maintenance', 'Reporting and coordination of repairs to the community water network.'],
+    ['Sanitation programmes', 'Promoting cleaner surroundings and responsible sanitation practices.'],
+    ['Revenue accountability', 'Transparent collection and record-keeping for community water services.'],
+    ['Sanitation levy collection', 'Supporting local sanitation activities through community contributions.'],
+  ];
+  const team = [
+    ['AmeWotse Edwin', 'Committee Chairman'],
+    ['Setordzi GodSway', 'Committee Secretary'],
+    ['Agbele Faustine', 'Treasurer'],
+    ['Agbele Eric', 'Operations Officer'],
+    ['Bete Lawrence', 'Operations Officer'],
+    ['Anku Laud Ernest', 'Meter Reader'],
+    ['Atubra Barnabas', 'Meter Reader'],
+    ['Ametonu Rhea', 'Revenue Collector'],
+    ['Kpoh Mary', 'Revenue Collector'],
+  ];
+  return <div className="screen-stack about-screen about-redesign">
+    <section className="about-hero">
+      <div className="about-hero-copy">
+        <span className="about-kicker"><span /> COMMUNITY WATER &amp; SANITATION</span>
+        <h1>Serving our community.<br /><em>Protecting every drop.</em></h1>
+        <p>Working together to manage reliable water services and promote a cleaner, healthier Tsrukpe-Tota.</p>
+        <div className="about-hero-meta"><span><ShieldCheck size={16} /> Community-led service</span><span><Info size={16} /> Local accountability</span></div>
+      </div>
+      <div className="about-hero-mark"><img src={logoPath} alt="Tsrukpe-Tota WATSAN emblem" /><span>TSRUKPE-TOTA<br />WATER &amp; SANITATION</span></div>
+      <div className="about-hero-wave" />
+    </section>
+
+    <section className="about-intro-grid">
+      <div className="about-section-label"><span>01</span><div><small>WHO WE ARE</small><h2>Water services, managed with community at heart.</h2></div></div>
+      <div className="about-intro-copy"><p>Tsrukpe-Tota Water and Sanitation (WATSAN) is a community-based organization responsible for managing and delivering water supply and sanitation services to residents of Tsrukpe-Tota.</p><p>Our work is rooted in service, responsible management and the belief that access to safe water and a clean environment supports the wellbeing and development of our whole community.</p></div>
+    </section>
+
+    <section className="about-purpose-grid">
+      <article className="about-purpose-card about-purpose-card--mission"><div className="about-card-icon"><Zap size={20} /></div><span>OUR MISSION</span><h3>Reliable services for everyone.</h3><p>To provide affordable, reliable and sustainable water and sanitation services to the people of Tsrukpe-Tota, contributing to better health and quality of life.</p></article>
+      <article className="about-purpose-card about-purpose-card--vision"><div className="about-card-icon"><ShieldCheck size={20} /></div><span>OUR VISION</span><h3>A cleaner, healthier Tsrukpe-Tota.</h3><p>A community where every resident has consistent access to clean, safe water and proper sanitation, supported by a healthy environment.</p></article>
+    </section>
+
+    <section className="about-services-section">
+      <div className="about-section-heading"><div><small>WHAT WE DO</small><h2>Our services</h2></div><p>Practical services that help keep the community water system dependable and accountable.</p></div>
+      <div className="about-services-grid">{services.map(([title,copy],index)=><article className="about-service-item" key={title}><span className="about-service-number">{String(index+1).padStart(2,'0')}</span><div><h3>{title}</h3><p>{copy}</p></div><ArrowRight size={17} /></article>)}</div>
+    </section>
+
+    <section className="about-team-section">
+      <div className="about-section-heading"><div><small>PEOPLE BEHIND THE SERVICE</small><h2>Our committee</h2></div><p>Community representatives supporting the day-to-day management of WATSAN services.</p></div>
+      <div className="about-team-grid">{team.map(([name,role],index)=><article className="about-team-member" key={name}><span className="about-team-initial">{name.split(' ').map(part=>part[0]).join('').slice(0,2).toUpperCase()}</span><div><strong>{name}</strong><small>{role}</small></div><span className="about-team-index">{String(index+1).padStart(2,'0')}</span></article>)}</div>
+    </section>
+
+    <section className="about-contact-panel"><div className="about-contact-icon"><Headphones size={23} /></div><div className="about-contact-copy"><small>WE ARE HERE TO HELP</small><h2>Need assistance with your water service?</h2><p>Contact the WATSAN office for account enquiries, service information and support.</p></div><div className="about-contact-actions"><a href="tel:+233591189163"><PhoneCall size={16} /> +233 59 118 9163</a><a href="mailto:watsancommitteetsrukpetota@gmail.com"><Mail size={16} /> Email WATSAN</a></div></section>
+    <p className="about-location-note">TSRUKPE-TOTA <span>•</span> NORTH DAYI DISTRICT <span>•</span> VOLTA REGION, GHANA</p>
   </div>;
 }
-
 function EmptyAccount() { return <section className="empty-account"><div className="empty-account-icon"><Info size={23} /></div><div><strong>No billing records found</strong><p>We could not find billing records for this meter. Please contact the WATSAN office to confirm your account details.</p></div></section>; }
 
 function HelpScreen({ account, showToast, session }: { account: ServiceAccount | null; showToast: (message: string) => void; session: PortalSession }) {
