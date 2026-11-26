@@ -4418,3 +4418,160 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell .modal-backdrop:has(.modal-card--auth) .modal-card--auth {
   z-index: 1;
 }
+
+
+/* Full-screen WATSAN sign-in experience inspired by the supplied GWCL app screen.
+   The previous selector targeted .portal-shell, but the login actually lives in
+   .welcome-shell, so those earlier background rules never applied. */
+.welcome-shell .modal-backdrop:has(.modal-card--auth) {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100 !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(ellipse at 50% 22%, rgba(84, 143, 240, .22) 0%, transparent 42%),
+    linear-gradient(160deg, #123f9b 0%, #103987 56%, #0a2d73 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.welcome-shell .modal-backdrop:has(.modal-card--auth)::before {
+  content: "";
+  position: absolute;
+  left: -18%;
+  right: -18%;
+  bottom: -105px;
+  height: 230px;
+  border-radius: 50% 50% 0 0 / 42% 42% 0 0;
+  background: #fff;
+  pointer-events: none;
+}
+.welcome-shell .modal-card--auth {
+  z-index: 1 !important;
+  width: min(100%, 520px) !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100dvh !important;
+  margin: 0 auto !important;
+  padding: max(76px, env(safe-area-inset-top) + 58px) 30px max(155px, env(safe-area-inset-bottom) + 125px) !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  animation: none !important;
+}
+.welcome-shell .modal-card--auth > .modal-brand {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 0 auto 34px !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.welcome-shell .modal-card--auth > .modal-brand .brand-mark {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  color: #fff !important;
+  text-align: center !important;
+}
+.welcome-shell .modal-card--auth > .modal-brand .brand-mark img {
+  width: 92px !important;
+  height: 92px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 5px 14px rgba(0,0,0,.15)) !important;
+}
+.welcome-shell .modal-card--auth > .modal-brand .brand-mark strong {
+  color: #fff !important;
+  font-size: 17px !important;
+  letter-spacing: .12em !important;
+}
+.welcome-shell .modal-card--auth > .modal-brand .brand-mark small {
+  color: rgba(255,255,255,.82) !important;
+  font-size: 10px !important;
+  letter-spacing: .16em !important;
+}
+.welcome-shell .modal-card--auth > .modal-close {
+  top: max(22px, env(safe-area-inset-top)) !important;
+  left: 22px !important;
+  right: auto !important;
+  width: 46px !important;
+  height: 46px !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(4,25,76,.55) !important;
+  color: #fff !important;
+}
+.welcome-shell .modal-card--auth form {
+  width: min(100%, 390px) !important;
+  margin: 0 auto !important;
+}
+.welcome-shell .modal-card--auth form > .eyebrow {
+  color: rgba(255,255,255,.76) !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  letter-spacing: .16em !important;
+}
+.welcome-shell .modal-card--auth form h2 {
+  color: #fff !important;
+  text-align: center !important;
+  font-size: clamp(25px, 6vw, 31px) !important;
+  line-height: 1.2 !important;
+  margin-bottom: 10px !important;
+}
+.welcome-shell .modal-card--auth form .modal-copy {
+  color: rgba(255,255,255,.83) !important;
+  text-align: center !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  margin-bottom: 25px !important;
+}
+.welcome-shell .modal-card--auth form label {
+  color: #fff !important;
+  font-size: 12px !important;
+}
+.welcome-shell .modal-card--auth form label input {
+  height: 52px !important;
+  border: 1px solid rgba(255,255,255,.52) !important;
+  border-radius: 28px !important;
+  padding: 0 19px !important;
+  background: rgba(255,255,255,.98) !important;
+  color: #173b83 !important;
+  font-size: 14px !important;
+}
+.welcome-shell .modal-card--auth form .button--primary {
+  min-height: 53px !important;
+  border: 0 !important;
+  border-radius: 28px !important;
+  background: #fff !important;
+  color: #123b87 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+.welcome-shell .modal-card--auth form .text-button {
+  color: #fff !important;
+}
+.welcome-shell .modal-card--auth .form-error {
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+.welcome-shell .modal-card--auth .modal-close svg {
+  width: 23px !important;
+  height: 23px !important;
+}
+@media (max-height: 650px) {
+  .welcome-shell .modal-card--auth {
+    justify-content: flex-start !important;
+    padding-top: 76px !important;
+    padding-bottom: 125px !important;
+  }
+  .welcome-shell .modal-card--auth > .modal-brand { margin-bottom: 18px !important; }
+  .welcome-shell .modal-card--auth > .modal-brand .brand-mark img { width: 62px !important; height: 62px !important; }
+}
