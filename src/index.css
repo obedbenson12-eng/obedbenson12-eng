@@ -1230,3 +1230,9 @@ body {
 .account-holder-footer button:disabled { opacity:.55; }
 .account-holder-card .zite-sync { color:#c9e5f7; }
 @media(max-width:420px) { .account-holder-card { padding:18px; } .account-holder-payment strong { font-size:27px; } .account-holder-footer { align-items:flex-start; } }
+
+/* Account holder card matches the primary WATSAN brand header. */
+.account-holder-card { background: linear-gradient(135deg, #083777 0%, #0d4b96 62%, #0d3f87 100%); }
+.account-holder-heading { justify-content: flex-start; }
+.account-holder-chip { display: none; }
+.account-holder-payment .balance-refresh:disabled { opacity: .7; cursor: wait; }
