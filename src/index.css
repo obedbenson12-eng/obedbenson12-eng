@@ -1345,3 +1345,227 @@ body {
   .theme-toggle { width: 36px; padding: 0; }
   .theme-toggle-label { display: none; }
 }
+
+
+/* WATSAN card system refresh — consistent, restrained, production-style surfaces. */
+.portal-shell {
+  --card-bg: #ffffff;
+  --card-border: #e2e9f0;
+  --card-text: #17324f;
+  --card-muted: #71849a;
+  --card-soft: #f3f7fa;
+  --card-shadow: 0 5px 18px rgba(18, 47, 76, .055);
+}
+.portal-shell .bill-card,
+.portal-shell .reading-card,
+.portal-shell .account-strip,
+.portal-shell .empty-account,
+.portal-shell .activity-card,
+.portal-shell .support-list,
+.portal-shell .settings-list,
+.portal-shell .statement-card,
+.portal-shell .bill-history-card,
+.portal-shell .profile-card,
+.portal-shell .profile-details-card,
+.portal-shell .security-status-card,
+.portal-shell .issue-form,
+.portal-shell .contact-panel,
+.portal-shell .info-banner,
+.portal-shell .payment-summary,
+.portal-shell .loading-card,
+.portal-shell .overview-screen .quick-action {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--card-shadow) !important;
+}
+.portal-shell .bill-card,
+.portal-shell .reading-card,
+.portal-shell .account-strip,
+.portal-shell .empty-account,
+.portal-shell .profile-card,
+.portal-shell .profile-details-card,
+.portal-shell .security-status-card,
+.portal-shell .issue-form { padding: 18px !important; }
+.portal-shell .bill-history-card { padding: 16px !important; gap: 14px !important; }
+.portal-shell .statement-card { padding: 14px 15px !important; }
+.portal-shell .overview-screen .quick-action {
+  min-height: 102px;
+  padding: 14px 8px !important;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.portal-shell .overview-screen .quick-action:hover,
+.portal-shell .bill-card:hover,
+.portal-shell .bill-history-card:hover,
+.portal-shell .statement-card:hover {
+  transform: translateY(-1px);
+  border-color: #c8d8e7 !important;
+  box-shadow: 0 9px 24px rgba(18, 47, 76, .09) !important;
+}
+.portal-shell .account-strip { min-height: 78px; }
+.portal-shell .bill-amount,
+.portal-shell .usage-reading-grid div,
+.portal-shell .bill-reading-grid div,
+.portal-shell .reading-row,
+.portal-shell .profile-detail-row,
+.portal-shell .activity-row,
+.portal-shell .help-item,
+.portal-shell .setting-row {
+  border-color: var(--card-border);
+}
+.portal-shell .bill-amount,
+.portal-shell .usage-reading-grid div,
+.portal-shell .bill-reading-grid div,
+.portal-shell .reading-row {
+  background: var(--card-soft) !important;
+  border-radius: 11px;
+}
+.portal-shell .bill-top strong,
+.portal-shell .bill-history-top strong,
+.portal-shell .statement-details strong,
+.portal-shell .profile-details-card strong,
+.portal-shell .profile-card strong,
+.portal-shell .security-status-card strong {
+  color: var(--card-text);
+}
+.portal-shell .bill-due,
+.portal-shell .bill-history-top div span,
+.portal-shell .bill-reading-grid small,
+.portal-shell .usage-reading-grid small,
+.portal-shell .statement-details span,
+.portal-shell .profile-details-card .profile-detail-row span,
+.portal-shell .profile-card p {
+  color: var(--card-muted);
+}
+.portal-shell .activity-card,
+.portal-shell .support-list,
+.portal-shell .settings-list { overflow: hidden; }
+.portal-shell .activity-row,
+.portal-shell .help-item,
+.portal-shell .setting-row {
+  transition: background .16s ease;
+}
+.portal-shell .activity-row:last-child,
+.portal-shell .help-item:last-child,
+.portal-shell .setting-row:last-child { border-bottom: 0; }
+.portal-shell .activity-row:hover,
+.portal-shell .help-item:hover,
+.portal-shell .setting-row:hover { background: #f7f9fc !important; }
+.portal-shell .mini-icon,
+.portal-shell .statement-icon,
+.portal-shell .profile-avatar,
+.portal-shell .help-item-icon,
+.portal-shell .setting-row > span,
+.portal-shell .empty-account-icon,
+.portal-shell .activity-icon {
+  border-radius: 12px;
+}
+.portal-shell .contact-panel {
+  background: #edf6f8 !important;
+  border-color: #d6e8ed !important;
+  color: #16455f;
+}
+.portal-shell .info-banner {
+  background: #eef6fb !important;
+  border-color: #d9e8f2 !important;
+}
+.portal-shell .account-holder-card {
+  border: 0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 12px 26px rgba(13, 63, 135, .20) !important;
+}
+.portal-shell .account-holder-card .account-holder-heading,
+.portal-shell .account-holder-card .account-holder-details,
+.portal-shell .account-holder-card .account-holder-payment,
+.portal-shell .account-holder-card .account-holder-footer { position: relative; z-index: 1; }
+
+/* Dark-mode equivalents for every shared card surface. */
+.portal-shell.theme-dark {
+  --card-bg: #192638;
+  --card-border: #2b3d53;
+  --card-text: #e7eef7;
+  --card-muted: #a5b7ca;
+  --card-soft: #22364c;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, .16);
+}
+.portal-shell.theme-dark .bill-card,
+.portal-shell.theme-dark .reading-card,
+.portal-shell.theme-dark .account-strip,
+.portal-shell.theme-dark .empty-account,
+.portal-shell.theme-dark .activity-card,
+.portal-shell.theme-dark .support-list,
+.portal-shell.theme-dark .settings-list,
+.portal-shell.theme-dark .statement-card,
+.portal-shell.theme-dark .bill-history-card,
+.portal-shell.theme-dark .profile-card,
+.portal-shell.theme-dark .profile-details-card,
+.portal-shell.theme-dark .security-status-card,
+.portal-shell.theme-dark .issue-form,
+.portal-shell.theme-dark .payment-summary,
+.portal-shell.theme-dark .loading-card,
+.portal-shell.theme-dark .overview-screen .quick-action {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--card-text) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+.portal-shell.theme-dark .bill-amount,
+.portal-shell.theme-dark .usage-reading-grid div,
+.portal-shell.theme-dark .bill-reading-grid div,
+.portal-shell.theme-dark .reading-row {
+  background: var(--card-soft) !important;
+  border-color: var(--card-border) !important;
+}
+.portal-shell.theme-dark .bill-top strong,
+.portal-shell.theme-dark .bill-history-top strong,
+.portal-shell.theme-dark .bill-history-total strong,
+.portal-shell.theme-dark .statement-details strong,
+.portal-shell.theme-dark .profile-details-card strong,
+.portal-shell.theme-dark .profile-card strong,
+.portal-shell.theme-dark .security-status-card strong,
+.portal-shell.theme-dark .reading-row strong,
+.portal-shell.theme-dark .bill-amount strong,
+.portal-shell.theme-dark .usage-reading-grid b,
+.portal-shell.theme-dark .bill-reading-grid b {
+  color: #e7eef7 !important;
+}
+.portal-shell.theme-dark .bill-due,
+.portal-shell.theme-dark .bill-history-top div span,
+.portal-shell.theme-dark .bill-reading-grid small,
+.portal-shell.theme-dark .usage-reading-grid small,
+.portal-shell.theme-dark .statement-details span,
+.portal-shell.theme-dark .profile-detail-row span,
+.portal-shell.theme-dark .profile-card p,
+.portal-shell.theme-dark .bill-amount span {
+  color: var(--card-muted) !important;
+}
+.portal-shell.theme-dark .activity-row,
+.portal-shell.theme-dark .help-item,
+.portal-shell.theme-dark .setting-row {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--card-text) !important;
+}
+.portal-shell.theme-dark .activity-row:hover,
+.portal-shell.theme-dark .help-item:hover,
+.portal-shell.theme-dark .setting-row:hover { background: #22364c !important; }
+.portal-shell.theme-dark .contact-panel,
+.portal-shell.theme-dark .info-banner {
+  background: #1d3448 !important;
+  border-color: #304c63 !important;
+  color: #dceaf5 !important;
+}
+.portal-shell.theme-dark .account-holder-card {
+  background: var(--watsan-brand-blue, #0d3f87) !important;
+  border-color: transparent !important;
+}
+.portal-shell.theme-dark .about-screen .activity-card {
+  background: rgba(25,38,56,.97) !important;
+  border-color: #34485f !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal-shell .overview-screen .quick-action,
+  .portal-shell .bill-card,
+  .portal-shell .bill-history-card,
+  .portal-shell .statement-card { transition: none !important; }
+}
