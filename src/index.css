@@ -1212,3 +1212,21 @@ body {
 /* Display the customer's saved profile photo in the sidebar avatar. */
 .drawer .avatar--large { overflow: hidden; border-radius: 50%; flex: 0 0 42px; }
 .drawer .drawer-avatar-image { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+
+/* Account holder overview card */
+.account-holder-card { background: linear-gradient(135deg, #073b82 0%, #0756a4 58%, #0b6db4 100%); padding: 22px; border: 1px solid rgba(255,255,255,.16); }
+.account-holder-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#c7e5fb; font-size:11px; font-weight:800; letter-spacing:.14em; }
+.account-holder-chip { border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:6px 9px; font-size:9px; letter-spacing:.08em; color:#fff; }
+.account-holder-card h2 { margin:22px 0 13px; color:#fff; font:800 clamp(21px,5vw,27px) 'Manrope',sans-serif; letter-spacing:.015em; overflow-wrap:anywhere; }
+.account-holder-details { display:grid; gap:8px; color:#e1f1fc; font-size:13px; font-weight:600; }
+.account-holder-payment { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:22px; padding:15px 0 13px; border-top:1px solid rgba(255,255,255,.2); }
+.account-holder-payment small { display:block; margin-bottom:6px; color:#b9ddf4; font-size:10px; font-weight:800; letter-spacing:.09em; }
+.account-holder-payment strong { display:block; color:#fff; font:800 30px 'Manrope',sans-serif; letter-spacing:-.03em; }
+.account-holder-payment .balance-refresh { color:#fff; padding:10px; border:1px solid rgba(255,255,255,.25); border-radius:10px; }
+.account-holder-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:1px solid rgba(255,255,255,.2); padding-top:14px; color:#d6ebf9; font-size:11px; }
+.account-holder-footer > span:first-child { display:flex; align-items:center; gap:6px; }
+.account-holder-footer button { background:#e7f5fb; color:#0d3f87; border-radius:9px; padding:9px 11px; font-size:12px; font-weight:800; }
+.account-holder-footer button:disabled { opacity:.55; }
+.account-holder-card .zite-sync { color:#c9e5f7; }
+@media(max-width:420px) { .account-holder-card { padding:18px; } .account-holder-payment strong { font-size:27px; } .account-holder-footer { align-items:flex-start; } }
