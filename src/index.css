@@ -4281,3 +4281,48 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.theme-dark .faq-answer-bubble{background:#1d3041;border-color:#344b60}
 .portal-shell.theme-dark .faq-answer-bubble p{color:#e4edf5}
 @media(max-width:520px){.faq-chat-panel{padding:14px!important}.faq-question-bubble{width:96%;padding:11px 12px}.faq-answer-bubble{max-width:calc(100% - 35px)}}
+
+
+/* Clean, refined customer bottom navigation */
+.portal-shell .bottom-nav{
+  height:76px!important;min-height:76px!important;
+  padding:9px 22px max(9px,env(safe-area-inset-bottom))!important;
+  display:flex!important;align-items:center!important;justify-content:space-evenly!important;
+  gap:10px!important;background:rgba(255,255,255,.97)!important;
+  border-top:1px solid #e7edf3!important;
+  box-shadow:0 -8px 28px rgba(20,48,76,.09)!important;
+  backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;
+}
+.portal-shell .bottom-nav .nav-button{
+  position:relative!important;flex:1 1 0!important;max-width:150px!important;
+  min-width:0!important;height:54px!important;padding:6px 10px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:4px!important;border:0!important;border-radius:15px!important;
+  background:transparent!important;color:#748397!important;
+  font-size:10px!important;font-weight:650!important;line-height:1.1!important;
+  transition:background .18s ease,color .18s ease,transform .18s ease!important;
+}
+.portal-shell .bottom-nav .nav-button svg{width:20px!important;height:20px!important;stroke-width:1.9!important}
+.portal-shell .bottom-nav .nav-button--active{
+  color:#0d5791!important;background:#eaf3fa!important;font-weight:800!important;
+}
+.portal-shell .bottom-nav .nav-button--active:before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:22px;height:3px;border-radius:0 0 5px 5px;background:#1476b8;
+}
+.portal-shell .bottom-nav .nav-button:active{transform:scale(.96)!important}
+.portal-shell.theme-dark .bottom-nav{
+  background:rgba(17,32,49,.97)!important;border-top-color:#2b4057!important;
+  box-shadow:0 -8px 28px rgba(0,0,0,.28)!important;
+}
+.portal-shell.theme-dark .bottom-nav .nav-button{color:#9aacc0!important}
+.portal-shell.theme-dark .bottom-nav .nav-button--active{color:#d8edff!important;background:#203b53!important}
+@media(max-width:520px){
+  .portal-shell .bottom-nav{height:72px!important;min-height:72px!important;padding:6px 14px max(6px,env(safe-area-inset-bottom))!important;gap:6px!important}
+  .portal-shell .bottom-nav .nav-button{height:52px!important;padding:5px 6px!important;font-size:9.5px!important;border-radius:13px!important}
+}
+@media(orientation:landscape) and (max-height:520px){
+  .portal-shell .bottom-nav{height:58px!important;min-height:58px!important;padding:4px 14px max(4px,env(safe-area-inset-bottom))!important}
+  .portal-shell .bottom-nav .nav-button{height:46px!important;gap:2px!important}
+  .portal-shell .bottom-nav .nav-button svg{width:18px!important;height:18px!important}
+}
