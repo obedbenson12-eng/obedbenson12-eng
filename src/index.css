@@ -1009,3 +1009,43 @@ body { font-size: 15px; }
 @media (prefers-reduced-motion: reduce) {
   .portal-shell .about-redesign > section { animation: none !important; }
 }
+
+
+/* About Us performance fix: remove entrance delays and costly mobile paint effects */
+.portal-shell .about-redesign > section {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+.portal-shell .about-screen.about-redesign::before,
+.portal-shell .about-screen.about-redesign::after {
+  display: none !important;
+}
+.portal-shell .about-redesign .about-intro-grid,
+.portal-shell .about-redesign .about-purpose-card,
+.portal-shell .about-redesign .about-service-item,
+.portal-shell .about-redesign .about-team-member,
+.portal-shell .about-redesign .about-contact-panel {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.portal-shell .about-redesign .about-service-item {
+  transition: none !important;
+}
+.portal-shell .about-redesign .about-service-item:hover {
+  transform: none !important;
+  box-shadow: 0 3px 12px rgba(16,48,76,.025) !important;
+}
+@media (max-width: 650px) {
+  .portal-shell .about-redesign {
+    gap: 18px !important;
+    background: #eef6fb !important;
+  }
+  .portal-shell .about-redesign .about-intro-grid,
+  .portal-shell .about-redesign .about-purpose-card,
+  .portal-shell .about-redesign .about-service-item,
+  .portal-shell .about-redesign .about-team-member,
+  .portal-shell .about-redesign .about-contact-panel {
+    box-shadow: 0 2px 8px rgba(16,48,76,.035) !important;
+  }
+}
