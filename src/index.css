@@ -4326,3 +4326,33 @@ img, svg, video, canvas { max-width: 100%; }
   .portal-shell .bottom-nav .nav-button{height:46px!important;gap:2px!important}
   .portal-shell .bottom-nav .nav-button svg{width:18px!important;height:18px!important}
 }
+
+
+/* Blue-and-white bottom navigation theme */
+.portal-shell .bottom-nav{
+  background:#075b91!important;
+  border-top:1px solid #0b679f!important;
+  box-shadow:0 -8px 26px rgba(5,55,91,.2)!important;
+}
+.portal-shell .bottom-nav .nav-button{
+  color:rgba(255,255,255,.82)!important;
+}
+.portal-shell .bottom-nav .nav-button--active{
+  color:#075b91!important;
+  background:#fff!important;
+}
+.portal-shell .bottom-nav .nav-button--active:before{
+  background:#fff!important;
+  opacity:0!important;
+}
+.portal-shell.theme-dark .bottom-nav{
+  background:#075b91!important;
+  border-top-color:#0b679f!important;
+}
+.portal-shell.theme-dark .bottom-nav .nav-button{
+  color:rgba(255,255,255,.84)!important;
+}
+.portal-shell.theme-dark .bottom-nav .nav-button--active{
+  color:#075b91!important;
+  background:#fff!important;
+}
