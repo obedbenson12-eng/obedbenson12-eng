@@ -1094,3 +1094,56 @@ body {
     will-change: auto !important;
   }
 }
+
+
+/* Site-wide mobile performance: keep scrolling native and remove expensive paint work. */
+html, body {
+  scroll-behavior: auto !important;
+  overscroll-behavior-y: auto;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+#root, .app-shell, .portal-shell, .welcome-shell {
+  overflow: visible !important;
+  contain: none !important;
+}
+.portal-content, .welcome-main {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+/* Blur filters and layered shadows are costly on lower-powered phones. */
+*, *::before, *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.modal-backdrop, .drawer-backdrop {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* Keep only functional loading feedback; remove decorative movement site-wide. */
+.logo-hero, .about-redesign > section, .quick-action, .support-card,
+.about-service-item, .modal-card, .drawer, .toast {
+  animation: none !important;
+  transition: none !important;
+}
+.logo-hero { transform: none !important; }
+.quick-action:hover, .support-card:hover, .about-service-item:hover {
+  transform: none !important;
+}
+/* Prevent large blurred shadows from being repainted during scroll. */
+.balance-card, .welcome-main, .modal-card, .drawer,
+.about-intro-grid, .about-purpose-card, .about-service-item,
+.about-team-member, .about-contact-panel {
+  filter: none !important;
+}
+@media (max-width: 650px) {
+  .app-shell, .portal-shell, .welcome-shell { min-height: 100svh; }
+  .portal-content { padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
+  .topbar { position: sticky; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
