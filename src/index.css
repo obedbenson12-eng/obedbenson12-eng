@@ -1208,3 +1208,7 @@ body {
 .managed-upload-link,.managed-remove-link { display: inline-block; padding: 0; margin: 0 12px 0 0; border: 0; background: transparent; color: #14558a; font-size: 11px; font-weight: 800; cursor: pointer; text-decoration: underline; }
 .managed-remove-link { color: #a94c45; }
 @media (max-width: 380px) { .profile-card--managed { padding: 13px; gap: 10px; } .managed-avatar-wrap,.managed-avatar { width: 64px; height: 64px; flex-basis: 64px; } }
+
+/* Display the customer's saved profile photo in the sidebar avatar. */
+.drawer .avatar--large { overflow: hidden; border-radius: 50%; flex: 0 0 42px; }
+.drawer .drawer-avatar-image { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
