@@ -1147,3 +1147,49 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+
+/* About Us cards: give every information card a clear, coordinated blue background. */
+.portal-shell .about-redesign .about-purpose-card--mission {
+  background: linear-gradient(145deg, #e5f2fb 0%, #f5faff 100%) !important;
+  border: 1px solid #c5dff0 !important;
+  border-top: 4px solid #17659c !important;
+}
+.portal-shell .about-redesign .about-purpose-card--vision {
+  background: linear-gradient(145deg, #eaf5fb 0%, #f7fbff 100%) !important;
+  border: 1px solid #cbdfea !important;
+  border-top: 4px solid #72afd4 !important;
+}
+.portal-shell .about-redesign .about-service-item {
+  background: linear-gradient(135deg, #eaf4fb 0%, #f8fbfe 100%) !important;
+  border: 1px solid #c9deed !important;
+}
+.portal-shell .about-redesign .about-service-number {
+  color: #fff !important;
+  background: #14558a !important;
+}
+.portal-shell .about-redesign .about-service-item > svg {
+  color: #14558a !important;
+}
+.portal-shell .about-redesign .about-team-member {
+  background: linear-gradient(135deg, #e6f1f9 0%, #f6faff 100%) !important;
+  border: 1px solid #c8dce9 !important;
+}
+.portal-shell .about-redesign .about-team-initial {
+  color: #fff !important;
+  background: #14558a !important;
+}
+.portal-shell .about-redesign .about-contact-actions a {
+  background: #14558a !important;
+  color: #fff !important;
+  border: 1px solid #14558a !important;
+}
+.portal-shell .about-redesign .about-contact-actions a + a {
+  background: #dcecf7 !important;
+  color: #124a78 !important;
+  border-color: #b8d2e4 !important;
+}
+.portal-shell .about-redesign .about-card-icon {
+  background: #14558a !important;
+  color: #fff !important;
+}
