@@ -346,12 +346,17 @@ function HelpScreen({ account, showToast, session }: { account: ServiceAccount |
   return <div className="screen-stack"><PageIntro eyebrow="SUPPORT" title="How can we help?" copy="Our team is ready to help with your account, payments and water service." /><div className="support-card"><div className="support-icon"><Headphones size={26} /></div><div><strong>Speak to our team</strong><p>Monday — Friday, 8:00 AM to 5:00 PM</p></div><button className="circle-arrow" onClick={() => showToast('Call +233 59 118 9163 for support')}><ArrowRight size={17} /></button></div><div className="support-list"><HelpItem icon={MessageSquare} title="Report a water issue" copy="Tell us about a leak, low pressure or service interruption." onClick={() => setFormOpen(true)} /><HelpItem icon={FileText} title="Request a statement" copy="Get a clear record of your recent water payments." onClick={() => showToast('Statement request received')} /><HelpItem icon={CircleHelp} title="Frequently asked questions" copy="Find quick answers about bills, meters and payments." onClick={() => showToast('FAQ section coming soon')} /></div>{formOpen && <form className="issue-form" onSubmit={submitRequest}><div className="section-heading"><h2>Send a request</h2><button type="button" onClick={() => setFormOpen(false)} aria-label="Close"><X size={18} /></button></div><label>Request type<select value={requestType} onChange={(event) => setRequestType(event.target.value)}><option value="water_issue">Water issue</option><option value="billing">Billing question</option><option value="other">Other</option></select></label><label>How can we help?<textarea required minLength={5} maxLength={2000} value={description} onChange={(event) => setDescription(event.target.value)} placeholder="Describe the issue or question" /></label><button className="button button--primary" disabled={submitting}>{submitting ? <LoaderCircle className="spin" size={18} /> : <SendIcon />} {submitting ? 'Sending…' : 'Send request'}</button></form>}<div className="contact-panel"><p className="eyebrow">EMERGENCY WATER LINE</p><strong>+233 59 118 9163</strong><p>For urgent leaks and supply concerns.</p></div><span className="sr-only">Signed in as {session.meterNumber}</span></div>;
 }
 
-function getBillPaymentState(bill: Pick<Bill, 'amount' | 'amount_paid' | 'balance'>): 'paid' | 'partial' | 'unpaid' {
+function getBillPaymentState(bill: Pick<Bill, 'amount' | 'amount_paid' | 'balance' | 'status'>): 'paid' | 'partial' | 'unpaid' {
   const total = Math.max(0, Number(bill.amount) || 0);
   const paid = Math.max(0, Number(bill.amount_paid) || 0);
   const balance = Math.max(0, Number(bill.balance) || 0);
-  if (total > 0 && (balance <= 0.009 || paid >= total - 0.009)) return 'paid';
-  if (paid > 0 && balance > 0.009) return 'partial';
+  // Use the actual amounts first; fall back to the WATSAN bill-status field
+  // when older records do not contain an amount-paid value.
+  if (total > 0 && balance <= 0.009) return 'paid';
+  if (paid > 0.009 && balance > 0.009) return 'partial';
+  const status = String(bill.status || '').trim().toLowerCase();
+  if (status.includes('partial')) return 'partial';
+  if (status.includes('paid') || status.includes('complete')) return 'paid';
   return 'unpaid';
 }
 
