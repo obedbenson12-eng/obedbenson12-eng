@@ -277,9 +277,6 @@ function Welcome({ modal, setModal, navigate, showToast, onLogin, onDemo }: { mo
       <div className="watsan-brand-caption"><strong>CUSTOMER APP</strong><span>TSRUKPE TOTA WATSAN</span></div>
     </header>
     <main className="watsan-professional-main">
-      <div className="watsan-professional-kicker"><span /> COMMUNITY WATER SERVICES</div>
-      <h1>Reliable water services,<br /><em>right at your fingertips.</em></h1>
-      <p className="watsan-professional-copy">Check your bill, make secure payments and reach our team without a trip to the office.</p>
       <div className="watsan-professional-actions">
         <button type="button" className="watsan-access-button" onClick={() => setModal('signin')}>Access my account <ArrowRight size={19} /></button>
         <button type="button" className="watsan-demo-button" onClick={onDemo}>Enter demo portal <span>(testing only)</span></button>
