@@ -5023,3 +5023,210 @@ img, svg, video, canvas { max-width: 100%; }
 @media (max-width: 480px) {
   .watsan-login-reference .watsan-login-logo { top: 11.8% !important; }
 }
+
+
+/* Professional WATSAN customer welcome screen: brand, clear value proposition,
+   primary account access, demo access and security/availability reassurance. */
+.watsan-login-professional {
+  position: relative !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  padding: max(30px,env(safe-area-inset-top)) 26px max(24px,env(safe-area-inset-bottom)) !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  background: linear-gradient(145deg,#123f98 0%,#0d3788 54%,#082d72 100%) !important;
+  isolation: isolate !important;
+}
+.watsan-login-professional::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: min(92vw,620px);
+  height: min(92vw,620px);
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 50%;
+  right: -38%;
+  top: 12%;
+  box-shadow: 0 0 0 42px rgba(255,255,255,.018),0 0 0 86px rgba(255,255,255,.014);
+}
+.watsan-login-professional::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -20%;
+  bottom: -34%;
+  width: 95vw;
+  height: 58vw;
+  max-height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse,rgba(64,153,220,.22),transparent 68%);
+}
+.watsan-login-professional .watsan-login-content,
+.watsan-login-professional .watsan-login-logo,
+.watsan-login-professional .watsan-login-actions,
+.watsan-login-professional .watsan-login-wave,
+.watsan-login-professional .watsan-back-button {
+  display: none !important;
+}
+.watsan-login-professional .watsan-login-glow {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(1px);
+}
+.watsan-login-professional .watsan-login-glow--one {
+  width: 260px;height:260px;left:-160px;top:22%;
+  background:rgba(75,177,225,.10);
+}
+.watsan-login-professional .watsan-login-glow--two {
+  width:220px;height:220px;right:-145px;bottom:8%;
+  background:rgba(84,151,226,.13);
+}
+.watsan-login-professional .watsan-professional-brand {
+  width: min(100%,560px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #fff;
+  font: 800 13px/1.2 'Manrope',Arial,sans-serif;
+  letter-spacing: .14em;
+}
+.watsan-login-professional .watsan-professional-logo {
+  width: 54px;height:54px;flex:0 0 54px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.97);
+  padding:5px;
+  box-shadow:0 7px 22px rgba(0,0,0,.16);
+}
+.watsan-login-professional .watsan-professional-logo img {
+  width:100%;height:100%;object-fit:contain;border-radius:50%;
+}
+.watsan-login-professional .watsan-professional-main {
+  width:min(100%,560px);
+  margin: auto;
+  padding: 55px 0 48px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.watsan-login-professional .watsan-professional-kicker {
+  display:flex;align-items:center;gap:9px;
+  margin-bottom:22px;
+  color:#b9d9f5;
+  font:700 10px/1.2 'Manrope',Arial,sans-serif;
+  letter-spacing:.18em;
+}
+.watsan-login-professional .watsan-professional-kicker span {
+  width:22px;height:2px;border-radius:2px;background:#77c9e9;
+}
+.watsan-login-professional .watsan-professional-main h1 {
+  max-width:540px;
+  margin:0 0 20px;
+  color:#fff;
+  font:600 clamp(34px,7.5vw,54px)/1.12 'Manrope',Arial,sans-serif;
+  letter-spacing:-.045em;
+}
+.watsan-login-professional .watsan-professional-main h1 em {
+  color:#bfe5f8;
+  font-style:normal;
+}
+.watsan-login-professional .watsan-professional-copy {
+  max-width:430px;
+  margin:0 0 34px;
+  color:rgba(239,247,255,.84);
+  font:400 15px/1.75 'Manrope',Arial,sans-serif;
+}
+.watsan-login-professional .watsan-professional-actions {
+  width:min(100%,390px);
+  display:grid;
+  gap:13px;
+}
+.watsan-login-professional .watsan-professional-actions button {
+  width:100%;
+  min-height:58px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  font:700 14px 'Manrope',Arial,sans-serif;
+  transition:transform .18s,box-shadow .18s,background .18s;
+}
+.watsan-login-professional .watsan-professional-actions button:active { transform:scale(.985); }
+.watsan-login-professional .watsan-access-button {
+  color:#103b88;
+  background:#fff;
+  box-shadow:0 10px 25px rgba(0,17,62,.22);
+}
+.watsan-login-professional .watsan-access-button:hover { background:#f0f7ff;box-shadow:0 13px 30px rgba(0,17,62,.28); }
+.watsan-login-professional .watsan-demo-button {
+  color:#fff;
+  background:rgba(255,255,255,.075);
+  border:1px solid rgba(255,255,255,.35);
+}
+.watsan-login-professional .watsan-demo-button span {
+  color:#c6dcf2;
+  font-size:11px;
+  font-weight:500;
+}
+.watsan-login-professional .watsan-professional-trust {
+  width:min(100%,540px);
+  margin-top:34px;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:14px 18px;
+  color:#d2e8f8;
+  font:500 11px/1.5 'Manrope',Arial,sans-serif;
+}
+.watsan-login-professional .watsan-professional-trust span {display:inline-flex;align-items:center;gap:8px;}
+.watsan-login-professional .watsan-professional-trust svg {color:#8ed5ee;}
+.watsan-login-professional .watsan-professional-trust i {width:4px;height:4px;border-radius:50%;background:#7bc8e8;}
+.watsan-login-professional .watsan-professional-footer {
+  width:min(100%,560px);
+  margin:0 auto;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.17);
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:9px 16px;
+  color:rgba(224,239,252,.7);
+  font:400 10px/1.5 'Manrope',Arial,sans-serif;
+}
+.watsan-login-professional .watsan-professional-footer a {color:#d5eaff;text-decoration:none;}
+.watsan-login-professional .modal-backdrop:has(.modal-card--auth) {
+  position:fixed!important;inset:0!important;z-index:50!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:16px!important;background:rgba(3,17,48,.72)!important;
+  backdrop-filter:blur(5px)!important;
+}
+.watsan-login-professional .modal-backdrop:has(.modal-card--auth)::before {display:none!important;}
+@media(max-width:600px) {
+  .watsan-login-professional {padding-left:25px!important;padding-right:25px!important;}
+  .watsan-login-professional .watsan-professional-brand {font-size:11px;letter-spacing:.12em;}
+  .watsan-login-professional .watsan-professional-logo {width:48px;height:48px;flex-basis:48px;}
+  .watsan-login-professional .watsan-professional-main {padding:42px 0 38px;}
+  .watsan-login-professional .watsan-professional-kicker {margin-bottom:18px;font-size:9px;}
+  .watsan-login-professional .watsan-professional-main h1 {font-size:clamp(34px,9vw,44px);}
+  .watsan-login-professional .watsan-professional-copy {font-size:14px;line-height:1.7;margin-bottom:28px;}
+  .watsan-login-professional .watsan-professional-actions button {min-height:56px;}
+  .watsan-login-professional .watsan-professional-trust {margin-top:27px;gap:10px 13px;font-size:10px;}
+  .watsan-login-professional .watsan-professional-footer {font-size:9px;}
+}
+@media(max-height:700px) {
+  .watsan-login-professional .watsan-professional-main {padding-top:25px;padding-bottom:24px;}
+  .watsan-login-professional .watsan-professional-main h1 {font-size:clamp(30px,6vh,43px);}
+  .watsan-login-professional .watsan-professional-copy {margin-bottom:20px;}
+  .watsan-login-professional .watsan-professional-trust {margin-top:20px;}
+}
