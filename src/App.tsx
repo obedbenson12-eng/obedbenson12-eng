@@ -94,7 +94,7 @@ function App() {
   useEffect(() => {
     if (!session) return;
     if (session.isDemo) {
-      setAccount({ id: 'DEMO-001', account_number: 'DEMO-001', service_address: 'Tsrukpe-Tota (Demo Account)', balance: 25, due_date: '2026-11-30', status: 'Demo' });
+      setAccount({ id: 'DEMO-001', account_number: 'DEMO-001', service_address: 'Tsrukpe-Tota (Demo Account)', balance: 27, due_date: '2026-11-30', status: 'Demo' });
       setBills([{ id: 'demo-bill-1', billing_period: '2026-11', amount: 127, water_charge: 125, meter_fee: 2, amount_paid: 100, balance: 27, previous_reading: 120, current_reading: 145, units_consumed: 25, rate_per_unit: 5, due_date: '2026-11-30', status: 'part-paid', notes: 'Demo data only — not a real customer bill.' }]);
       setPayments([]);
       setZiteData(null);
