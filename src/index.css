@@ -3633,3 +3633,20 @@ img, svg, video, canvas { max-width: 100%; }
   font-weight: 800 !important;
 }
 
+
+
+/* Dark mode: remove internal horizontal divider lines from the two overview cards. */
+.portal-shell.theme-dark .account-holder-card .account-holder-payment,
+.portal-shell.theme-dark .account-holder-card .account-holder-footer,
+.portal-shell.theme-dark .account-holder-card .zite-sync,
+.portal-shell.theme-dark .reading-card .usage-cost {
+  border-top: 0 !important;
+}
+.portal-shell.theme-dark .account-holder-card .account-holder-payment {
+  padding-top: 4px !important;
+}
+.portal-shell.theme-dark .account-holder-card .account-holder-footer,
+.portal-shell.theme-dark .account-holder-card .zite-sync,
+.portal-shell.theme-dark .reading-card .usage-cost {
+  padding-top: 0 !important;
+}
