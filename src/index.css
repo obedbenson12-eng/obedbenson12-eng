@@ -3002,3 +3002,94 @@ img, svg, video, canvas { max-width: 100%; }
     font-size: 8.8px !important;
   }
 }
+
+
+/* Secure payment modal — compact, balanced and production-style. */
+.portal-shell .modal-card--payment,
+.welcome-shell .modal-card--payment {
+  width: min(100% - 32px, 410px) !important;
+  max-width: 410px !important;
+  padding: 20px 20px 18px !important;
+  border-radius: 19px !important;
+  box-shadow: 0 18px 48px rgba(0, 20, 48, .24) !important;
+}
+.portal-shell .modal-card--payment .modal-brand,
+.welcome-shell .modal-card--payment .modal-brand {
+  margin: 0 42px 18px 0 !important;
+  padding: 8px 10px !important;
+  border-radius: 11px !important;
+}
+.portal-shell .modal-card--payment > .eyebrow,
+.welcome-shell .modal-card--payment > .eyebrow {
+  margin: 0 0 6px !important;
+  font-size: 9px !important;
+}
+.portal-shell .modal-card--payment h2,
+.welcome-shell .modal-card--payment h2 {
+  font-size: clamp(20px, 5vw, 23px) !important;
+  margin-bottom: 7px !important;
+}
+.portal-shell .modal-card--payment .modal-copy,
+.welcome-shell .modal-card--payment .modal-copy {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  margin-bottom: 14px !important;
+}
+.portal-shell .modal-card--payment .payment-summary,
+.welcome-shell .modal-card--payment .payment-summary {
+  padding: 12px 13px !important;
+  margin-bottom: 13px !important;
+  border-radius: 13px !important;
+  gap: 4px !important;
+}
+.portal-shell .modal-card--payment .payment-summary span,
+.welcome-shell .modal-card--payment .payment-summary span {
+  font-size: 9px !important;
+}
+.portal-shell .modal-card--payment .payment-summary strong,
+.welcome-shell .modal-card--payment .payment-summary strong {
+  font-size: 16px !important;
+}
+.portal-shell .modal-card--payment .payment-summary small,
+.welcome-shell .modal-card--payment .payment-summary small {
+  font-size: 9px !important;
+  line-height: 1.4 !important;
+}
+.portal-shell .modal-card--payment .button--primary,
+.welcome-shell .modal-card--payment .button--primary {
+  min-height: 44px !important;
+  border-radius: 11px !important;
+  font-size: 11px !important;
+  box-shadow: 0 4px 12px rgba(13, 63, 135, .15) !important;
+}
+.portal-shell .modal-card--payment .secure-note,
+.welcome-shell .modal-card--payment .secure-note {
+  font-size: 8.5px !important;
+  margin-top: 10px !important;
+}
+.portal-shell .modal-card--payment .modal-close,
+.welcome-shell .modal-card--payment .modal-close {
+  top: 15px !important;
+  right: 14px !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+@media (max-width: 480px) {
+  .portal-shell .modal-card--payment,
+  .welcome-shell .modal-card--payment {
+    width: min(100%, 390px) !important;
+    padding: 18px 16px 16px !important;
+    border-radius: 17px !important;
+  }
+  .portal-shell .modal-card--payment .modal-brand,
+  .welcome-shell .modal-card--payment .modal-brand {
+    margin-bottom: 15px !important;
+  }
+}
+@media (max-height: 560px) {
+  .portal-shell .modal-card--payment,
+  .welcome-shell .modal-card--payment {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+  }
+}
