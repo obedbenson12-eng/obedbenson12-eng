@@ -2500,3 +2500,47 @@ img, svg, video, canvas { max-width: 100%; }
   .portal-shell .drawer-item { padding: 13px 10px !important; gap: 12px !important; }
   .portal-shell .drawer-bottom { margin-top: 5px !important; padding-top: 6px !important; }
 }
+
+
+/* The drawer must sit above the fixed header and bottom navigation.
+   Otherwise the bottom navigation covers Settings and Sign out. */
+.portal-shell .drawer-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  z-index: 2147483647 !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+}
+.portal-shell .drawer {
+  position: relative !important;
+  z-index: 1 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+.portal-shell .drawer-items {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+.portal-shell .drawer-bottom {
+  position: relative !important;
+  flex: 0 0 auto !important;
+  margin-top: auto !important;
+  padding-top: 12px !important;
+  padding-bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  z-index: 2 !important;
+}
+.portal-shell .drawer .drawer-item {
+  padding: 13px 10px !important;
+  gap: 12px !important;
+}
