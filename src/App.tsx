@@ -334,6 +334,7 @@ function HomeScreen({ account, payments, bills, ziteData, ziteSyncing, displayNa
   const liveBalance: number = ziteCustomer ? (toFieldValue(ziteCustomer, ['Balance', 'Amount Due', 'Outstanding', 'Current Balance'], 'number') as number | null) ?? (account ? Number(account.balance) : 0) : (account ? Number(account.balance) : 0);
   const liveDueDate = ''; // A reading month is not a confirmed payment deadline.
   const liveStatus = ziteCustomer ? (toFieldValue(ziteCustomer, ['Status', 'Account Status'], 'string') as string ?? account?.status ?? 'active') : account?.status ?? 'active';
+  const latestBillPaid = Number(latestBill?.amount_paid ?? 0);
   const totalPaidAcrossBills = bills.reduce((sum, bill) => sum + Math.max(0, Number(bill.amount_paid ?? 0)), 0);
   // The account summary must show the customer's total outstanding balance,
   // not just the newest month's bill (payments may clear older bills first).
