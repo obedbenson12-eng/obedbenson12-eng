@@ -5547,3 +5547,30 @@ img, svg, video, canvas { max-width: 100%; }
     font-size: 9px !important;
   }
 }
+
+
+/* Full-viewport water-splash background for the logged-in Home screen only. */
+.portal-shell.portal-shell--home {
+  position: relative !important;
+  isolation: isolate !important;
+  background: transparent !important;
+}
+.portal-shell.portal-shell--home::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background-image: url("/obedbenson12-eng/watsan-home-bg.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+.portal-shell.portal-shell--home .overview-screen {
+  background: transparent !important;
+  background-image: none !important;
+  background-color: transparent !important;
+}
+.portal-shell.portal-shell--home .topbar {
+  position: sticky;
+}
