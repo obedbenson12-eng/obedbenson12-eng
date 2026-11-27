@@ -5438,3 +5438,112 @@ img, svg, video, canvas { max-width: 100%; }
     flex:0 0 90px !important;
   }
 }
+
+/* Landscape-only repair: keep the brand, CUSTOMER ACCESS actions and footer
+   in separate rows so the logo can never overlap the heading or buttons. */
+@media (orientation: landscape) and (max-height: 700px) and (max-width: 1400px) {
+  .watsan-login-professional {
+    min-height: 100svh !important;
+    height: 100svh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: max(8px, env(safe-area-inset-top)) 24px max(8px, env(safe-area-inset-bottom)) !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .watsan-login-professional .watsan-professional-brand {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    flex: 0 0 auto !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+
+  .watsan-login-professional .watsan-professional-logo {
+    width: 42px !important;
+    height: 42px !important;
+    flex: 0 0 42px !important;
+    padding: 3px !important;
+  }
+
+  .watsan-login-professional .watsan-brand-caption {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  .watsan-login-professional .watsan-brand-caption span {
+    font-size: 10px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .watsan-login-professional .watsan-professional-main {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(100%, 560px) !important;
+    flex: 1 0 auto !important;
+    margin: 0 auto !important;
+    padding: 8px 0 !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0 !important;
+  }
+
+  .watsan-login-professional .watsan-customer-access-copy {
+    margin: 0 auto 12px !important;
+  }
+
+  .watsan-login-professional .watsan-customer-access-copy h1 {
+    margin: 0 0 5px !important;
+    font-size: clamp(18px, 3.2vw, 24px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .watsan-login-professional .watsan-customer-access-copy p {
+    font-size: clamp(11px, 1.8vw, 14px) !important;
+    line-height: 1.3 !important;
+  }
+
+  .watsan-login-professional .watsan-professional-actions {
+    width: min(100%, 440px) !important;
+    gap: 8px !important;
+  }
+
+  .watsan-login-professional .watsan-professional-actions button {
+    min-height: 42px !important;
+    padding: 7px 12px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+
+  .watsan-login-professional .watsan-professional-trust {
+    width: 100% !important;
+    margin: 10px auto 0 !important;
+    justify-content: center !important;
+    gap: 6px 12px !important;
+    font-size: 9px !important;
+  }
+
+  .watsan-login-professional .watsan-professional-footer {
+    width: min(100%, 700px) !important;
+    flex: 0 0 auto !important;
+    margin: 0 auto !important;
+    padding-top: 8px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 4px 14px !important;
+    font-size: 9px !important;
+  }
+}
