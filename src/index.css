@@ -5574,3 +5574,8 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.portal-shell--home .topbar {
   position: sticky;
 }
+
+/* Let the fixed background extend beyond the centered portal column. */
+.portal-shell.portal-shell--home {
+  overflow: visible !important;
+}
