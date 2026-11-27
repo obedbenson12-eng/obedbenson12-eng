@@ -5579,3 +5579,11 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.portal-shell--home {
   overflow: visible !important;
 }
+
+
+/* Make the homepage water artwork a little clearer and more noticeable. */
+.portal-shell.portal-shell--home::before {
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  filter: contrast(1.12) saturate(1.22) brightness(1.025) !important;
+}
