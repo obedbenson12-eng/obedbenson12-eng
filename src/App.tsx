@@ -254,7 +254,7 @@ function App() {
   ];
   const displayName = session.customer.fullName || 'WATSAN Customer';
 
-  return <div className={`app-shell portal-shell${darkMode ? " theme-dark" : ""}`}>
+  return <div className={`app-shell portal-shell${darkMode ? " theme-dark" : ""}${screen === "home" ? " portal-shell--home" : ""}`}>
     <header className="topbar"><button className="icon-button icon-button--top" onClick={() => setDrawerOpen(true)} aria-label="Open menu"><Menu size={22} /></button><WatsanMark compact /><div className="topbar-actions"><button className="theme-toggle" type="button" onClick={() => setDarkMode(value => !value)} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} title={darkMode ? "Switch to light mode" : "Switch to dark mode"}><span className="theme-toggle-icon">{darkMode ? <Sun size={17} /> : <Moon size={17} />}</span><span className="theme-toggle-label">{darkMode ? "Light" : "Dark"}</span></button><button className="icon-button icon-button--top" onClick={() => navigate('notifications')} aria-label="Open notifications"><Bell size={19} /><span className="notification-dot" /></button></div></header>
     <main className="portal-content">
       {appError && <div className="error-banner"><Info size={17} /><span>{appError}</span><button onClick={() => void loadCustomerData(session)}>Retry</button></div>}
