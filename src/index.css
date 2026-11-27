@@ -5580,3 +5580,27 @@ img, svg, video, canvas { max-width: 100%; }
   overflow: visible !important;
 }
 
+
+
+/* Extend the same water background across the full viewport on
+   Transaction History, My Complaints and Notifications pages. */
+.portal-shell.portal-shell--water-pages {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+.portal-shell.portal-shell--water-pages::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background-image: url("/obedbenson12-eng/watsan-home-bg.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+.portal-shell.portal-shell--water-pages .portal-content {
+  background: transparent !important;
+}
