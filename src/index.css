@@ -5438,3 +5438,61 @@ img, svg, video, canvas { max-width: 100%; }
     flex:0 0 90px !important;
   }
 }
+
+/* Keep the CUSTOMER ACCESS heading, buttons and verification details centered
+   in the visible screen on desktop, tablet, mobile and rotated layouts. */
+.watsan-login-professional {
+  position: relative !important;
+}
+.watsan-login-professional .watsan-professional-main {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(600px, calc(100% - 40px)) !important;
+  max-height: calc(100svh - 36px) !important;
+  margin: 0 !important;
+  padding: 16px 0 !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  overflow: visible !important;
+}
+.watsan-login-professional .watsan-customer-access-copy,
+.watsan-login-professional .watsan-professional-actions,
+.watsan-login-professional .watsan-professional-trust {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+@media (max-height: 520px), (orientation: landscape) and (max-height: 650px) {
+  .watsan-login-professional .watsan-professional-main {
+    top: 50% !important;
+    padding: 6px 0 !important;
+    gap: 0 !important;
+  }
+  .watsan-login-professional .watsan-customer-access-copy {
+    margin-bottom: 12px !important;
+  }
+  .watsan-login-professional .watsan-customer-access-copy h1 {
+    margin-bottom: 5px !important;
+    font-size: clamp(17px, 3.4vh, 22px) !important;
+  }
+  .watsan-login-professional .watsan-customer-access-copy p {
+    font-size: clamp(11px, 2.5vh, 14px) !important;
+  }
+  .watsan-login-professional .watsan-professional-actions {
+    gap: 7px !important;
+  }
+  .watsan-login-professional .watsan-professional-actions button {
+    min-height: 40px !important;
+  }
+  .watsan-login-professional .watsan-professional-trust {
+    margin-top: 10px !important;
+    gap: 6px 10px !important;
+    font-size: 9px !important;
+  }
+}
