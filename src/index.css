@@ -5611,3 +5611,9 @@ img, svg, video, canvas { max-width: 100%; }
 .watsan-login-professional {
   touch-action: pan-x pan-y;
 }
+
+
+/* Prevent pinch-to-zoom while interacting with the customer sidebar. */
+.portal-shell .drawer {
+  touch-action: pan-x pan-y;
+}
