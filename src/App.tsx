@@ -517,9 +517,9 @@ function PersonalDetailsScreen({ session, customer }: { session: PortalSession; 
 
   const savePreferredPhone = () => {
     const cleaned = phoneDraft.trim();
-    const digits = cleaned.replace(/\\D/g, '');
-    if (!/^(0\\d{9}|233\\d{9})$/.test(digits)) {
-      setPhoneError('Enter a valid Ghana mobile number in 0XXXXXXXXX or +233XXXXXXXXX format. Numbers from all Ghana networks are accepted.');
+    const digits = cleaned.replace(/\D/g, '');
+    if (!/^(0[25]\d{8}|233[25]\d{8})$/.test(digits)) {
+      setPhoneError('Enter a valid 10-digit Ghana mobile number starting with 02 or 05, or use +233 followed by the 9-digit number.');
       return;
     }
     try {
