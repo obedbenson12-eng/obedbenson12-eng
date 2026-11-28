@@ -519,7 +519,7 @@ function PersonalDetailsScreen({ session, customer }: { session: PortalSession; 
     const cleaned = phoneDraft.trim();
     const digits = cleaned.replace(/\\D/g, '');
     if (!/^(0\\d{9}|233\\d{9})$/.test(digits)) {
-      setPhoneError('Enter a valid Ghana number, such as 0241234567 or +233241234567.');
+      setPhoneError('Enter a valid Ghana mobile number in 0XXXXXXXXX or +233XXXXXXXXX format. Numbers from all Ghana networks are accepted.');
       return;
     }
     try {
@@ -544,9 +544,9 @@ function PersonalDetailsScreen({ session, customer }: { session: PortalSession; 
       <div className="profile-detail-row"><span>Official registered phone</span><strong>{officialPhone}</strong></div>
       <div className="profile-detail-row"><span>Service address</span><strong>{address}</strong></div>
       <div className="profile-detail-row profile-detail-row--phone-preference">
-        <span>My preferred phone number</span>
+        <span>My preferred phone number <small>(any Ghana network)</small></span>
         {!editingPhone ? <strong>{preferredPhone || 'Not set'}</strong> : <div style={{display:'flex',flexDirection:'column',gap:10,width:'100%',maxWidth:300}}>
-          <input type="tel" inputMode="tel" autoComplete="tel" value={phoneDraft} onChange={event => setPhoneDraft(event.target.value)} placeholder="e.g. 0241234567" aria-label="Preferred phone number" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',border:'1px solid var(--border, #d7e0e8)',borderRadius:10,font:'inherit',background:'var(--card, #fff)',color:'inherit'}} />
+          <input type="tel" inputMode="tel" autoComplete="tel" value={phoneDraft} onChange={event => setPhoneDraft(event.target.value)} placeholder="e.g. 0201234567 or 0541234567" aria-label="Preferred phone number" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',border:'1px solid var(--border, #d7e0e8)',borderRadius:10,font:'inherit',background:'var(--card, #fff)',color:'inherit'}} />
           {phoneError && <small className="form-error" role="alert">{phoneError}</small>}
           <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
             <button type="button" className="button button--primary" onClick={savePreferredPhone}>Save number</button>
