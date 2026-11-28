@@ -5604,3 +5604,10 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.portal-shell--water-pages .portal-content {
   background: transparent !important;
 }
+
+
+/* Prevent pinch-to-zoom on the customer login screen only.
+   The signed-in customer portal keeps normal browser zoom/accessibility. */
+.watsan-login-professional {
+  touch-action: pan-x pan-y;
+}
