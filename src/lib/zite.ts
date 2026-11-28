@@ -59,7 +59,11 @@ export type PortalData = {
   payments: PortalPayment[];
 };
 
-export async function accessCustomerByMeter(input: { meterNumber: string }) {\n  return callZite<{ activated: boolean; message: string; sessionToken?: string; expiresAt?: string; customer?: PortalSession['customer'] }>('accessCustomerByMeter', input);\n}\n\nexport async function sendCustomerOtp(input: { meterNumber: string; phoneNumber: string }) {
+export async function accessCustomerByMeter(input: { meterNumber: string }) {
+  return callZite<{ activated: boolean; message: string; sessionToken?: string; expiresAt?: string; customer?: PortalSession['customer'] }>('accessCustomerByMeter', input);
+}
+
+export async function sendCustomerOtp(input: { meterNumber: string; phoneNumber: string }) {
   return callZite<{ success: boolean; message: string; maskedPhone?: string }>('sendCustomerOtp', input);
 }
 
