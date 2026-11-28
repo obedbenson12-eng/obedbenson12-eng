@@ -495,19 +495,71 @@ function customerValue(customer: ZiteField | null, keys: string[], fallback = 'N
 
 function PersonalDetailsScreen({ session, customer }: { session: PortalSession; customer: ZiteField | null }) {
   const name = session.customer.fullName || customerValue(customer, ['Full Name','fullName','Customer Name','name'], 'WATSAN Customer');
-  const phone = customerValue(customer, ['Phone Number','phoneNumber','Phone','phone','Mobile Number','mobileNumber']);
+  const officialPhone = customerValue(customer, ['Phone Number','phoneNumber','Phone','phone','Mobile Number','mobileNumber']);
   const address = customerValue(customer, ['Location','location','Address','address','Service Address','serviceAddress'], 'Tsrukpe-Tota');
-  const requestBody = encodeURIComponent(`Hello WATSAN Office, I would like to request an update to my customer personal details.\nMeter number: ${session.meterNumber}\nName: ${name}\nRegistered phone: ${phone}\nPlease contact me to verify this request.`);
+  const phoneKey = `watsan_customer_preferred_phone_${session.meterNumber}`;
+  const [preferredPhone, setPreferredPhone] = useState(() => {
+    try { return localStorage.getItem(phoneKey) ?? officialPhone; } catch { return officialPhone; }
+  });
+  const [phoneDraft, setPhoneDraft] = useState(preferredPhone);
+  const [editingPhone, setEditingPhone] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
+  const [phoneSaved, setPhoneSaved] = useState(false);
+
+  useEffect(() => {
+    let saved = officialPhone;
+    try { saved = localStorage.getItem(phoneKey) ?? officialPhone; } catch { /* Use the official number when browser storage is unavailable. */ }
+    setPreferredPhone(saved);
+    setPhoneDraft(saved);
+    setEditingPhone(false);
+    setPhoneError('');
+  }, [phoneKey, officialPhone]);
+
+  const savePreferredPhone = () => {
+    const cleaned = phoneDraft.trim();
+    const digits = cleaned.replace(/\\D/g, '');
+    if (!/^(0\\d{9}|233\\d{9})$/.test(digits)) {
+      setPhoneError('Enter a valid Ghana number, such as 0241234567 or +233241234567.');
+      return;
+    }
+    try {
+      localStorage.setItem(phoneKey, cleaned);
+      setPreferredPhone(cleaned);
+      setPhoneDraft(cleaned);
+      setEditingPhone(false);
+      setPhoneError('');
+      setPhoneSaved(true);
+      window.setTimeout(() => setPhoneSaved(false), 3000);
+    } catch {
+      setPhoneError('This browser could not save the number. Check your device storage and try again.');
+    }
+  };
+
+  const requestBody = encodeURIComponent(`Hello WATSAN Office, I would like to request an update to my official customer personal details.\\nMeter number: ${session.meterNumber}\\nName: ${name}\\nOfficial registered phone: ${officialPhone}\\nPlease contact me to verify this request.`);
   return <div className="screen-stack">
-    <PageIntro eyebrow="MY PROFILE" title="Personal details" copy="Review the customer information linked to your WATSAN meter account." />
+    <PageIntro eyebrow="MY PROFILE" title="Personal details" copy="Review your WATSAN account details and manage the phone number displayed on this device." />
     <section className="profile-details-card">
       <div className="profile-detail-row"><span>Full name</span><strong>{name}</strong></div>
       <div className="profile-detail-row"><span>Meter number</span><strong>{session.meterNumber}</strong></div>
-      <div className="profile-detail-row"><span>Registered phone number</span><strong>{phone}</strong></div>
+      <div className="profile-detail-row"><span>Official registered phone</span><strong>{officialPhone}</strong></div>
       <div className="profile-detail-row"><span>Service address</span><strong>{address}</strong></div>
-      <p className="settings-note">For your protection, these details are read-only. WATSAN must verify and approve changes to your registered information. Your meter number cannot be changed through the customer portal.</p>
+      <div className="profile-detail-row profile-detail-row--phone-preference">
+        <span>My preferred phone number</span>
+        {!editingPhone ? <strong>{preferredPhone || 'Not set'}</strong> : <div style={{display:'flex',flexDirection:'column',gap:10,width:'100%',maxWidth:300}}>
+          <input type="tel" inputMode="tel" autoComplete="tel" value={phoneDraft} onChange={event => setPhoneDraft(event.target.value)} placeholder="e.g. 0241234567" aria-label="Preferred phone number" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',border:'1px solid var(--border, #d7e0e8)',borderRadius:10,font:'inherit',background:'var(--card, #fff)',color:'inherit'}} />
+          {phoneError && <small className="form-error" role="alert">{phoneError}</small>}
+          <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+            <button type="button" className="button button--primary" onClick={savePreferredPhone}>Save number</button>
+            <button type="button" className="text-button" onClick={() => {setPhoneDraft(preferredPhone);setEditingPhone(false);setPhoneError('');}}>Cancel</button>
+          </div>
+        </div>}
+        {!editingPhone && <button type="button" className="text-button" onClick={() => {setPhoneDraft(preferredPhone);setEditingPhone(true);setPhoneError('');}}>Edit</button>}
+      </div>
+      <p className="settings-note">The preferred number is saved only in this browser on this device. It does not change your official WATSAN registered number, OTP number, SMS contact, or any Zite database record. It may not appear on another device or after browser data is cleared.</p>
+      {phoneSaved && <p className="settings-note" role="status">Your preferred phone number has been saved on this device.</p>}
+      <p className="settings-note">Your name, meter number, official phone number and service address remain managed by WATSAN. Your meter number cannot be changed through this portal.</p>
     </section>
-    <a className="button button--primary settings-contact-button" href={`mailto:watsancommitteetsrukpetota@gmail.com?subject=Request%20to%20update%20customer%20details&body=${requestBody}`}> <Mail size={17}/> Request a details update</a>
+    <a className="button button--primary settings-contact-button" href={`mailto:watsancommitteetsrukpetota@gmail.com?subject=Request%20to%20update%20official%20customer%20details&body=${requestBody}`}> <Mail size={17}/> Request an official details update</a>
   </div>;
 }
 
