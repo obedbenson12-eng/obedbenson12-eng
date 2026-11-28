@@ -619,6 +619,9 @@ function ModalContent({ modal, close, setModal, navigate, onPayment, onLogin, sh
           onLogin({ meterNumber: form.meterNumber.trim(), token: access.sessionToken, expiresAt: access.expiresAt, customer: access.customer });
           return;
         }
+        if (access.message !== 'This meter has not been activated yet.') {
+          throw new Error(access.message || 'We could not find an active WATSAN account for that meter number.');
+        }
         setActivationRequired(true);
         setError('');
       } else if (!otpSent && activationRequired) {
