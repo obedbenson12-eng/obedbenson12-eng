@@ -555,7 +555,6 @@ function PersonalDetailsScreen({ session, customer }: { session: PortalSession; 
         </div>}
         {!editingPhone && <button type="button" className="text-button" onClick={() => {setPhoneDraft(preferredPhone);setEditingPhone(true);setPhoneError('');}}>Edit</button>}
       </div>
-      <p className="settings-note">The preferred number is saved only in this browser on this device. It does not change your official WATSAN registered number, OTP number, SMS contact, or any Zite database record. It may not appear on another device or after browser data is cleared.</p>
       {phoneSaved && <p className="settings-note" role="status">Your preferred phone number has been saved on this device.</p>}
       <p className="settings-note">Your name, meter number, official phone number and service address remain managed by WATSAN. Your meter number cannot be changed through this portal.</p>
     </section>
