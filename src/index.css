@@ -5604,3 +5604,47 @@ img, svg, video, canvas { max-width: 100%; }
 .portal-shell.portal-shell--water-pages .portal-content {
   background: transparent !important;
 }
+
+
+/* Keep the customer login at normal viewport scale; remove the large offsets
+   that made the branding and access panel look enlarged/cropped on phones. */
+.watsan-login-professional {
+  min-height: 100svh !important;
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding: max(18px, env(safe-area-inset-top)) 20px max(16px, env(safe-area-inset-bottom)) !important;
+}
+.watsan-login-professional .watsan-professional-brand {
+  position: relative !important;
+  top: 0 !important;
+  width: min(100%, 560px) !important;
+  margin: 0 auto !important;
+  padding-top: 0 !important;
+}
+.watsan-login-professional .watsan-professional-logo {
+  width: 70px !important;
+  height: 70px !important;
+  flex: 0 0 70px !important;
+}
+.watsan-login-professional .watsan-professional-main {
+  position: relative !important;
+  top: auto !important;
+  margin: auto !important;
+  padding: 22px 0 !important;
+  transform: none !important;
+}
+@media (max-width: 600px) {
+  .watsan-login-professional .watsan-professional-brand {
+    justify-content: center !important;
+  }
+  .watsan-login-professional .watsan-professional-logo {
+    width: 68px !important;
+    height: 68px !important;
+    flex-basis: 68px !important;
+  }
+  .watsan-login-professional .watsan-professional-main {
+    width: 100% !important;
+    padding: 20px 0 !important;
+  }
+}
