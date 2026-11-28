@@ -42,9 +42,9 @@ import {
 
 type Screen = 'home' | 'help' | 'statements' | 'account' | 'about' | 'notifications' | 'personal' | 'security';
 type Modal = 'signin' | 'pay' | 'success' | null;
-type ServiceAccount = { id: string; account_number: string; service_address: string; balance: number; due_date: string; status: string };
+type ServiceAccount = { id: string; account_number: string; service_address: string; balance: number; due_date: string; status: string; meter_number?: string; customer_name?: string };
 type Payment = { id: string; amount: number; method: string; status: string; receipt_number: string; created_at: string };
-type Bill = { id: string; billing_period: string; amount: number; water_charge: number; meter_fee: number; amount_paid: number; balance: number; previous_reading: number; current_reading: number; units_consumed: number; rate_per_unit: number; status: string; notes: string };
+type Bill = { id: string; billing_period: string; amount: number; water_charge: number; meter_fee: number; due_date: string; amount_paid: number; balance: number; previous_reading: number; current_reading: number; units_consumed: number; rate_per_unit: number; status: string; notes: string };
 type ZiteField = Record<string, unknown>;
 type ZiteCustomerData = {
   customer: ZiteField | null;
