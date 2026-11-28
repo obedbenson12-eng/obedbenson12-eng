@@ -604,6 +604,7 @@ function ModalContent({ modal, close, setModal, navigate, onPayment, onLogin, sh
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [otpSent, setOtpSent] = useState(false);
+  const [activationRequired, setActivationRequired] = useState(false);
   const [maskedPhone, setMaskedPhone] = useState('');
   const [success, setSuccess] = useState(false);
   const isPay = modal === 'pay';
